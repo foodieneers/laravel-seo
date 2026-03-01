@@ -6,13 +6,13 @@ use Foodieneers\Laravel\SEO\Tests\Fixtures\Page;
 
 use function Pest\Laravel\get;
 
-it('does not render by default the JSON-LD Schema markup: BreadcrumbList', function () {
+it('does not render by default the JSON-LD Schema markup: BreadcrumbList', function (): void {
     get(route('seo.test-plain'))
         ->assertDontSee('"application/ld+json"')
         ->assertDontSee('"@type": "BreadcrumbList"');
 });
 
-it('can correctly render the JSON-LD Schema markup: BreadcrumbList', function () {
+it('can correctly render the JSON-LD Schema markup: BreadcrumbList', function (): void {
     config()->set('seo.title.suffix', ' | Laravel SEO');
 
     $page = Page::create([
@@ -23,14 +23,12 @@ it('can correctly render the JSON-LD Schema markup: BreadcrumbList', function ()
         'title' => 'Test article',
         'enableTitleSuffix' => true,
         'url' => 'https://example.com/test/article',
-        'schema' => SchemaCollection::initialize()->addBreadcrumbs(function (BreadcrumbListSchema $breadcrumbList): BreadcrumbListSchema {
-            return $breadcrumbList->prependBreadcrumbs([
-                'Homepage' => 'https://example.com',
-                'Category' => 'https://example.com/test',
-            ])->appendBreadcrumbs([
-                'Subarticle' => 'https://example.com/test/article/2',
-            ]);
-        }),
+        'schema' => SchemaCollection::initialize()->addBreadcrumbs(fn(BreadcrumbListSchema $breadcrumbList): BreadcrumbListSchema => $breadcrumbList->prependBreadcrumbs([
+            'Homepage' => 'https://example.com',
+            'Category' => 'https://example.com/test',
+        ])->appendBreadcrumbs([
+            'Subarticle' => 'https://example.com/test/article/2',
+        ])),
     ];
 
     get(route('seo.test-page', ['page' => $page]))

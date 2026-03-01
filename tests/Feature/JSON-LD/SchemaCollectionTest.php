@@ -1,16 +1,16 @@
 <?php
 
-use Illuminate\Support\Collection;
 use Foodieneers\Laravel\SEO\Schema\ArticleSchema;
 use Foodieneers\Laravel\SEO\Schema\BreadcrumbListSchema;
 use Foodieneers\Laravel\SEO\Schema\FaqPageSchema;
 use Foodieneers\Laravel\SEO\SchemaCollection;
 use Foodieneers\Laravel\SEO\Support\SEOData;
 use Foodieneers\Laravel\SEO\Tests\Fixtures\Page;
+use Illuminate\Support\Collection;
 
 use function Pest\Laravel\get;
 
-it('can correctly render a custom JSON-LD Schemas markup', function () {
+it('can correctly render a custom JSON-LD Schemas markup', function (): void {
     $page = Page::create([]);
 
     $faqPageSchema = [
@@ -43,7 +43,7 @@ it('can correctly render a custom JSON-LD Schemas markup', function () {
         ->assertSee('<script type="application/ld+json">' . json_encode($faqPageSchema) . '</script>', false);
 });
 
-it('can correctly render a custom JSON-LD Schemas markup from a function', function () {
+it('can correctly render a custom JSON-LD Schemas markup from a function', function (): void {
     $page = Page::create([]);
 
     $now = now();
@@ -56,7 +56,7 @@ it('can correctly render a custom JSON-LD Schemas markup from a function', funct
         'url' => 'https://example.com',
         'author' => 'Ralph J. Smit',
         'schema' => SchemaCollection::make()
-            ->add(fn (SEOData $SEOData) => [
+            ->add(fn (SEOData $SEOData): array => [
                 '@context' => 'https://schema.org',
                 '@type' => 'Article',
                 'mainEntityOfPage' => [
@@ -99,7 +99,7 @@ it('can correctly render a custom JSON-LD Schemas markup from a function', funct
         );
 });
 
-it('can correctly render the JSON-LD Schema markup: Article', function () {
+it('can correctly render the JSON-LD Schema markup: Article', function (): void {
     $created_at = now()->subDays(2);
     $updated_at = now();
 
@@ -113,15 +113,11 @@ it('can correctly render the JSON-LD Schema markup: Article', function () {
         'image' => 'images/twitter-1743x1743.jpg',
         'author' => 'Ralph J. Smit',
         'schema' => SchemaCollection::make()
-            ->addArticle(function (ArticleSchema $article, SEOData $SEOData) {
-                return $article
-                    ->addAuthor('Second author')
-                    ->markup(function (Collection $markup) {
-                        return $markup->mergeRecursive([
-                            'alternativeHeadline' => 'My alternative headline',
-                        ]);
-                    });
-            }),
+            ->addArticle(fn(ArticleSchema $article, SEOData $SEOData): ArticleSchema => $article
+                ->addAuthor('Second author')
+                ->markup(fn(Collection $markup) => $markup->mergeRecursive([
+                    'alternativeHeadline' => 'My alternative headline',
+                ]))),
     ];
 
     get(route('seo.test-page', ['page' => $page]))
@@ -155,7 +151,7 @@ it('can correctly render the JSON-LD Schema markup: Article', function () {
         );
 });
 
-it('can correctly render the JSON-LD Schema markup: BreadcrumbList', function () {
+it('can correctly render the JSON-LD Schema markup: BreadcrumbList', function (): void {
     config()->set('seo.title.suffix', ' | Laravel SEO');
 
     $page = Page::create([]);
@@ -165,16 +161,14 @@ it('can correctly render the JSON-LD Schema markup: BreadcrumbList', function ()
         'enableTitleSuffix' => true,
         'url' => 'https://example.com/test/article',
         'schema' => SchemaCollection::make()
-            ->addBreadcrumbs(function (BreadcrumbListSchema $breadcrumbList, SEOData $SEOData) {
-                return $breadcrumbList
-                    ->prependBreadcrumbs([
-                        'Homepage' => 'https://example.com',
-                        'Category' => 'https://example.com/test',
-                    ])
-                    ->appendBreadcrumbs([
-                        'Subarticle' => 'https://example.com/test/article/2',
-                    ]);
-            }),
+            ->addBreadcrumbs(fn(BreadcrumbListSchema $breadcrumbList, SEOData $SEOData): BreadcrumbListSchema => $breadcrumbList
+                ->prependBreadcrumbs([
+                    'Homepage' => 'https://example.com',
+                    'Category' => 'https://example.com/test',
+                ])
+                ->appendBreadcrumbs([
+                    'Subarticle' => 'https://example.com/test/article/2',
+                ])),
     ];
 
     get(route('seo.test-page', ['page' => $page]))
@@ -215,7 +209,7 @@ it('can correctly render the JSON-LD Schema markup: BreadcrumbList', function ()
         );
 });
 
-it('can correctly render the JSON-LD Schema markup: FaqPage', function () {
+it('can correctly render the JSON-LD Schema markup: FaqPage', function (): void {
     config()->set('seo.title.suffix', ' | Laravel SEO');
 
     $page = Page::create([]);
@@ -225,11 +219,9 @@ it('can correctly render the JSON-LD Schema markup: FaqPage', function () {
         'enableTitleSuffix' => true,
         'url' => 'https://example.com/test/article',
         'schema' => SchemaCollection::make()
-            ->addFaqPage(function (FaqPageSchema $faqPage, SEOData $SEOData) {
-                return $faqPage
-                    ->addQuestion(name: 'Can this package add FaqPage to the schema?', acceptedAnswer: 'Yes!')
-                    ->addQuestion(name: 'Does it support multiple questions?', acceptedAnswer: 'Of course.');
-            }),
+            ->addFaqPage(fn(FaqPageSchema $faqPage, SEOData $SEOData): FaqPageSchema => $faqPage
+                ->addQuestion(name: 'Can this package add FaqPage to the schema?', acceptedAnswer: 'Yes!')
+                ->addQuestion(name: 'Does it support multiple questions?', acceptedAnswer: 'Of course.')),
     ];
 
     get(route('seo.test-page', ['page' => $page]))
@@ -262,7 +254,7 @@ it('can correctly render the JSON-LD Schema markup: FaqPage', function () {
         );
 });
 
-it('can correctly render multiple custom JSON-LD Schemas markup', function () {
+it('can correctly render multiple custom JSON-LD Schemas markup', function (): void {
     $page = Page::create([]);
 
     $faqPageSchema = [
@@ -297,7 +289,7 @@ it('can correctly render multiple custom JSON-LD Schemas markup', function () {
         'author' => 'Ralph J. Smit',
         'schema' => SchemaCollection::make()
             ->add($faqPageSchema)
-            ->add(fn (SEOData $SEOData) => [
+            ->add(fn (SEOData $SEOData): array => [
                 '@context' => 'https://schema.org',
                 '@type' => 'Article',
                 'mainEntityOfPage' => [

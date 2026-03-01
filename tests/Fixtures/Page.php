@@ -2,7 +2,6 @@
 
 namespace Foodieneers\Laravel\SEO\Tests\Fixtures;
 
-
 use Foodieneers\Laravel\SEO\Support\HasSEO;
 use Foodieneers\Laravel\SEO\Support\SEOData;
 

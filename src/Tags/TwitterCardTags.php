@@ -2,13 +2,13 @@
 
 namespace Foodieneers\Laravel\SEO\Tags;
 
-use Illuminate\Contracts\Support\Renderable;
-use Illuminate\Support\Collection;
 use Foodieneers\Laravel\SEO\Support\RenderableCollection;
 use Foodieneers\Laravel\SEO\Support\SEOData;
 use Foodieneers\Laravel\SEO\Support\TwitterCardTag;
 use Foodieneers\Laravel\SEO\Tags\TwitterCard\Summary;
 use Foodieneers\Laravel\SEO\Tags\TwitterCard\SummaryLargeImage;
+use Illuminate\Contracts\Support\Renderable;
+use Illuminate\Support\Collection;
 
 class TwitterCardTags extends Collection implements Renderable
 {
@@ -21,21 +21,18 @@ class TwitterCardTags extends Collection implements Renderable
         // No generic image that spans multiple pages
         $imageFallback = config('seo.image.fallback');
 
-        if (
-            $SEOData->image
-            && (
-                // If no fallback specified, then the image is not the fallback.
-                ! $imageFallback
-                // If fallback image specified, then verify if the image is not the fallback.
-                || $SEOData->image !== secure_url($imageFallback)
-            )
-            && $SEOData->imageMeta?->height !== null
-            && $SEOData->imageMeta->height > 0
-        ) {
+        if ($SEOData->image
+        && (
+            // If no fallback specified, then the image is not the fallback.
+            ! $imageFallback
+            // If fallback image specified, then verify if the image is not the fallback.
+            || $SEOData->image !== secure_url($imageFallback)
+        )
+        && $SEOData->imageMeta?->height !== null
+        && $SEOData->imageMeta->height > 0) {
             // Only one Twitter card can be pushed. The `summary_large_image` card
             // is tried first, then it falls back to the normal `summary` card.
             $imageMetaWidthDividedByHeight = $SEOData->imageMeta->width / $SEOData->imageMeta->height;
-
             if ($imageMetaWidthDividedByHeight < 1.5) {
                 // Summary large card has aspect ratio of 2:1. Aspect ratios of < 1 are closer to 1:1
                 // then they are to 2:1. Assuming most images are landscape, so fallback to 2:1.
@@ -43,13 +40,11 @@ class TwitterCardTags extends Collection implements Renderable
             } else {
                 $collection->push(SummaryLargeImage::initialize($SEOData));
             }
+        } elseif ($SEOData->image && ! $SEOData->imageMeta) {
+            // Image external URL...
+            $collection->push(SummaryLargeImage::initialize($SEOData));
         } else {
-            if ($SEOData->image && ! $SEOData->imageMeta) {
-                // Image external URL...
-                $collection->push(SummaryLargeImage::initialize($SEOData));
-            } else {
-                $collection->push(new TwitterCardTag('card', 'summary'));
-            }
+            $collection->push(new TwitterCardTag('card', 'summary'));
         }
 
         if ($SEOData->openGraphTitle) {

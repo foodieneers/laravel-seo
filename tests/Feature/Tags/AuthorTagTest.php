@@ -4,21 +4,21 @@ use Foodieneers\Laravel\SEO\Tests\Fixtures\Page;
 
 use function Pest\Laravel\get;
 
-it('can display the fallback description tag', function () {
+it('can display the fallback description tag', function (): void {
     config()->set('seo.author.fallback', 'Ralph J. Smit');
 
     get(route('seo.test-plain'))
         ->assertSee('<meta name="author" content="Ralph J. Smit">', false);
 });
 
-it('will not display the author tag if there isn\'t a author', function () {
-    config()->set('seo.author.fallback', null);
+it('will not display the author tag if there isn\'t a author', function (): void {
+    config()->set('seo.author.fallback');
 
     get(route('seo.test-plain'))
         ->assertDontSee('author');
 });
 
-it('will display the author if the associated SEO model has a author', function () {
+it('will display the author if the associated SEO model has a author', function (): void {
     $page = Page::create();
 
     $page->seo->update([
@@ -31,7 +31,7 @@ it('will display the author if the associated SEO model has a author', function 
         ->assertSee('<meta name="author" content="Article Author">', false);
 });
 
-it('can override the author', function () {
+it('can override the author', function (): void {
     $page = Page::create();
 
     $page->seo->update([

@@ -16,14 +16,12 @@ class OpenGraphTag extends Tag
         $this->attributes['property'] = $property;
         $this->attributes['content'] = $content;
 
-        $this->attributesPipeline[] = function (Collection $collection) {
-            return $collection->mapWithKeys(function (mixed $value, string $key) {
-                if ($key === 'property') {
-                    $value = 'og:' . $value;
-                }
+        $this->attributesPipeline[] = (fn(Collection $collection) => $collection->mapWithKeys(function (mixed $value, string $key): array {
+            if ($key === 'property') {
+                $value = 'og:' . $value;
+            }
 
-                return [$key => $value];
-            });
-        };
+            return [$key => $value];
+        }));
     }
 }

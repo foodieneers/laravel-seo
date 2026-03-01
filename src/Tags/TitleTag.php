@@ -2,10 +2,11 @@
 
 namespace Foodieneers\Laravel\SEO\Tags;
 
+use Inertia\Middleware;
 use Closure;
-use Illuminate\Support\Facades\Route;
 use Foodieneers\Laravel\SEO\Support\SEOData;
 use Foodieneers\Laravel\SEO\Support\Tag;
+use Illuminate\Support\Facades\Route;
 
 class TitleTag extends Tag
 {
@@ -42,12 +43,12 @@ class TitleTag extends Tag
             return false;
         }
 
-        return collect(Route::gatherRouteMiddleware($currentRoute))->contains(function (string | Closure $middleware) {
+        return collect(Route::gatherRouteMiddleware($currentRoute))->contains(function (string | Closure $middleware): bool {
             if ($middleware instanceof Closure) {
                 return false;
             }
 
-            return is_subclass_of($middleware, \Inertia\Middleware::class);
+            return is_subclass_of($middleware, Middleware::class);
         });
     }
 }

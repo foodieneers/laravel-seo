@@ -2,8 +2,8 @@
 
 namespace Foodieneers\Laravel\SEO\Schema;
 
-use Illuminate\Support\Collection;
 use Foodieneers\Laravel\SEO\Support\SEOData;
+use Illuminate\Support\Collection;
 
 /**
  * @see https://developers.google.com/search/docs/appearance/structured-data/faqpage

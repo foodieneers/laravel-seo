@@ -1,0 +1,64 @@
+<?php
+
+declare(strict_types=1);
+
+use Rector\Caching\ValueObject\Storage\FileCacheStorage;
+use Rector\Config\RectorConfig;
+use Rector\DeadCode\Rector\ClassMethod\RemoveUnusedPrivateMethodRector;
+use Rector\Php70\Rector\StaticCall\StaticCallOnNonStaticToInstanceCallRector;
+use Rector\Php83\Rector\ClassMethod\AddOverrideAttributeToOverriddenMethodsRector;
+use Rector\Privatization\Rector\ClassMethod\PrivatizeFinalClassMethodRector;
+use Rector\Privatization\Rector\Property\PrivatizeFinalClassPropertyRector;
+use Rector\TypeDeclaration\Rector\ClassMethod\AddVoidReturnTypeWhereNoReturnRector;
+use Rector\ValueObject\PhpVersion;
+use RectorLaravel\Set\LaravelSetList;
+use RectorLaravel\Set\LaravelSetProvider;
+
+return RectorConfig::configure()
+    ->withPhpVersion(PhpVersion::PHP_85)
+    ->withSetProviders(LaravelSetProvider::class)
+    ->withSets([
+        LaravelSetList::LARAVEL_ARRAYACCESS_TO_METHOD_CALL,
+        LaravelSetList::LARAVEL_ARRAY_STR_FUNCTION_TO_STATIC_CALL,
+        LaravelSetList::LARAVEL_CODE_QUALITY,
+        LaravelSetList::LARAVEL_COLLECTION,
+        LaravelSetList::LARAVEL_CONTAINER_STRING_TO_FULLY_QUALIFIED_NAME,
+        LaravelSetList::LARAVEL_ELOQUENT_MAGIC_METHOD_TO_QUERY_BUILDER,
+        LaravelSetList::LARAVEL_FACADE_ALIASES_TO_FULL_NAMES,
+        LaravelSetList::LARAVEL_FACTORIES,
+        LaravelSetList::LARAVEL_IF_HELPERS,
+        LaravelSetList::LARAVEL_LEGACY_FACTORIES_TO_CLASSES,
+    ])
+    ->withImportNames(
+        removeUnusedImports: true,
+    )
+    ->withComposerBased(laravel: true)
+    ->withCache(
+        cacheDirectory: '/storage/tmp/rector',
+        cacheClass: FileCacheStorage::class,
+    )
+    ->withPaths([
+        __DIR__.'/src',
+        __DIR__.'/config',
+        __DIR__.'/tests',
+    ])
+    ->withSkip([
+        StaticCallOnNonStaticToInstanceCallRector::class,
+        RemoveUnusedPrivateMethodRector::class,
+        PrivatizeFinalClassMethodRector::class,
+        PrivatizeFinalClassPropertyRector::class => [
+            __DIR__.'/app/Models/*',
+        ],
+        AddVoidReturnTypeWhereNoReturnRector::class => [
+            __DIR__.'/tests',
+            __DIR__.'/app-modules/*/tests',
+        ],
+    ])
+    ->withPreparedSets(
+        deadCode: true,
+        codeQuality: true,
+        typeDeclarations: true,
+        privatization: true,
+        earlyReturn: true,
+    )
+    ->withPhpSets();

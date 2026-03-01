@@ -2,7 +2,7 @@
 
 use function Pest\Laravel\get;
 
-it('can display the sitemap if path is set', function () {
+it('can display the sitemap if path is set', function (): void {
     config()->set('seo.sitemap', '/storage/sitemap.xml');
 
     get($url = route('seo.test-plain'))

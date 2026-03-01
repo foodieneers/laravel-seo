@@ -3,8 +3,8 @@
 namespace Foodieneers\Laravel\SEO\Schema;
 
 use Carbon\CarbonInterface;
-use Illuminate\Support\Collection;
 use Foodieneers\Laravel\SEO\Support\SEOData;
+use Illuminate\Support\Collection;
 
 class ArticleSchema extends CustomSchemaFluent
 {

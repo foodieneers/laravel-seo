@@ -2,9 +2,9 @@
 
 namespace Foodieneers\Laravel\SEO\Tags;
 
-use Illuminate\Support\Collection;
 use Foodieneers\Laravel\SEO\Support\LinkTag;
 use Foodieneers\Laravel\SEO\Support\SEOData;
+use Illuminate\Support\Collection;
 
 class FaviconTag extends LinkTag
 {

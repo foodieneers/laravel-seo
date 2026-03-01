@@ -4,7 +4,7 @@ use Foodieneers\Laravel\SEO\Tests\Fixtures\Page;
 
 use function Pest\Laravel\get;
 
-beforeEach(function () {
+beforeEach(function (): void {
     if (! file_exists($dir = public_path('images'))) {
         mkdir($dir, 0777, true);
     }
@@ -15,7 +15,7 @@ beforeEach(function () {
     copy(__DIR__ . '/../../Fixtures/images/twitter-3597x1799.jpg', public_path('images/twitter-3597x1799.jpg'));
 });
 
-it('can correctly render the Twitter Card summary without the image', function () {
+it('can correctly render the Twitter Card summary without the image', function (): void {
     config()->set('seo.title.suffix', ' | Laravel SEO');
     config()->set('seo.description.fallback', 'Fallback description');
     config()->set('seo.image.fallback', 'images/twitter-1743x1743.jpg');
@@ -30,7 +30,7 @@ it('can correctly render the Twitter Card summary without the image', function (
         ->assertSee('<meta name="twitter:site" content="@Foodieneers">', false);
 });
 
-it('can correctly render the Twitter Card summary with the image on a Page', function (string $expectedCard, string $imagePath, string $expectedWidth, string $expectedHeight) {
+it('can correctly render the Twitter Card summary with the image on a Page', function (string $expectedCard, string $imagePath, string $expectedWidth, string $expectedHeight): void {
     config()->set('seo.title.suffix', ' | Laravel SEO');
     config()->set('seo.description.fallback', 'Fallback description');
 
@@ -54,7 +54,7 @@ it('can correctly render the Twitter Card summary with the image on a Page', fun
     ['summary_large_image', 'images/twitter-3597x1799.jpg', '3597', '1799'],
 ]);
 
-it('will not include the widths and heights of Twitter images if the image was overridden using a URL', function (string $expectedCard, string $imagePath, string $expectedWidth, string $expectedHeight) {
+it('will not include the widths and heights of Twitter images if the image was overridden using a URL', function (string $expectedCard, string $imagePath, string $expectedWidth, string $expectedHeight): void {
     config()->set('seo.title.suffix', ' | Laravel SEO');
     config()->set('seo.description.fallback', 'Fallback description');
 
@@ -79,7 +79,7 @@ it('will not include the widths and heights of Twitter images if the image was o
     ['summary_large_image', 'images/twitter-3597x1799.jpg', '3597', '1799'],
 ]);
 
-it('will not escape the image URL query parameters', function () {
+it('will not escape the image URL query parameters', function (): void {
     config()->set('seo.title.suffix', ' | Laravel SEO');
     config()->set('seo.description.fallback', 'Fallback description');
 
@@ -100,7 +100,7 @@ it('will not escape the image URL query parameters', function () {
         ->assertDontSee('twitter:site'); // We should not display an empty '@' username.
 });
 
-it('will not render the Twitter Card summary_large_image for too large or small images', function (string $imagePath) {
+it('will not render the Twitter Card summary_large_image for too large or small images', function (string $imagePath): void {
     $page = Page::create();
 
     $page::$overrides = [
@@ -115,7 +115,7 @@ it('will not render the Twitter Card summary_large_image for too large or small 
     ['images/twitter-4721x4721.jpg'],
 ]);
 
-it('uses openGraphTitle over title', function () {
+it('uses openGraphTitle over title', function (): void {
     config()->set('seo.title.suffix', ' | Laravel SEO');
 
     $page = Page::create();
@@ -132,7 +132,7 @@ it('uses openGraphTitle over title', function () {
         ->assertSee('<meta name="twitter:title" content="My OG title | Laravel SEO">', false);
 });
 
-it('will escape the title', function () {
+it('will escape the title', function (): void {
     config()->set('seo.title.suffix', ' - A & B');
 
     $page = Page::create();

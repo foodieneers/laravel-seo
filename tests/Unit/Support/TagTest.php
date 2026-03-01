@@ -2,7 +2,7 @@
 
 use Foodieneers\Laravel\SEO\Support\Tag;
 
-it('orders tag attributes', function () {
+it('orders tag attributes', function (): void {
     $tag = new class extends Tag
     {
         public string $tag = 'link';

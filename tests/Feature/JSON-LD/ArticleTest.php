@@ -6,7 +6,7 @@ use Foodieneers\Laravel\SEO\Tests\Fixtures\Page;
 
 use function Pest\Laravel\get;
 
-beforeEach(function () {
+beforeEach(function (): void {
     if (! file_exists($dir = public_path('images'))) {
         mkdir($dir, 0777, true);
     }
@@ -17,13 +17,13 @@ beforeEach(function () {
     copy(__DIR__ . '/../../Fixtures/images/twitter-3597x1799.jpg', public_path('images/twitter-3597x1799.jpg'));
 });
 
-it('does not render by default the JSON-LD Schema markup: Article', function () {
+it('does not render by default the JSON-LD Schema markup: Article', function (): void {
     get(route('seo.test-plain'))
         ->assertDontSee('"application/ld+json"')
         ->assertDontSee('"@type": "Article"');
 });
 
-it('can correctly render the JSON-LD Schema markup: Article', function () {
+it('can correctly render the JSON-LD Schema markup: Article', function (): void {
     $page = Page::create([
         'created_at' => now()->subDays(2),
     ]);

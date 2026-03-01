@@ -2,10 +2,10 @@
 
 namespace Foodieneers\Laravel\SEO\Tags;
 
-use Illuminate\Contracts\Support\Renderable;
-use Illuminate\Support\Collection;
 use Foodieneers\Laravel\SEO\Support\RenderableCollection;
 use Foodieneers\Laravel\SEO\Support\SEOData;
+use Illuminate\Contracts\Support\Renderable;
+use Illuminate\Support\Collection;
 
 class AlternateTags extends Collection implements Renderable
 {

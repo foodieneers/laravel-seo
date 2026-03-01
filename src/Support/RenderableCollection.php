@@ -9,10 +9,8 @@ trait RenderableCollection
 {
     public function render(): string
     {
-        return $this->reduce(function (string $carry, Renderable $item): string {
-            return $carry .= Str::of(
-                $item->render()
-            )->trim() . PHP_EOL;
-        }, '');
+        return $this->reduce(fn(string $carry, Renderable $item): string => $carry .= Str::of(
+            $item->render()
+        )->trim() . PHP_EOL, '');
     }
 }

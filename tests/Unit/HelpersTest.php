@@ -4,11 +4,11 @@ use Foodieneers\Laravel\SEO\Support\SEOData;
 use Foodieneers\Laravel\SEO\TagManager;
 use Foodieneers\Laravel\SEO\Tests\Fixtures\Page;
 
-it('can get the TagManager', function () {
+it('can get the TagManager', function (): void {
     expect(seo())->toBeInstanceOf(TagManager::class);
 });
 
-it('can get the TagManager with and without a model', function () {
+it('can get the TagManager with and without a model', function (): void {
     expect(seo())->toBeInstanceOf(TagManager::class);
 
     $page = Page::create();
@@ -16,10 +16,10 @@ it('can get the TagManager with and without a model', function () {
     expect(seo())->model->toBeNull();
     expect(seo()->for($page))->model->toBe($page);
     expect(seo($page))->model->toBe($page);
-    expect(seo(null))->model->toBeNull();
+    expect(seo())->model->toBeNull();
 });
 
-it('can get the TagManager with a SEOData data object', function () {
+it('can get the TagManager with a SEOData data object', function (): void {
     expect(seo())->toBeInstanceOf(TagManager::class);
 
     $SEOData = new SEOData(
@@ -30,5 +30,5 @@ it('can get the TagManager with a SEOData data object', function () {
     expect(seo())->SEOData->toBeNull();
     expect(seo()->for($SEOData))->SEOData->toBe($SEOData);
     expect(seo($SEOData))->SEOData->toBe($SEOData);
-    expect(seo(null))->SEOData->toBeNull();
+    expect(seo())->SEOData->toBeNull();
 });

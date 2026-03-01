@@ -2,15 +2,15 @@
 
 namespace Foodieneers\Laravel\SEO;
 
+use Stringable;
 use const FILTER_VALIDATE_URL;
 
-use Illuminate\Contracts\Support\Renderable;
-
-use Illuminate\Support\Str;
 use Foodieneers\Laravel\SEO\Facades\SEOManager;
 use Foodieneers\Laravel\SEO\Support\SEOData;
+use Illuminate\Contracts\Support\Renderable;
+use Illuminate\Support\Str;
 
-class TagManager implements Renderable
+class TagManager implements Renderable, Stringable
 {
     public Model $model;
 
@@ -112,9 +112,7 @@ class TagManager implements Renderable
     {
         return $this->tags
             ->pipeThrough(SEOManager::getTagTransformers())
-            ->reduce(function (string $carry, Renderable $item) {
-                return $carry .= Str::of($item->render())->trim() . PHP_EOL;
-            }, '');
+            ->reduce(fn(string $carry, Renderable $item): string => $carry .= Str::of($item->render())->trim() . PHP_EOL, '');
     }
 
     public function __toString(): string

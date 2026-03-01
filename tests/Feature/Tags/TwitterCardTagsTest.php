@@ -3,8 +3,8 @@
 use Foodieneers\Laravel\SEO\Support\SEOData;
 use Foodieneers\Laravel\SEO\Tags\TwitterCardTags;
 
-it('can instantiate the `TwitterCardTags` class when no fallback image has been specified in config', function () {
-    config()->set('seo.image.fallback', null);
+it('can instantiate the `TwitterCardTags` class when no fallback image has been specified in config', function (): void {
+    config()->set('seo.image.fallback');
 
     $SEOData = new SEOData(
         title: 'Unique Title',

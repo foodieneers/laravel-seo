@@ -2,7 +2,7 @@
 
 use Foodieneers\Laravel\SEO\Facades\SEOManager;
 
-test('the SEOManager facade works as expected', function () {
+test('the SEOManager facade works as expected', function (): void {
     $managerA = SEOManager::getFacadeRoot();
     $managerB = SEOManager::getFacadeRoot();
 
@@ -11,7 +11,7 @@ test('the SEOManager facade works as expected', function () {
     $managerC = SEOManager::getFacadeRoot();
     $managerD = SEOManager::getFacadeRoot();
 
-    $managerE = app(\Foodieneers\Laravel\SEO\SEOManager::class);
+    $managerE = resolve(\Foodieneers\Laravel\SEO\SEOManager::class);
 
     expect($managerA)
         ->toBe($managerB)

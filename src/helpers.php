@@ -4,11 +4,11 @@ use Foodieneers\Laravel\SEO\Support\SEOData;
 use Foodieneers\Laravel\SEO\TagManager;
 
 if (! function_exists('seo')) {
-    function seo(SEOData | null $source = null): TagManager
+    function seo(?SEOData $source = null): TagManager
     {
-        $tagManager = app(TagManager::class);
+        $tagManager = resolve(TagManager::class);
 
-        if ($source) {
+        if ($source instanceof SEOData) {
             $tagManager->for($source);
         }
 

@@ -2,11 +2,11 @@
 
 namespace Foodieneers\Laravel\SEO\Tests;
 
+use Illuminate\Support\Facades\Date;
+use Foodieneers\Laravel\SEO\LaravelSEOServiceProvider;
 use Illuminate\Database\Eloquent\Factories\Factory;
-use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Schema;
 use Orchestra\Testbench\TestCase as Orchestra;
-use Foodieneers\Laravel\SEO\LaravelSEOServiceProvider;
 
 class TestCase extends Orchestra
 {
@@ -15,11 +15,11 @@ class TestCase extends Orchestra
         parent::setUp();
 
         Factory::guessFactoryNamesUsing(
-            fn (string $modelName) => 'Foodieneers\\Laravel\\SEO\\Database\\Factories\\' . class_basename($modelName) . 'Factory'
+            fn (string $modelName): string => 'Foodieneers\\Laravel\\SEO\\Database\\Factories\\' . class_basename($modelName) . 'Factory'
         );
 
         // Freeze the time across entire testsuite...
-        Carbon::setTestNow(now());
+        Date::setTestNow(now());
     }
 
     protected function getPackageProviders($app)

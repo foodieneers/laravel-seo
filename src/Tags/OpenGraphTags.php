@@ -2,13 +2,14 @@
 
 namespace Foodieneers\Laravel\SEO\Tags;
 
-use Illuminate\Contracts\Support\Renderable;
-use Illuminate\Support\Collection;
-use Illuminate\Support\HtmlString;
+use Foodieneers\Laravel\SEO\Support\ImageMeta;
 use Foodieneers\Laravel\SEO\Support\MetaContentTag;
 use Foodieneers\Laravel\SEO\Support\OpenGraphTag;
 use Foodieneers\Laravel\SEO\Support\RenderableCollection;
 use Foodieneers\Laravel\SEO\Support\SEOData;
+use Illuminate\Contracts\Support\Renderable;
+use Illuminate\Support\Collection;
+use Illuminate\Support\HtmlString;
 
 class OpenGraphTags extends Collection implements Renderable
 {
@@ -35,7 +36,7 @@ class OpenGraphTags extends Collection implements Renderable
         if ($SEOData->image) {
             $collection->push(new OpenGraphTag('image', new HtmlString($SEOData->image)));
 
-            if ($SEOData->imageMeta) {
+            if ($SEOData->imageMeta instanceof ImageMeta) {
                 $collection
                     ->when($SEOData->imageMeta->width, fn (self $collection): self => $collection->push(new OpenGraphTag('image:width', $SEOData->imageMeta->width)))
                     ->when($SEOData->imageMeta->height, fn (self $collection): self => $collection->push(new OpenGraphTag('image:height', $SEOData->imageMeta->height)));

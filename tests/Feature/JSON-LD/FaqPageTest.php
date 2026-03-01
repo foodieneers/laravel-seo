@@ -6,13 +6,13 @@ use Foodieneers\Laravel\SEO\Tests\Fixtures\Page;
 
 use function Pest\Laravel\get;
 
-it('does not render by default the JSON-LD Schema markup: FaqPageTest', function () {
+it('does not render by default the JSON-LD Schema markup: FaqPageTest', function (): void {
     get(route('seo.test-plain'))
         ->assertDontSee('"application/ld+json"')
         ->assertDontSee('"@type": "FAQPage"');
 });
 
-it('can correctly render the JSON-LD Schema markup: FaqPageTest', function () {
+it('can correctly render the JSON-LD Schema markup: FaqPageTest', function (): void {
     config()->set('seo.title.suffix', ' | Laravel SEO');
 
     $page = Page::create([]);
@@ -21,11 +21,9 @@ it('can correctly render the JSON-LD Schema markup: FaqPageTest', function () {
         'title' => 'Test FAQ',
         'enableTitleSuffix' => true,
         'url' => 'https://example.com/test/faq',
-        'schema' => SchemaCollection::initialize()->addFaqPage(function (FaqPageSchema $faqPage): FaqPageSchema {
-            return $faqPage
-                ->addQuestion(name: 'Can this package add FaqPage to the schema?', acceptedAnswer: 'Yes!')
-                ->addQuestion(name: 'Does it support multiple questions?', acceptedAnswer: 'Of course.');
-        }),
+        'schema' => SchemaCollection::initialize()->addFaqPage(fn(FaqPageSchema $faqPage): FaqPageSchema => $faqPage
+            ->addQuestion(name: 'Can this package add FaqPage to the schema?', acceptedAnswer: 'Yes!')
+            ->addQuestion(name: 'Does it support multiple questions?', acceptedAnswer: 'Of course.')),
     ];
 
     get(route('seo.test-page', ['page' => $page]))

@@ -1,10 +1,10 @@
 <?php
 
-use Illuminate\Support\Collection;
 use Foodieneers\Laravel\SEO\Schema\ArticleSchema;
 use Foodieneers\Laravel\SEO\Support\SEOData;
+use Illuminate\Support\Collection;
 
-beforeEach(function () {
+beforeEach(function (): void {
     $this->SEOData = new SEOData(
         title: 'Test',
         description: 'Description',
@@ -17,7 +17,7 @@ beforeEach(function () {
     );
 });
 
-it('can construct Schema Markup: Article', function () {
+it('can construct Schema Markup: Article', function (): void {
     $articleSchema = new ArticleSchema($this->SEOData);
 
     expect((string) $articleSchema->render())
@@ -44,13 +44,11 @@ it('can construct Schema Markup: Article', function () {
         );
 });
 
-it('can add multiple authors to Schema Markup: Article', function () {
+it('can add multiple authors to Schema Markup: Article', function (): void {
     $articleSchema = new ArticleSchema($this->SEOData, [
         fn (ArticleSchema $article): ArticleSchema => $article
             ->addAuthor('Second author')
-            ->markup(function (Collection $markup): Collection {
-                return $markup->put('alternativeHeadline', 'My alternative headline');
-            }),
+            ->markup(fn(Collection $markup): Collection => $markup->put('alternativeHeadline', 'My alternative headline')),
     ]);
 
     expect((string) $articleSchema->render())->toBe(

@@ -2,8 +2,8 @@
 
 namespace Foodieneers\Laravel\SEO\Schema;
 
-use Illuminate\Support\Collection;
 use Foodieneers\Laravel\SEO\Support\SEOData;
+use Illuminate\Support\Collection;
 
 class BreadcrumbListSchema extends CustomSchemaFluent
 {
@@ -33,14 +33,12 @@ class BreadcrumbListSchema extends CustomSchemaFluent
             '@context' => 'https://schema.org',
             '@type' => $this->type,
             'itemListElement' => $this->breadcrumbs
-                ->reduce(function (Collection $carry, string $url, string $pagename): Collection {
-                    return $carry->push([
-                        '@type' => 'ListItem',
-                        'position' => $carry->count() + 1,
-                        'name' => $pagename,
-                        'item' => $url,
-                    ]);
-                }, new Collection),
+                ->reduce(fn(Collection $carry, string $url, string $pagename): Collection => $carry->push([
+                    '@type' => 'ListItem',
+                    'position' => $carry->count() + 1,
+                    'name' => $pagename,
+                    'item' => $url,
+                ]), new Collection),
         ])
             ->pipeThrough($this->markupTransformers);
     }

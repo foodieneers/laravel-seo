@@ -2,9 +2,9 @@
 
 namespace Foodieneers\Laravel\SEO\Tags;
 
-use Illuminate\Support\HtmlString;
 use Foodieneers\Laravel\SEO\Support\MetaTag;
 use Foodieneers\Laravel\SEO\Support\SEOData;
+use Illuminate\Support\HtmlString;
 
 class ImageTag extends MetaTag
 {

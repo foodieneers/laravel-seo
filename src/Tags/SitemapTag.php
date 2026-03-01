@@ -2,11 +2,11 @@
 
 namespace Foodieneers\Laravel\SEO\Tags;
 
-use Illuminate\Contracts\Support\Renderable;
-use Illuminate\Support\Collection;
 use Foodieneers\Laravel\SEO\Support\RenderableCollection;
 use Foodieneers\Laravel\SEO\Support\SEOData;
 use Foodieneers\Laravel\SEO\Support\SitemapTag as SitemapTagSupport;
+use Illuminate\Contracts\Support\Renderable;
+use Illuminate\Support\Collection;
 
 class SitemapTag extends Collection implements Renderable
 {

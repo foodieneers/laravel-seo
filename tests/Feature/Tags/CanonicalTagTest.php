@@ -1,27 +1,28 @@
 <?php
 
+use Illuminate\Foundation\Application;
+use Foodieneers\Laravel\SEO\Tests\Fixtures\Page;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Str;
-use Foodieneers\Laravel\SEO\Tests\Fixtures\Page;
 
 use function Pest\Laravel\get;
 
-it('can display the canonical URL if allowed', function () {
+it('can display the canonical URL if allowed', function (): void {
     config()->set('seo.canonical_link', true);
 
     get($url = route('seo.test-plain', ['name' => 'robots']))
         ->assertSee('<link rel="canonical" href="' . Str::before($url, '?name') . '">', false);
 });
 
-it('cannot display the canonical url if not allowed', function () {
+it('cannot display the canonical url if not allowed', function (): void {
     config()->set('seo.canonical_link', false);
 
     get($url = route('seo.test-plain', ['name' => 'robots']))
         ->assertDontSee('rel="canonical"', false);
 });
 
-it('can display the model level canonical url if set in database', function () {
+it('can display the model level canonical url if set in database', function (): void {
     config()->set('seo.canonical_link', true);
 
     $page = Page::create();
@@ -36,7 +37,7 @@ it('can display the model level canonical url if set in database', function () {
         ->assertSee('<link rel="canonical" href="https://example.com/canonical/url/test">', false);
 });
 
-it('can display the model level canonical url if set on override', function () {
+it('can display the model level canonical url if set on override', function (): void {
     config()->set('seo.canonical_link', true);
 
     $page = Page::create();
@@ -51,7 +52,7 @@ it('can display the model level canonical url if set on override', function () {
         ->assertSee('<link rel="canonical" href="https://example.com/canonical/url/test">', false);
 });
 
-it('will not break if no canonical_url column exists in seo table', function () {
+it('will not break if no canonical_url column exists in seo table', function (): void {
     // New seo.canonical_url column was added in https://github.com/Foodieneers/laravel-seo/pull/35.
     config()->set('seo.canonical_link', true);
 
@@ -60,7 +61,7 @@ it('will not break if no canonical_url column exists in seo table', function () 
     expect(Schema::hasColumn('seo', 'canonical_url'))
         ->toBeTrue();
 
-    Schema::table('seo', function (Blueprint $table) {
+    Schema::table('seo', function (Blueprint $table): void {
         $table->dropColumn('canonical_url');
     });
 
@@ -73,4 +74,4 @@ it('will not break if no canonical_url column exists in seo table', function () 
         ->assertOk();
 })
     // Skip tests on Laravel 9, so we don't need to install Doctrine for this test only.
-    ->skip(version_compare(Illuminate\Foundation\Application::VERSION, '10', 'lt'));
+    ->skip(version_compare(Application::VERSION, '10', 'lt'));

@@ -4,7 +4,7 @@ use Foodieneers\Laravel\SEO\Tests\Fixtures\Page;
 
 use function Pest\Laravel\get;
 
-beforeEach(function () {
+beforeEach(function (): void {
     if (! file_exists($dir = public_path('test'))) {
         mkdir($dir, 0777, true);
     }
@@ -17,14 +17,14 @@ beforeEach(function () {
     copy(__DIR__ . '/../../Fixtures/images/test-image.jpg', storage_path('test/image.jpg'));
 });
 
-it('will not render the default image if that was disabled', function () {
-    config()->set('seo.image.fallback', null);
+it('will not render the default image if that was disabled', function (): void {
+    config()->set('seo.image.fallback');
 
     get(route('seo.test-plain'))
         ->assertDontSee('name="image"');
 });
 
-it('will render the default image', function (string $imagePath) {
+it('will render the default image', function (string $imagePath): void {
     config()->set('seo.image.fallback', $imagePath);
 
     get(route('seo.test-plain'))
@@ -34,7 +34,7 @@ it('will render the default image', function (string $imagePath) {
     ['/public/test/image.jpg'],
 ]);
 
-it('will display the image url from a model', function () {
+it('will display the image url from a model', function (): void {
     $page = Page::create();
 
     $page::$overrides = [
@@ -45,7 +45,7 @@ it('will display the image url from a model', function () {
         ->assertSee('<meta name="image" content="' . secure_url('public/storage/test/image.jpg') . '">', false);
 });
 
-it('will display the image url if it came from a model', function () {
+it('will display the image url if it came from a model', function (): void {
     $page = Page::create();
 
     $page->seo->update([
@@ -56,7 +56,7 @@ it('will display the image url if it came from a model', function () {
         ->assertSee('<meta name="image" content="' . secure_url('test/image.jpg') . '">', false);
 });
 
-it('will not change query parameters on an image URL', function () {
+it('will not change query parameters on an image URL', function (): void {
     $page = Page::create();
 
     $page->seo->update([

@@ -1,22 +1,22 @@
 <?php
 
-use Illuminate\Session\Middleware\StartSession;
-use Illuminate\Support\Arr;
-use Illuminate\Support\Facades\Route;
 use Foodieneers\Laravel\SEO\Tags\TitleTag;
 use Foodieneers\Laravel\SEO\Tests\Fixtures\Http\Middleware\DummyInertiaMiddleware;
 use Foodieneers\Laravel\SEO\Tests\Fixtures\Page;
+use Illuminate\Session\Middleware\StartSession;
+use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Route;
 
 use function Pest\Laravel\get;
 
-it('will not infer the title from the url if that isn\'t allowed', function () {
+it('will not infer the title from the url if that isn\'t allowed', function (): void {
     config()->set('seo.title.infer_title_from_url', false);
 
     get(route('seo.test-plain'))
         ->assertDontSee('<title>');
 });
 
-it('will infer the title from the url if that is allowed', function () {
+it('will infer the title from the url if that is allowed', function (): void {
     config()->set('seo.title.infer_title_from_url', true);
     config()->set('seo.title.suffix', ' | Laravel SEO');
 
@@ -24,7 +24,7 @@ it('will infer the title from the url if that is allowed', function () {
         ->assertSee('<title>Test Plain | Laravel SEO</title>', false);
 });
 
-it('will display the title if the associated SEO model has a title', function () {
+it('will display the title if the associated SEO model has a title', function (): void {
     $page = Page::create();
 
     $page->seo->update([
@@ -37,7 +37,7 @@ it('will display the title if the associated SEO model has a title', function ()
         ->assertSee('<title>My great title, set by a model on a per-page basis.</title>', false);
 });
 
-it('will infer the title from the url if that is allowed and the model doesn\'t return a title', function () {
+it('will infer the title from the url if that is allowed and the model doesn\'t return a title', function (): void {
     config()->set('seo.title.infer_title_from_url', true);
     config()->set('seo.title.suffix', ' | Laravel SEO');
 
@@ -51,7 +51,7 @@ it('will infer the title from the url if that is allowed and the model doesn\'t 
         ->assertSee('<title>1 | Laravel SEO</title>', false);
 });
 
-it('will escape the title', function () {
+it('will escape the title', function (): void {
     config()->set('seo.title.infer_title_from_url', true);
     config()->set('seo.title.suffix', ' - A & B');
 
@@ -59,7 +59,7 @@ it('will escape the title', function () {
         ->assertSee('<title>Test Plain - A &amp; B</title>', false);
 });
 
-it('will not include the `inertia` attribute by default', function () {
+it('will not include the `inertia` attribute by default', function (): void {
     config()->set('seo.title.infer_title_from_url', true);
     config()->set('seo.title.suffix', ' - A & B');
 
@@ -88,7 +88,7 @@ it('will not include the `inertia` attribute by default', function () {
         ->render()->__toString()->toBe('<title>X</title>');
 });
 
-it('will include the `inertia` attribute', function () {
+it('will include the `inertia` attribute', function (): void {
     config()->set('seo.title.infer_title_from_url', true);
     config()->set('seo.title.suffix', ' - A & B');
 

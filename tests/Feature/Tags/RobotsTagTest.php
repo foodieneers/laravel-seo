@@ -5,14 +5,14 @@ use Foodieneers\Laravel\SEO\Tests\Fixtures\Page;
 
 use function Pest\Laravel\get;
 
-it('can output the robots tag "default" value', function () {
+it('can output the robots tag "default" value', function (): void {
     config()->set('seo.robots.default', 'max-snippet:-1');
 
     get($url = route('seo.test-plain'))
         ->assertSee('<meta name="robots" content="max-snippet:-1">', false);
 });
 
-it('can overwrite the robots tag "default" value with the robots attribute (SEOData)', function () {
+it('can overwrite the robots tag "default" value with the robots attribute (SEOData)', function (): void {
     config()->set('seo.robots.default', 'max-snippet:-1');
     config()->set('seo.robots.force_default', false);
 
@@ -24,7 +24,7 @@ it('can overwrite the robots tag "default" value with the robots attribute (SEOD
     $this->assertStringContainsString('<meta name="robots" content="noindex,nofollow">', $SEODataOutput);
 });
 
-it('cannot overwrite the robots tag "default" value with the robots attribute if "force_default" is set (SEOData)', function () {
+it('cannot overwrite the robots tag "default" value with the robots attribute if "force_default" is set (SEOData)', function (): void {
     config()->set('seo.robots.default', 'max-snippet:-1');
     config()->set('seo.robots.force_default', true);
 
@@ -36,7 +36,7 @@ it('cannot overwrite the robots tag "default" value with the robots attribute if
     $this->assertStringContainsString('<meta name="robots" content="max-snippet:-1">', $SEODataOutput);
 });
 
-it('can overwrite the robots tag "default" value with the robots attribute (DB Model)', function () {
+it('can overwrite the robots tag "default" value with the robots attribute (DB Model)', function (): void {
     config()->set('seo.robots.default', 'max-snippet:-1');
 
     $page = Page::create();
@@ -51,7 +51,7 @@ it('can overwrite the robots tag "default" value with the robots attribute (DB M
         ->assertSee('<meta name="robots" content="noindex,nofollow">', false);
 });
 
-it('cannot overwrite the robots tag "default" value with the robots attribute if "force_default" is set (DB Model)', function () {
+it('cannot overwrite the robots tag "default" value with the robots attribute if "force_default" is set (DB Model)', function (): void {
     config()->set('seo.robots.default', 'max-snippet:-1');
     config()->set('seo.robots.force_default', true);
 

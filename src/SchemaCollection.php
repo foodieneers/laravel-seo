@@ -3,12 +3,12 @@
 namespace Foodieneers\Laravel\SEO;
 
 use Closure;
-use Illuminate\Contracts\Support\Arrayable;
-use Illuminate\Support\Collection;
 use Foodieneers\Laravel\SEO\Schema\ArticleSchema;
 use Foodieneers\Laravel\SEO\Schema\BreadcrumbListSchema;
 use Foodieneers\Laravel\SEO\Schema\FaqPageSchema;
 use Foodieneers\Laravel\SEO\Support\SEOData;
+use Illuminate\Contracts\Support\Arrayable;
+use Illuminate\Support\Collection;
 
 /**
  * @template TKey of array-key

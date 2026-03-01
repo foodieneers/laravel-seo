@@ -1,13 +1,13 @@
 <?php
 
-use Illuminate\Support\Collection;
 use Foodieneers\Laravel\SEO\Facades\SEOManager;
 use Foodieneers\Laravel\SEO\Support\MetaTag;
 use Foodieneers\Laravel\SEO\Support\SEOData;
+use Illuminate\Support\Collection;
 
 use function Pest\Laravel\get;
 
-it('can replace the title if we\'re on the homepage', function (?string $homepageTitleConfig, string $expectedTitle) {
+it('can replace the title if we\'re on the homepage', function (?string $homepageTitleConfig, string $expectedTitle): void {
     config()->set('seo.title.homepage_title', $homepageTitleConfig);
     config()->set('seo.title.suffix', '| My Website suffix');
 
@@ -18,7 +18,7 @@ it('can replace the title if we\'re on the homepage', function (?string $homepag
     ['Custom homepage title', 'Custom homepage title'],
 ]);
 
-test('can render the SEOData from an object that\'s directly passed in', function () {
+test('can render the SEOData from an object that\'s directly passed in', function (): void {
     $SEOData = new SEOData(
         title: 'Awesome News - My Project',
     );
@@ -28,7 +28,7 @@ test('can render the SEOData from an object that\'s directly passed in', functio
     expect($output)->toContain('Awesome News - My Project');
 });
 
-it('can pipe the SEOData through the transformer before putting it into the collection', function () {
+it('can pipe the SEOData through the transformer before putting it into the collection', function (): void {
     config()->set('seo.title.infer_title_from_url', true);
 
     get(route('seo.test-plain'))
@@ -51,10 +51,8 @@ it('can pipe the SEOData through the transformer before putting it into the coll
         ->assertSee('Transformed description');
 });
 
-it('can pipe the generated tags through the transformers just before render', function () {
-    SEOManager::tagTransformer(function (Collection $tags): Collection {
-        return $tags->push(new MetaTag('test', 'content'));
-    });
+it('can pipe the generated tags through the transformers just before render', function (): void {
+    SEOManager::tagTransformer(fn(Collection $tags): Collection => $tags->push(new MetaTag('test', 'content')));
 
     get(route('seo.test-plain'))
         ->assertSee('<meta name="test" content="content">', false);

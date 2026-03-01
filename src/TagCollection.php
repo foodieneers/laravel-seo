@@ -2,8 +2,6 @@
 
 namespace Foodieneers\Laravel\SEO;
 
-use Illuminate\Contracts\Support\Renderable;
-use Illuminate\Support\Collection;
 use Foodieneers\Laravel\SEO\Support\SchemaTagCollection;
 use Foodieneers\Laravel\SEO\Support\SEOData;
 use Foodieneers\Laravel\SEO\Tags\AlternateTags;
@@ -17,6 +15,8 @@ use Foodieneers\Laravel\SEO\Tags\RobotsTag;
 use Foodieneers\Laravel\SEO\Tags\SitemapTag;
 use Foodieneers\Laravel\SEO\Tags\TitleTag;
 use Foodieneers\Laravel\SEO\Tags\TwitterCardTags;
+use Illuminate\Contracts\Support\Renderable;
+use Illuminate\Support\Collection;
 
 class TagCollection extends Collection
 {

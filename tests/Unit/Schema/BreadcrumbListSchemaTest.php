@@ -3,14 +3,14 @@
 use Foodieneers\Laravel\SEO\Schema\BreadcrumbListSchema;
 use Foodieneers\Laravel\SEO\Support\SEOData;
 
-beforeEach(function () {
+beforeEach(function (): void {
     $this->SEOData = new SEOData(
         title: 'Test article',
         url  : 'https://example.com/test/article',
     );
 });
 
-it('can construct Schema Markup: BreadcrumbList', function () {
+it('can construct Schema Markup: BreadcrumbList', function (): void {
     $articleSchema = new BreadcrumbListSchema($this->SEOData, [
         fn (BreadcrumbListSchema $breadcrumbList): BreadcrumbListSchema => $breadcrumbList->prependBreadcrumbs([
             'Homepage' => 'https://example.com',

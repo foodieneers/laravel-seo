@@ -5,7 +5,7 @@ use Foodieneers\Laravel\SEO\Tests\Fixtures\Page;
 use function Pest\Laravel\get;
 use function Spatie\PestPluginTestTime\testTime;
 
-beforeEach(function () {
+beforeEach(function (): void {
     if (! file_exists($dir = public_path('images/foo'))) {
         mkdir($dir, 0777, true);
     }
@@ -13,7 +13,7 @@ beforeEach(function () {
     copy(__DIR__ . '/../../Fixtures/images/test-image.jpg', public_path('images/foo/test-image.jpg'));
 });
 
-it('can correctly render OpenGraph tags', function () {
+it('can correctly render OpenGraph tags', function (): void {
     config()->set('seo.title.suffix', ' | Laravel SEO');
     config()->set('seo.description.fallback', 'Fallback description');
     config()->set('seo.image.fallback', 'images/foo/test-image.jpg');
@@ -34,7 +34,7 @@ it('can correctly render OpenGraph tags', function () {
         ->assertDontSee('article:modified_time');
 });
 
-it('can correctly render OpenGraph tags for a post or page', function () {
+it('can correctly render OpenGraph tags for a post or page', function (): void {
     config()->set('seo.title.suffix', ' | Laravel SEO');
     config()->set('seo.description.fallback', 'Fallback description');
     config()->set('seo.image.fallback', 'images/foo/test-image.jpg');
@@ -71,7 +71,7 @@ it('can correctly render OpenGraph tags for a post or page', function () {
         ->assertSee('<meta property="article:modified_time" content="' . $page->updated_at->toIso8601String() . '">', false);
 });
 
-it('can correctly render OpenGraph tags for a post or page with a few additional overrides', function () {
+it('can correctly render OpenGraph tags for a post or page with a few additional overrides', function (): void {
     config()->set('seo.title.suffix', ' | Laravel SEO');
     config()->set('seo.description.fallback', 'Fallback description');
     config()->set('seo.image.fallback', 'images/foo/test-image.jpg');
@@ -116,14 +116,14 @@ it('can correctly render OpenGraph tags for a post or page with a few additional
         ->assertSee('<meta property="article:tag" content="Laravel">', false);
 });
 
-it('can correctly render locale tags', function () {
+it('can correctly render locale tags', function (): void {
     config()->set('app.locale', 'en_GB');
 
     get(route('seo.test-plain'))
         ->assertSee('<meta property="og:locale" content="en_GB">', false);
 });
 
-it('uses openGraphTitle over title', function () {
+it('uses openGraphTitle over title', function (): void {
     config()->set('seo.title.suffix', ' | Laravel SEO');
 
     $page = Page::create();
@@ -140,7 +140,7 @@ it('uses openGraphTitle over title', function () {
         ->assertSee('<meta property="og:title" content="My OG title | Laravel SEO">', false);
 });
 
-it('will escape the title', function () {
+it('will escape the title', function (): void {
     config()->set('seo.title.suffix', ' - A & B');
 
     $page = Page::create();
@@ -154,7 +154,7 @@ it('will escape the title', function () {
         ->assertSee('<meta property="og:title" content="My page title - A &amp; B">', false);
 });
 
-it('will not escape the image URL query parameters', function () {
+it('will not escape the image URL query parameters', function (): void {
     config()->set('seo.title.suffix', ' | Laravel SEO');
     config()->set('seo.description.fallback', 'Fallback description');
 

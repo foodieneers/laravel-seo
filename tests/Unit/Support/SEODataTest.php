@@ -5,11 +5,11 @@ use Foodieneers\Laravel\SEO\Tests\Fixtures\Page;
 
 use function Pest\Laravel\assertDatabaseCount;
 
-beforeEach(function () {
+beforeEach(function (): void {
     copy(__DIR__ . '/../../Fixtures/images/test-image.jpg', public_path('test-image.jpg'));
 });
 
-it('can determine the size of an image', function () {
+it('can determine the size of an image', function (): void {
     $page = Page::create();
 
     $page->seo->update([
@@ -22,7 +22,7 @@ it('can determine the size of an image', function () {
     $this->assertEquals(258, $SEOData->imageMeta()->height);
 });
 
-it('can allow to prepareForUsage without a model in the database', function () {
+it('can allow to prepareForUsage without a model in the database', function (): void {
     $page = Page::create();
 
     $page->seo->delete();

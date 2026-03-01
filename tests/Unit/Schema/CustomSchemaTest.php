@@ -2,7 +2,7 @@
 
 use Foodieneers\Laravel\SEO\Schema\CustomSchema;
 
-it('can construct a custom faq schema', function () {
+it('can construct a custom faq schema', function (): void {
     $schema = new CustomSchema([
         '@context' => 'https://schema.org',
         '@type' => 'FAQPage',

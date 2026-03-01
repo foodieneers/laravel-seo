@@ -1,20 +1,20 @@
 <?php
 
 use Carbon\CarbonImmutable;
-use Illuminate\Support\Facades\Date;
 use Foodieneers\Laravel\SEO\Models\SEO;
 use Foodieneers\Laravel\SEO\Support\SEOData;
 use Foodieneers\Laravel\SEO\Tests\Fixtures\Page;
 use Foodieneers\Laravel\SEO\Tests\Fixtures\PageWithoutTitleSuffixFunction;
 use Foodieneers\Laravel\SEO\Tests\Fixtures\PageWithoutTitleSuffixProperty;
+use Illuminate\Support\Facades\Date;
 
-it('can morph a model to the SEO model', function () {
+it('can morph a model to the SEO model', function (): void {
     $page = Page::create();
 
     expect($page->seo)->toBeInstanceOf(SEO::class);
 });
 
-it('can prepare the SEO for use on a page', function () {
+it('can prepare the SEO for use on a page', function (): void {
     $seo = Page::create()->seo;
 
     $export = $seo->prepareForUsage();
@@ -22,7 +22,7 @@ it('can prepare the SEO for use on a page', function () {
     expect($export)->toBeInstanceOf(SEOData::class);
 });
 
-it('can have immutable timestamps', function () {
+it('can have immutable timestamps', function (): void {
     Date::useClass(CarbonImmutable::class);
 
     $seo = Page::create()->seo;
@@ -32,7 +32,7 @@ it('can have immutable timestamps', function () {
     expect($export)->toBeInstanceOf(SEOData::class);
 });
 
-it('can add properties to a SEO model', function (string $property, string $input) {
+it('can add properties to a SEO model', function (string $property, string $input): void {
     $page = Page::create();
 
     $page->seo->{$property} = $input;
@@ -48,7 +48,7 @@ it('can add properties to a SEO model', function (string $property, string $inpu
     ['title', 'My Cool Page Title'],
 ]);
 
-it('can override certain SEO Data', function (string $overriddenProperty, string $input) {
+it('can override certain SEO Data', function (string $overriddenProperty, string $input): void {
     $page = Page::create();
 
     $page->seo->update(
@@ -80,7 +80,7 @@ it('can override certain SEO Data', function (string $overriddenProperty, string
     ['title', 'My Cool Page Title'],
 ]);
 
-it('can give the title of a page a suffix it was specified', function () {
+it('can give the title of a page a suffix it was specified', function (): void {
     config()->set('seo.title.suffix', ' | TestCases');
 
     $seo = Page::create()->seo;
@@ -93,7 +93,7 @@ it('can give the title of a page a suffix it was specified', function () {
         ->enableTitleSuffix->toBeTrue();
 });
 
-it('can disable the suffix in the page model', function () {
+it('can disable the suffix in the page model', function (): void {
     config()->set('seo.title.suffix', ' | TestCases');
 
     $page = PageWithoutTitleSuffixProperty::create();
@@ -106,7 +106,7 @@ it('can disable the suffix in the page model', function () {
         ->title->toBe('My page title');
 });
 
-it('can disable the suffix in the page model dynamically via a function', function () {
+it('can disable the suffix in the page model dynamically via a function', function (): void {
     config()->set('seo.title.suffix', ' | TestCases');
 
     $page = PageWithoutTitleSuffixFunction::create();

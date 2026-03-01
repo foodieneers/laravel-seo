@@ -5,12 +5,12 @@ use Foodieneers\Laravel\SEO\Tests\Fixtures\Page;
 
 use function Pest\Laravel\get;
 
-it('will not display the aternates tags if there isn\'t any alternate', function () {
+it('will not display the aternates tags if there isn\'t any alternate', function (): void {
     get(route('seo.test-plain'))
         ->assertDontSee('alternate');
 });
 
-it('will display the alternates links if the associated SEO model has alternates links', function () {
+it('will display the alternates links if the associated SEO model has alternates links', function (): void {
     $page = Page::create();
 
     $page::$overrides = [

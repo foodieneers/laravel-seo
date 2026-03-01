@@ -4,7 +4,7 @@ namespace Foodieneers\Laravel\SEO\Tests\Fixtures\Http\Middleware;
 
 use Inertia\Middleware;
 
-include 'Middleware.php';
+include __DIR__ . '/Middleware.php';
 
 class DummyInertiaMiddleware extends Middleware
 {
