@@ -102,7 +102,7 @@ class TagManager implements Renderable, Stringable
 
             foreach ($source->schema as $schemaType) {
                 if (is_string($schemaType) && $schemaType === 'BreadcrumbList') {
-                    $currentBreadcrumbName ??= $this->inferCurrentBreadcrumbName();
+                    $currentBreadcrumbName ??= $this->inferTitleFromUrl();
 
                     $schema->addBreadcrumbs(
                         fn(Schema\BreadcrumbListSchema $breadcrumbList): Schema\BreadcrumbListSchema => $breadcrumbList
@@ -142,15 +142,6 @@ class TagManager implements Renderable, Stringable
             openGraphTitle: $source->openGraphTitle,
             alternates: $source->alternates,
         );
-    }
-
-    protected function inferCurrentBreadcrumbName(): string
-    {
-        return Str::of(url()->current())
-            ->afterLast('/')
-            ->replace('-', ' ')
-            ->title()
-            ->toString();
     }
 
     protected function inferTitleFromUrl(): string
