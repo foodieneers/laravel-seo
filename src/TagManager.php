@@ -5,7 +5,7 @@ namespace Foodieneers\Laravel\SEO;
 use const FILTER_VALIDATE_URL;
 
 use Foodieneers\Laravel\SEO\Facades\SEOManager;
-use Foodieneers\Laravel\SEO\Schema\BreadcrumbListSchema;
+use Spatie\SchemaOrg\Schema;
 use Foodieneers\Laravel\SEO\Support\SEOData;
 use Foodieneers\Laravel\SEO\Support\SEOInputData;
 use Illuminate\Contracts\Support\Renderable;
@@ -104,15 +104,22 @@ class TagManager implements Renderable, Stringable
             foreach ($source->schema as $schemaType) {
                 if (is_string($schemaType) && $schemaType === 'BreadcrumbList') {
                     $currentBreadcrumbName ??= $this->inferTitleFromUrl();
+                    $list = Schema::breadcrumbList();
 
-                    $schema->addBreadcrumbs(
-                        fn (BreadcrumbListSchema $breadcrumbList): BreadcrumbListSchema => $breadcrumbList
-                            ->prependBreadcrumbs($source->prependBreadcrumb ?? [])
-                            ->appendBreadcrumbs(array_merge(
-                                [$currentBreadcrumbName => url()->current()],
-                                $source->appendBreadcrumb ?? [],
-                            ))
-                    );
+                    foreach ($source->prependBreadcrumb as $name => $url) {
+                        $list->itemListElement(Schema::listItem()
+                            ->name($name)
+                            ->item($url));
+                    }
+                    $list->itemListElement(Schema::listItem()
+                        ->name($currentBreadcrumbName));
+
+                    foreach ($source->appendBreadcrumb as $name => $url) {
+                        $list->itemListElement(Schema::listItem()
+                            ->name($name)
+                            ->item($url));
+                    }
+                    $schema->add($list->toArray());
 
                     continue;
                 }
