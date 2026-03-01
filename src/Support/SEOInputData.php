@@ -38,7 +38,7 @@ final readonly class SEOInputData
         public ?string $section = null,
         public ?array $tags = null,
         public ?string $currentBreadcrumbName = null,
-        public ?array $prependBreadcrumb = [],
+        public ?array $breadcrumbs = [],
         public ?array $appendBreadcrumb = [],
         public bool $markAsNoindex = false,
     ) {}

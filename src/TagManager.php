@@ -107,7 +107,7 @@ class TagManager implements Renderable, Stringable
                     $list = [];
                     $counter = 1;
 
-                    foreach ($source->prependBreadcrumb as $name => $url) {
+                    foreach ($source->breadcrumbs as $name => $url) {
                         $list[] = Schema::listItem()
                             ->position($counter++)
                             ->name($name)
