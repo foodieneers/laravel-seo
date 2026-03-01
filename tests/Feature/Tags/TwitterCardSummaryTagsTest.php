@@ -1,6 +1,6 @@
 <?php
 
-use RalphJSmit\Laravel\SEO\Tests\Fixtures\Page;
+use Foodieneers\Laravel\SEO\Tests\Fixtures\Page;
 
 use function Pest\Laravel\get;
 
@@ -19,7 +19,7 @@ it('can correctly render the Twitter Card summary without the image', function (
     config()->set('seo.title.suffix', ' | Laravel SEO');
     config()->set('seo.description.fallback', 'Fallback description');
     config()->set('seo.image.fallback', 'images/twitter-1743x1743.jpg');
-    config()->set('seo.twitter.@username', 'ralphjsmit');
+    config()->set('seo.twitter.@username', 'Foodieneers');
 
     // The image should not be loaded, because Twitter doesn't allow a 'generic image that spans multiple pages'.
     get(route('seo.test-plain'))
@@ -27,7 +27,7 @@ it('can correctly render the Twitter Card summary without the image', function (
         ->assertSee('<meta name="twitter:title" content="Test Plain | Laravel SEO">', false)
         ->assertSee('<meta name="twitter:description" content="Fallback description">', false)
         ->assertDontSee('twitter:image')
-        ->assertSee('<meta name="twitter:site" content="@ralphjsmit">', false);
+        ->assertSee('<meta name="twitter:site" content="@Foodieneers">', false);
 });
 
 it('can correctly render the Twitter Card summary with the image on a Page', function (string $expectedCard, string $imagePath, string $expectedWidth, string $expectedHeight) {

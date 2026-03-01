@@ -1,8 +1,8 @@
 <?php
 
 use Illuminate\Support\Collection;
-use RalphJSmit\Laravel\SEO\Schema\ArticleSchema;
-use RalphJSmit\Laravel\SEO\Support\SEOData;
+use Foodieneers\Laravel\SEO\Schema\ArticleSchema;
+use Foodieneers\Laravel\SEO\Support\SEOData;
 
 beforeEach(function () {
     $this->SEOData = new SEOData(

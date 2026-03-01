@@ -1,6 +1,6 @@
 <?php
 
-namespace RalphJSmit\Laravel\SEO\Support;
+namespace Foodieneers\Laravel\SEO\Support;
 
 class AlternateTag extends LinkTag
 {

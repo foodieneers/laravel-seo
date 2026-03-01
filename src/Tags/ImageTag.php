@@ -1,10 +1,10 @@
 <?php
 
-namespace RalphJSmit\Laravel\SEO\Tags;
+namespace Foodieneers\Laravel\SEO\Tags;
 
 use Illuminate\Support\HtmlString;
-use RalphJSmit\Laravel\SEO\Support\MetaTag;
-use RalphJSmit\Laravel\SEO\Support\SEOData;
+use Foodieneers\Laravel\SEO\Support\MetaTag;
+use Foodieneers\Laravel\SEO\Support\SEOData;
 
 class ImageTag extends MetaTag
 {

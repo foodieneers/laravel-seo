@@ -1,6 +1,6 @@
 <?php
 
-use RalphJSmit\Laravel\SEO\Tests\Fixtures\Page;
+use Foodieneers\Laravel\SEO\Tests\Fixtures\Page;
 
 use function Pest\Laravel\get;
 use function Spatie\PestPluginTestTime\testTime;

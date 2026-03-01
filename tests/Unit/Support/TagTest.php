@@ -1,6 +1,6 @@
 <?php
 
-use RalphJSmit\Laravel\SEO\Support\Tag;
+use Foodieneers\Laravel\SEO\Support\Tag;
 
 it('orders tag attributes', function () {
     $tag = new class extends Tag

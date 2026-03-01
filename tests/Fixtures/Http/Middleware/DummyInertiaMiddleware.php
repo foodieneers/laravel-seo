@@ -1,6 +1,6 @@
 <?php
 
-namespace RalphJSmit\Laravel\SEO\Tests\Fixtures\Http\Middleware;
+namespace Foodieneers\Laravel\SEO\Tests\Fixtures\Http\Middleware;
 
 use Inertia\Middleware;
 

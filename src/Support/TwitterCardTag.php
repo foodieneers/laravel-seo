@@ -1,6 +1,6 @@
 <?php
 
-namespace RalphJSmit\Laravel\SEO\Support;
+namespace Foodieneers\Laravel\SEO\Support;
 
 use Illuminate\Support\Collection;
 use Illuminate\Support\HtmlString;

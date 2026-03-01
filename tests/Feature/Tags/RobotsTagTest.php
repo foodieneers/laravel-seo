@@ -1,7 +1,7 @@
 <?php
 
-use RalphJSmit\Laravel\SEO\Support\SEOData;
-use RalphJSmit\Laravel\SEO\Tests\Fixtures\Page;
+use Foodieneers\Laravel\SEO\Support\SEOData;
+use Foodieneers\Laravel\SEO\Tests\Fixtures\Page;
 
 use function Pest\Laravel\get;
 

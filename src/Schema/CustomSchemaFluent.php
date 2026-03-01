@@ -1,10 +1,10 @@
 <?php
 
-namespace RalphJSmit\Laravel\SEO\Schema;
+namespace Foodieneers\Laravel\SEO\Schema;
 
 use Closure;
 use Illuminate\Support\Collection;
-use RalphJSmit\Laravel\SEO\Support\SEOData;
+use Foodieneers\Laravel\SEO\Support\SEOData;
 
 abstract class CustomSchemaFluent extends CustomSchema
 {

@@ -1,4 +1,4 @@
-![laravel-seo](https://github.com/ralphjsmit/laravel-seo/blob/main/docs/images/seo.jpg)
+![laravel-seo](https://github.com/Foodieneers/laravel-seo/blob/main/docs/images/seo.jpg)
 
 # Never worry about SEO in Laravel again!
 
@@ -66,7 +66,7 @@ class Post extends Model
 Run the following command to install the package:
 
 ```shell
-composer require ralphjsmit/laravel-seo
+composer require Foodieneers/laravel-seo
 ```
 
 Publish the migration and configuration file:
@@ -207,7 +207,7 @@ To really profit from this package, you can **associate an Eloquent model with a
 To associate an Eloquent model with a SEO-model, add the `HasSEO` trait to your model:
 
 ```php
-use RalphJSmit\Laravel\SEO\Support\HasSEO;
+use Foodieneers\Laravel\SEO\Support\HasSEO;
 
 class Post extends Model
 {
@@ -307,7 +307,7 @@ Another option is to pass a SEOData-object directly from the controller to the l
 
 ```php
 use Illuminate\Contracts\View\View;
-use RalphJSmit\Laravel\SEO\Support\SEOData;
+use Foodieneers\Laravel\SEO\Support\SEOData;
 
 class Homepage extends Controller
 {
@@ -333,15 +333,16 @@ This package can also **generate any structured data** for you (also called sche
 Structured data is a very vast subject, so we highly recommend you to check the [Google documentation dedicated to it](https://developers.google.com/search/docs/appearance/structured-data/search-gallery).
 
 Structured data can be added in two ways:
--   Construct custom arrays of the structured data format, which is then rendered by the package in JSON on the correct place.
--   Use one of the 3 pre-defined templates to fluently build your structured data (`Article`, `BreadcrumbList`, `FaqPage`).
+
+- Construct custom arrays of the structured data format, which is then rendered by the package in JSON on the correct place.
+- Use one of the 3 pre-defined templates to fluently build your structured data (`Article`, `BreadcrumbList`, `FaqPage`).
 
 ### Adding your first schema
 
 Let's add the FAQPage schema markup to our website as an example:
 
 ```php
-use RalphJSmit\Laravel\SEO\SchemaCollection;
+use Foodieneers\Laravel\SEO\SchemaCollection;
 
 public function getDynamicSEOData(): SEOData
 {
@@ -383,7 +384,7 @@ In order to automatically and fluently generate `Article` schema markup, use the
 
 ```php
 
-use RalphJSmit\Laravel\SEO\SchemaCollection;
+use Foodieneers\Laravel\SEO\SchemaCollection;
 
 public function getDynamicSEOData(): SEOData
 {
@@ -397,9 +398,9 @@ public function getDynamicSEOData(): SEOData
 This will construct an article schema using all data provided by the `SEOData` object. You can pass a closure to `->addArticle()` method to customize the individual schema markup. This closure will receive an instance of ArticleSchema as its argument. You can an additional author by using the `->addAuthor()` method.
 
 ```php
-use RalphJSmit\Laravel\SEO\Schema\ArticleSchema;
-use RalphJSmit\Laravel\SEO\SchemaCollection;
-use RalphJSmit\Laravel\SEO\Support\SEOData;
+use Foodieneers\Laravel\SEO\Schema\ArticleSchema;
+use Foodieneers\Laravel\SEO\SchemaCollection;
+use Foodieneers\Laravel\SEO\Support\SEOData;
 use Illuminate\Support\Collection;
 
 public function getDynamicSEOData(): SEOData
@@ -488,7 +489,7 @@ To accomplish this, you can use the `SEODataTransformer()` function on the `SEOM
 
 ```php
 // In the `boot()` method of a service provider somewhere
-use RalphJSmit\Laravel\SEO\Facades\SEOManager;
+use Foodieneers\Laravel\SEO\Facades\SEOManager;
 
 SEOManager::SEODataTransformer(function (SEOData $SEOData): SEOData {
     // This will change the title on *EVERY* page. Do any logic you want here, e.g. based on the current request.
@@ -517,7 +518,7 @@ SEOManager::tagTransformer(function (TagCollection $tags): TagCollection {
 
 ## Roadmap
 
-I hope this package will be useful to you! If you have any ideas or suggestions on how to make it more useful, please let me know (rjs@ralphjsmit.com) or via the issues.
+I hope this package will be useful to you! If you have any ideas or suggestions on how to make it more useful, please let me know (rjs@Foodieneers.com) or via the issues.
 
 PRs are welcome, so feel free to fork and submit a pull request. I'll be happy to review your changes, think along and add them to the package.
 
@@ -529,4 +530,4 @@ PRs are welcome, so feel free to fork and submit a pull request. I'll be happy t
 
 🙌 If you want to contribute, please submit a pull request. All PRs will be fully credited. If you're unsure whether I'd accept your idea, feel free to contact me!
 
-🙋‍♂️ [Ralph J. Smit](https://ralphjsmit.com)
+🙋‍♂️ [Ralph J. Smit](https://Foodieneers.com)

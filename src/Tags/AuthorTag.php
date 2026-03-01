@@ -1,9 +1,9 @@
 <?php
 
-namespace RalphJSmit\Laravel\SEO\Tags;
+namespace Foodieneers\Laravel\SEO\Tags;
 
-use RalphJSmit\Laravel\SEO\Support\MetaTag;
-use RalphJSmit\Laravel\SEO\Support\SEOData;
+use Foodieneers\Laravel\SEO\Support\MetaTag;
+use Foodieneers\Laravel\SEO\Support\SEOData;
 
 class AuthorTag extends MetaTag
 {

@@ -1,14 +1,14 @@
 <?php
 
-namespace RalphJSmit\Laravel\SEO\Tags;
+namespace Foodieneers\Laravel\SEO\Tags;
 
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Support\Collection;
-use RalphJSmit\Laravel\SEO\Support\RenderableCollection;
-use RalphJSmit\Laravel\SEO\Support\SEOData;
-use RalphJSmit\Laravel\SEO\Support\TwitterCardTag;
-use RalphJSmit\Laravel\SEO\Tags\TwitterCard\Summary;
-use RalphJSmit\Laravel\SEO\Tags\TwitterCard\SummaryLargeImage;
+use Foodieneers\Laravel\SEO\Support\RenderableCollection;
+use Foodieneers\Laravel\SEO\Support\SEOData;
+use Foodieneers\Laravel\SEO\Support\TwitterCardTag;
+use Foodieneers\Laravel\SEO\Tags\TwitterCard\Summary;
+use Foodieneers\Laravel\SEO\Tags\TwitterCard\SummaryLargeImage;
 
 class TwitterCardTags extends Collection implements Renderable
 {

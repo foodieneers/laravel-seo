@@ -1,17 +1,17 @@
 {
-    "name": "ralphjsmit/laravel-seo",
+    "name": "foodieneers/laravel-seo",
     "description": "A package to handle the SEO in any Laravel application, big or small.",
     "keywords": [
-        "ralphjsmit",
+        "Foodieneers",
         "laravel",
         "laravel-seo"
     ],
-    "homepage": "https://github.com/ralphjsmit/laravel-seo",
+    "homepage": "https://github.com/foodieneers/laravel-seo",
     "license": "MIT",
     "authors": [
         {
-            "name": "Ralph J. Smit",
-            "email": "rjs@ralphjsmit.com",
+            "name": "Paride Azzari",
+            "email": "paride21azzari@gmail.com",
             "role": "Developer"
         }
     ],
@@ -22,21 +22,14 @@
         "spatie/laravel-package-tools": "^1.9.2"
     },
     "require-dev": {
-        "laravel/pint": "^1.16",
+        "foodieneers/laravel-devtools": "*",
         "nesbot/carbon": "^3.0",
-        "nunomaduro/collision": "^8.0|^9.0",
         "orchestra/testbench": "^9.16|^10.0",
-        "orchestra/testbench-core": "^9.1.4|^10.0",
-        "pestphp/pest": "^2.0|^3.0",
-        "pestphp/pest-plugin-laravel": "^2.0|^3.0",
-        "phpunit/phpunit": "^10.5|^11.5",
-        "spatie/laravel-ray": "^1.39",
-        "spatie/pest-plugin-test-time": "^2.0"
+        "orchestra/testbench-core": "^9.1.4|^10.0"
     },
     "autoload": {
         "psr-4": {
-            "RalphJSmit\\Laravel\\SEO\\": "src",
-            "RalphJSmit\\Laravel\\SEO\\Database\\Factories\\": "database/factories"
+            "Foodieneers\\Laravel\\SEO\\": "src"
         },
         "files": [
             "src/helpers.php"
@@ -44,7 +37,7 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "RalphJSmit\\Laravel\\SEO\\Tests\\": "tests"
+            "Foodieneers\\Laravel\\SEO\\Tests\\": "tests"
         }
     },
     "scripts": {
@@ -55,16 +48,17 @@
     "config": {
         "sort-packages": true,
         "allow-plugins": {
-            "pestphp/pest-plugin": true
+            "pestphp/pest-plugin": true,
+            "phpstan/extension-installer": true
         }
     },
     "extra": {
         "laravel": {
             "providers": [
-                "RalphJSmit\\Laravel\\SEO\\LaravelSEOServiceProvider"
+                "Foodieneers\\Laravel\\SEO\\LaravelSEOServiceProvider"
             ],
             "aliases": {
-                "SEOManager": "RalphJSmit\\Laravel\\SEO\\Facades\\SEOManager"
+                "SEOManager": "Foodieneers\\Laravel\\SEO\\Facades\\SEOManager"
             }
         }
     },

@@ -1,6 +1,6 @@
 <?php
 
-namespace RalphJSmit\Laravel\SEO;
+namespace Foodieneers\Laravel\SEO;
 
 use Closure;
 

@@ -1,8 +1,8 @@
 <?php
 
-use RalphJSmit\Laravel\SEO\Support\SEOData;
-use RalphJSmit\Laravel\SEO\TagManager;
-use RalphJSmit\Laravel\SEO\Tests\Fixtures\Page;
+use Foodieneers\Laravel\SEO\Support\SEOData;
+use Foodieneers\Laravel\SEO\TagManager;
+use Foodieneers\Laravel\SEO\Tests\Fixtures\Page;
 
 it('can get the TagManager', function () {
     expect(seo())->toBeInstanceOf(TagManager::class);

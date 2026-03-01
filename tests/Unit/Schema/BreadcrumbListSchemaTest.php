@@ -1,7 +1,7 @@
 <?php
 
-use RalphJSmit\Laravel\SEO\Schema\BreadcrumbListSchema;
-use RalphJSmit\Laravel\SEO\Support\SEOData;
+use Foodieneers\Laravel\SEO\Schema\BreadcrumbListSchema;
+use Foodieneers\Laravel\SEO\Support\SEOData;
 
 beforeEach(function () {
     $this->SEOData = new SEOData(

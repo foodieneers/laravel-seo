@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Str;
-use RalphJSmit\Laravel\SEO\Tests\Fixtures\Page;
+use Foodieneers\Laravel\SEO\Tests\Fixtures\Page;
 
 use function Pest\Laravel\get;
 
@@ -52,7 +52,7 @@ it('can display the model level canonical url if set on override', function () {
 });
 
 it('will not break if no canonical_url column exists in seo table', function () {
-    // New seo.canonical_url column was added in https://github.com/ralphjsmit/laravel-seo/pull/35.
+    // New seo.canonical_url column was added in https://github.com/Foodieneers/laravel-seo/pull/35.
     config()->set('seo.canonical_link', true);
 
     $page = Page::create();

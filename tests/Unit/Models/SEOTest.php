@@ -2,11 +2,11 @@
 
 use Carbon\CarbonImmutable;
 use Illuminate\Support\Facades\Date;
-use RalphJSmit\Laravel\SEO\Models\SEO;
-use RalphJSmit\Laravel\SEO\Support\SEOData;
-use RalphJSmit\Laravel\SEO\Tests\Fixtures\Page;
-use RalphJSmit\Laravel\SEO\Tests\Fixtures\PageWithoutTitleSuffixFunction;
-use RalphJSmit\Laravel\SEO\Tests\Fixtures\PageWithoutTitleSuffixProperty;
+use Foodieneers\Laravel\SEO\Models\SEO;
+use Foodieneers\Laravel\SEO\Support\SEOData;
+use Foodieneers\Laravel\SEO\Tests\Fixtures\Page;
+use Foodieneers\Laravel\SEO\Tests\Fixtures\PageWithoutTitleSuffixFunction;
+use Foodieneers\Laravel\SEO\Tests\Fixtures\PageWithoutTitleSuffixProperty;
 
 it('can morph a model to the SEO model', function () {
     $page = Page::create();

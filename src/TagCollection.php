@@ -1,22 +1,22 @@
 <?php
 
-namespace RalphJSmit\Laravel\SEO;
+namespace Foodieneers\Laravel\SEO;
 
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Support\Collection;
-use RalphJSmit\Laravel\SEO\Support\SchemaTagCollection;
-use RalphJSmit\Laravel\SEO\Support\SEOData;
-use RalphJSmit\Laravel\SEO\Tags\AlternateTags;
-use RalphJSmit\Laravel\SEO\Tags\AuthorTag;
-use RalphJSmit\Laravel\SEO\Tags\CanonicalTag;
-use RalphJSmit\Laravel\SEO\Tags\DescriptionTag;
-use RalphJSmit\Laravel\SEO\Tags\FaviconTag;
-use RalphJSmit\Laravel\SEO\Tags\ImageTag;
-use RalphJSmit\Laravel\SEO\Tags\OpenGraphTags;
-use RalphJSmit\Laravel\SEO\Tags\RobotsTag;
-use RalphJSmit\Laravel\SEO\Tags\SitemapTag;
-use RalphJSmit\Laravel\SEO\Tags\TitleTag;
-use RalphJSmit\Laravel\SEO\Tags\TwitterCardTags;
+use Foodieneers\Laravel\SEO\Support\SchemaTagCollection;
+use Foodieneers\Laravel\SEO\Support\SEOData;
+use Foodieneers\Laravel\SEO\Tags\AlternateTags;
+use Foodieneers\Laravel\SEO\Tags\AuthorTag;
+use Foodieneers\Laravel\SEO\Tags\CanonicalTag;
+use Foodieneers\Laravel\SEO\Tags\DescriptionTag;
+use Foodieneers\Laravel\SEO\Tags\FaviconTag;
+use Foodieneers\Laravel\SEO\Tags\ImageTag;
+use Foodieneers\Laravel\SEO\Tags\OpenGraphTags;
+use Foodieneers\Laravel\SEO\Tags\RobotsTag;
+use Foodieneers\Laravel\SEO\Tags\SitemapTag;
+use Foodieneers\Laravel\SEO\Tags\TitleTag;
+use Foodieneers\Laravel\SEO\Tags\TwitterCardTags;
 
 class TagCollection extends Collection
 {

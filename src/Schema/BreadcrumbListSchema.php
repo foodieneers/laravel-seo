@@ -1,9 +1,9 @@
 <?php
 
-namespace RalphJSmit\Laravel\SEO\Schema;
+namespace Foodieneers\Laravel\SEO\Schema;
 
 use Illuminate\Support\Collection;
-use RalphJSmit\Laravel\SEO\Support\SEOData;
+use Foodieneers\Laravel\SEO\Support\SEOData;
 
 class BreadcrumbListSchema extends CustomSchemaFluent
 {

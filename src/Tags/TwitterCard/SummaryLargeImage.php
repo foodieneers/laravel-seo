@@ -1,13 +1,13 @@
 <?php
 
-namespace RalphJSmit\Laravel\SEO\Tags\TwitterCard;
+namespace Foodieneers\Laravel\SEO\Tags\TwitterCard;
 
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Support\Collection;
 use Illuminate\Support\HtmlString;
-use RalphJSmit\Laravel\SEO\Support\RenderableCollection;
-use RalphJSmit\Laravel\SEO\Support\SEOData;
-use RalphJSmit\Laravel\SEO\Support\TwitterCardTag;
+use Foodieneers\Laravel\SEO\Support\RenderableCollection;
+use Foodieneers\Laravel\SEO\Support\SEOData;
+use Foodieneers\Laravel\SEO\Support\TwitterCardTag;
 
 class SummaryLargeImage extends Collection implements Renderable
 {

@@ -1,14 +1,14 @@
 <?php
 
-namespace RalphJSmit\Laravel\SEO;
+namespace Foodieneers\Laravel\SEO;
 
 use const FILTER_VALIDATE_URL;
 
 use Illuminate\Contracts\Support\Renderable;
-use Illuminate\Database\Eloquent\Model;
+
 use Illuminate\Support\Str;
-use RalphJSmit\Laravel\SEO\Facades\SEOManager;
-use RalphJSmit\Laravel\SEO\Support\SEOData;
+use Foodieneers\Laravel\SEO\Facades\SEOManager;
+use Foodieneers\Laravel\SEO\Support\SEOData;
 
 class TagManager implements Renderable
 {

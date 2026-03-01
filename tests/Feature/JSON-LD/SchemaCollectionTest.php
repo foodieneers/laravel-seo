@@ -1,12 +1,12 @@
 <?php
 
 use Illuminate\Support\Collection;
-use RalphJSmit\Laravel\SEO\Schema\ArticleSchema;
-use RalphJSmit\Laravel\SEO\Schema\BreadcrumbListSchema;
-use RalphJSmit\Laravel\SEO\Schema\FaqPageSchema;
-use RalphJSmit\Laravel\SEO\SchemaCollection;
-use RalphJSmit\Laravel\SEO\Support\SEOData;
-use RalphJSmit\Laravel\SEO\Tests\Fixtures\Page;
+use Foodieneers\Laravel\SEO\Schema\ArticleSchema;
+use Foodieneers\Laravel\SEO\Schema\BreadcrumbListSchema;
+use Foodieneers\Laravel\SEO\Schema\FaqPageSchema;
+use Foodieneers\Laravel\SEO\SchemaCollection;
+use Foodieneers\Laravel\SEO\Support\SEOData;
+use Foodieneers\Laravel\SEO\Tests\Fixtures\Page;
 
 use function Pest\Laravel\get;
 

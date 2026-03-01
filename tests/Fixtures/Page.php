@@ -1,10 +1,10 @@
 <?php
 
-namespace RalphJSmit\Laravel\SEO\Tests\Fixtures;
+namespace Foodieneers\Laravel\SEO\Tests\Fixtures;
 
-use Illuminate\Database\Eloquent\Model;
-use RalphJSmit\Laravel\SEO\Support\HasSEO;
-use RalphJSmit\Laravel\SEO\Support\SEOData;
+
+use Foodieneers\Laravel\SEO\Support\HasSEO;
+use Foodieneers\Laravel\SEO\Support\SEOData;
 
 class Page extends Model
 {

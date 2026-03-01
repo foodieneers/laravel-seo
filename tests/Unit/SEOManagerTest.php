@@ -1,6 +1,6 @@
 <?php
 
-use RalphJSmit\Laravel\SEO\SEOManager;
+use Foodieneers\Laravel\SEO\SEOManager;
 
 test('the SEOManager singleton works as expected', function () {
     $managerA = app(SEOManager::class);

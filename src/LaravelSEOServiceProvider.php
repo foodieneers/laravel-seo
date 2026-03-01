@@ -1,6 +1,6 @@
 <?php
 
-namespace RalphJSmit\Laravel\SEO;
+namespace Foodieneers\Laravel\SEO;
 
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
@@ -12,8 +12,7 @@ class LaravelSEOServiceProvider extends PackageServiceProvider
         $package
             ->name('laravel-seo')
             ->hasConfigFile()
-            ->hasViews('seo')
-            ->hasMigration('create_seo_table');
+            ->hasViews('seo');
     }
 
     public function packageRegistered(): void

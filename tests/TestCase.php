@@ -1,12 +1,12 @@
 <?php
 
-namespace RalphJSmit\Laravel\SEO\Tests;
+namespace Foodieneers\Laravel\SEO\Tests;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Schema;
 use Orchestra\Testbench\TestCase as Orchestra;
-use RalphJSmit\Laravel\SEO\LaravelSEOServiceProvider;
+use Foodieneers\Laravel\SEO\LaravelSEOServiceProvider;
 
 class TestCase extends Orchestra
 {
@@ -15,7 +15,7 @@ class TestCase extends Orchestra
         parent::setUp();
 
         Factory::guessFactoryNamesUsing(
-            fn (string $modelName) => 'RalphJSmit\\Laravel\\SEO\\Database\\Factories\\' . class_basename($modelName) . 'Factory'
+            fn (string $modelName) => 'Foodieneers\\Laravel\\SEO\\Database\\Factories\\' . class_basename($modelName) . 'Factory'
         );
 
         // Freeze the time across entire testsuite...

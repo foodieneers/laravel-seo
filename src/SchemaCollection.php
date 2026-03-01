@@ -1,14 +1,14 @@
 <?php
 
-namespace RalphJSmit\Laravel\SEO;
+namespace Foodieneers\Laravel\SEO;
 
 use Closure;
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Support\Collection;
-use RalphJSmit\Laravel\SEO\Schema\ArticleSchema;
-use RalphJSmit\Laravel\SEO\Schema\BreadcrumbListSchema;
-use RalphJSmit\Laravel\SEO\Schema\FaqPageSchema;
-use RalphJSmit\Laravel\SEO\Support\SEOData;
+use Foodieneers\Laravel\SEO\Schema\ArticleSchema;
+use Foodieneers\Laravel\SEO\Schema\BreadcrumbListSchema;
+use Foodieneers\Laravel\SEO\Schema\FaqPageSchema;
+use Foodieneers\Laravel\SEO\Support\SEOData;
 
 /**
  * @template TKey of array-key

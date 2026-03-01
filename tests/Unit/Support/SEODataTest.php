@@ -1,7 +1,7 @@
 <?php
 
-use RalphJSmit\Laravel\SEO\Models\SEO;
-use RalphJSmit\Laravel\SEO\Tests\Fixtures\Page;
+use Foodieneers\Laravel\SEO\Models\SEO;
+use Foodieneers\Laravel\SEO\Tests\Fixtures\Page;
 
 use function Pest\Laravel\assertDatabaseCount;
 

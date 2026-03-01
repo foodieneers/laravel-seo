@@ -1,6 +1,6 @@
 <?php
 
-use RalphJSmit\Laravel\SEO\Schema\CustomSchema;
+use Foodieneers\Laravel\SEO\Schema\CustomSchema;
 
 it('can construct a custom faq schema', function () {
     $schema = new CustomSchema([

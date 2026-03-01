@@ -1,10 +1,10 @@
 <?php
 
-namespace RalphJSmit\Laravel\SEO\Support;
+namespace Foodieneers\Laravel\SEO\Support;
 
 use Carbon\CarbonInterface;
-use RalphJSmit\Helpers\Laravel\Pipe\Pipeable;
-use RalphJSmit\Laravel\SEO\SchemaCollection;
+use Foodieneers\Helpers\Laravel\Pipe\Pipeable;
+use Foodieneers\Laravel\SEO\SchemaCollection;
 
 class SEOData
 {

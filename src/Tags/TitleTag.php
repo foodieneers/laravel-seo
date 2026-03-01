@@ -1,11 +1,11 @@
 <?php
 
-namespace RalphJSmit\Laravel\SEO\Tags;
+namespace Foodieneers\Laravel\SEO\Tags;
 
 use Closure;
 use Illuminate\Support\Facades\Route;
-use RalphJSmit\Laravel\SEO\Support\SEOData;
-use RalphJSmit\Laravel\SEO\Support\Tag;
+use Foodieneers\Laravel\SEO\Support\SEOData;
+use Foodieneers\Laravel\SEO\Support\Tag;
 
 class TitleTag extends Tag
 {

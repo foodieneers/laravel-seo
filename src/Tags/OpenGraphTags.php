@@ -1,14 +1,14 @@
 <?php
 
-namespace RalphJSmit\Laravel\SEO\Tags;
+namespace Foodieneers\Laravel\SEO\Tags;
 
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Support\Collection;
 use Illuminate\Support\HtmlString;
-use RalphJSmit\Laravel\SEO\Support\MetaContentTag;
-use RalphJSmit\Laravel\SEO\Support\OpenGraphTag;
-use RalphJSmit\Laravel\SEO\Support\RenderableCollection;
-use RalphJSmit\Laravel\SEO\Support\SEOData;
+use Foodieneers\Laravel\SEO\Support\MetaContentTag;
+use Foodieneers\Laravel\SEO\Support\OpenGraphTag;
+use Foodieneers\Laravel\SEO\Support\RenderableCollection;
+use Foodieneers\Laravel\SEO\Support\SEOData;
 
 class OpenGraphTags extends Collection implements Renderable
 {

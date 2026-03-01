@@ -1,9 +1,9 @@
 <?php
 
 use Illuminate\Support\Collection;
-use RalphJSmit\Laravel\SEO\Facades\SEOManager;
-use RalphJSmit\Laravel\SEO\Support\MetaTag;
-use RalphJSmit\Laravel\SEO\Support\SEOData;
+use Foodieneers\Laravel\SEO\Facades\SEOManager;
+use Foodieneers\Laravel\SEO\Support\MetaTag;
+use Foodieneers\Laravel\SEO\Support\SEOData;
 
 use function Pest\Laravel\get;
 

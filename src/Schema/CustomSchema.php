@@ -1,11 +1,11 @@
 <?php
 
-namespace RalphJSmit\Laravel\SEO\Schema;
+namespace Foodieneers\Laravel\SEO\Schema;
 
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Support\HtmlString;
-use RalphJSmit\Helpers\Laravel\Pipe\Pipeable;
-use RalphJSmit\Laravel\SEO\Support\Tag;
+use Foodieneers\Helpers\Laravel\Pipe\Pipeable;
+use Foodieneers\Laravel\SEO\Support\Tag;
 
 class CustomSchema extends Tag
 {
@@ -20,7 +20,7 @@ class CustomSchema extends Tag
     public function __construct(iterable | Arrayable $inner)
     {
         $this->inner = new HtmlString(
-            collect($inner)->toJson()
+            collect($inner)->toJson(JSON_UNESCAPED_SLASHES)
         );
     }
 }

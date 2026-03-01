@@ -3,9 +3,9 @@
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Route;
-use RalphJSmit\Laravel\SEO\Tags\TitleTag;
-use RalphJSmit\Laravel\SEO\Tests\Fixtures\Http\Middleware\DummyInertiaMiddleware;
-use RalphJSmit\Laravel\SEO\Tests\Fixtures\Page;
+use Foodieneers\Laravel\SEO\Tags\TitleTag;
+use Foodieneers\Laravel\SEO\Tests\Fixtures\Http\Middleware\DummyInertiaMiddleware;
+use Foodieneers\Laravel\SEO\Tests\Fixtures\Page;
 
 use function Pest\Laravel\get;
 

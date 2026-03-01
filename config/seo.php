@@ -1,6 +1,6 @@
 <?php
 
-use RalphJSmit\Laravel\SEO\Models\SEO;
+use Foodieneers\Laravel\SEO\Models\SEO;
 
 return [
     /**

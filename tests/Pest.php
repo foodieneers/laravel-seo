@@ -1,8 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use RalphJSmit\Laravel\SEO\Tests\Fixtures\Page;
-use RalphJSmit\Laravel\SEO\Tests\TestCase;
+use Foodieneers\Laravel\SEO\Tests\Fixtures\Page;
+use Foodieneers\Laravel\SEO\Tests\TestCase;
 
 use function Pest\Laravel\withoutExceptionHandling;
 
