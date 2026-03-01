@@ -3,7 +3,7 @@
 namespace Foodieneers\Laravel\SEO\Support;
 
 use Carbon\CarbonInterface;
-use Foodieneers\Helpers\Laravel\Pipe\Pipeable;
+use RalphJSmit\Helpers\Laravel\Pipe\Pipeable;
 use Foodieneers\Laravel\SEO\SchemaCollection;
 
 class SEOData

@@ -12,8 +12,6 @@ use Illuminate\Support\Str;
 
 class TagManager implements Renderable, Stringable
 {
-    public Model $model;
-
     public SEOData $SEOData;
 
     public TagCollection $tags;
@@ -45,14 +43,6 @@ class TagManager implements Renderable, Stringable
             }
         }
 
-        if ($SEOData->enableTitleSuffix) {
-            $SEOData->title .= config('seo.title.suffix');
-
-            if ($SEOData->openGraphTitle) {
-                $SEOData->openGraphTitle .= config('seo.title.suffix');
-            }
-        }
-
         if ($SEOData->image && filter_var(str_replace(' ', '%20', $SEOData->image), FILTER_VALIDATE_URL) === false) {
             $SEOData->imageMeta();
 
@@ -76,23 +66,9 @@ class TagManager implements Renderable, Stringable
         );
     }
 
-    public function for(Model | SEOData $source): static
+    public function for(SEOData $source): static
     {
-        if ($source instanceof Model) {
-            $this->model = $source;
-            unset($this->SEOData);
-        } elseif ($source instanceof SEOData) {
-            unset($this->model);
-            $this->SEOData = $source;
-        }
-
-        // The tags collection is already initialized when constructing the manager. Here, we'll
-        // initialize the collection again, but this time we pass the model to the initializer.
-        // The initializes will pass the generated SEOData to all underlying initializers, ensuring that
-        // the tags are always fully up-to-date and no remnants from previous initializations are present.
-        $SEOData = isset($this->model)
-            ? $this->model->seo?->prepareForUsage()
-            : $this->SEOData;
+        $this->SEOData = $source;
 
         $this->tags = TagCollection::initialize(
             $this->fillSEOData($SEOData ?? new SEOData)
