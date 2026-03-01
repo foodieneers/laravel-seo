@@ -2,7 +2,7 @@
 
 namespace Foodieneers\Laravel\SEO\Schema;
 
-use Foodieneers\Helpers\Laravel\Pipe\Pipeable;
+use RalphJSmit\Helpers\Laravel\Pipe\Pipeable;
 use Foodieneers\Laravel\SEO\Support\Tag;
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Support\HtmlString;
