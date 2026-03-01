@@ -23,7 +23,7 @@ it('can correctly render the JSON-LD Schema markup: BreadcrumbList', function ()
         'title' => 'Test article',
         'enableTitleSuffix' => true,
         'url' => 'https://example.com/test/article',
-        'schema' => SchemaCollection::initialize()->addBreadcrumbs(fn(BreadcrumbListSchema $breadcrumbList): BreadcrumbListSchema => $breadcrumbList->prependBreadcrumbs([
+        'schema' => SchemaCollection::initialize()->addBreadcrumbs(fn (BreadcrumbListSchema $breadcrumbList): BreadcrumbListSchema => $breadcrumbList->prependBreadcrumbs([
             'Homepage' => 'https://example.com',
             'Category' => 'https://example.com/test',
         ])->appendBreadcrumbs([

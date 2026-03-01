@@ -2,14 +2,15 @@
 
 namespace Foodieneers\Laravel\SEO;
 
-use Stringable;
 use const FILTER_VALIDATE_URL;
 
 use Foodieneers\Laravel\SEO\Facades\SEOManager;
-use Foodieneers\Laravel\SEO\Support\SEOInputData;
+use Foodieneers\Laravel\SEO\Schema\BreadcrumbListSchema;
 use Foodieneers\Laravel\SEO\Support\SEOData;
+use Foodieneers\Laravel\SEO\Support\SEOInputData;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Support\Str;
+use Stringable;
 
 class TagManager implements Renderable, Stringable
 {
@@ -22,7 +23,7 @@ class TagManager implements Renderable, Stringable
         $this->tags = new TagCollection;
     }
 
-    public function fillSEOData(SEOData|SEOInputData|null $source = null): SEOData
+    public function fillSEOData(SEOData | SEOInputData | null $source = null): SEOData
     {
         $SEOData = $this->resolveSEOData($source);
 
@@ -65,7 +66,7 @@ class TagManager implements Renderable, Stringable
         );
     }
 
-    public function for(SEOData|SEOInputData $source): static
+    public function for(SEOData | SEOInputData $source): static
     {
         $this->SEOData = $this->fillSEOData($source);
         $this->tags = TagCollection::initialize($this->SEOData);
@@ -73,7 +74,7 @@ class TagManager implements Renderable, Stringable
         return $this;
     }
 
-    protected function resolveSEOData(SEOData|SEOInputData|null $source = null): SEOData
+    protected function resolveSEOData(SEOData | SEOInputData | null $source = null): SEOData
     {
         if ($source instanceof SEOData) {
             return $source;
@@ -105,7 +106,7 @@ class TagManager implements Renderable, Stringable
                     $currentBreadcrumbName ??= $this->inferTitleFromUrl();
 
                     $schema->addBreadcrumbs(
-                        fn(Schema\BreadcrumbListSchema $breadcrumbList): Schema\BreadcrumbListSchema => $breadcrumbList
+                        fn (BreadcrumbListSchema $breadcrumbList): BreadcrumbListSchema => $breadcrumbList
                             ->prependBreadcrumbs($source->prependBreadcrumb ?? [])
                             ->appendBreadcrumbs(array_merge(
                                 [$currentBreadcrumbName => url()->current()],
@@ -153,14 +154,14 @@ class TagManager implements Renderable, Stringable
 
     public function render(): string
     {
-        if ($this->SEOData === null) {
+        if (! $this->SEOData instanceof SEOData) {
             $this->SEOData = $this->fillSEOData();
             $this->tags = TagCollection::initialize($this->SEOData);
         }
 
         return $this->tags
             ->pipeThrough(SEOManager::getTagTransformers())
-            ->reduce(fn(string $carry, Renderable $item): string => $carry .= Str::of($item->render())->trim() . PHP_EOL, '');
+            ->reduce(fn (string $carry, Renderable $item): string => $carry .= Str::of($item->render())->trim() . PHP_EOL, '');
     }
 
     public function __toString(): string

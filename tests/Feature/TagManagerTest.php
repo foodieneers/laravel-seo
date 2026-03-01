@@ -52,7 +52,7 @@ it('can pipe the SEOData through the transformer before putting it into the coll
 });
 
 it('can pipe the generated tags through the transformers just before render', function (): void {
-    SEOManager::tagTransformer(fn(Collection $tags): Collection => $tags->push(new MetaTag('test', 'content')));
+    SEOManager::tagTransformer(fn (Collection $tags): Collection => $tags->push(new MetaTag('test', 'content')));
 
     get(route('seo.test-plain'))
         ->assertSee('<meta name="test" content="content">', false);

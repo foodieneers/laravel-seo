@@ -113,9 +113,9 @@ it('can correctly render the JSON-LD Schema markup: Article', function (): void 
         'image' => 'images/twitter-1743x1743.jpg',
         'author' => 'Ralph J. Smit',
         'schema' => SchemaCollection::make()
-            ->addArticle(fn(ArticleSchema $article, SEOData $SEOData): ArticleSchema => $article
+            ->addArticle(fn (ArticleSchema $article, SEOData $SEOData): ArticleSchema => $article
                 ->addAuthor('Second author')
-                ->markup(fn(Collection $markup) => $markup->mergeRecursive([
+                ->markup(fn (Collection $markup) => $markup->mergeRecursive([
                     'alternativeHeadline' => 'My alternative headline',
                 ]))),
     ];
@@ -161,7 +161,7 @@ it('can correctly render the JSON-LD Schema markup: BreadcrumbList', function ()
         'enableTitleSuffix' => true,
         'url' => 'https://example.com/test/article',
         'schema' => SchemaCollection::make()
-            ->addBreadcrumbs(fn(BreadcrumbListSchema $breadcrumbList, SEOData $SEOData): BreadcrumbListSchema => $breadcrumbList
+            ->addBreadcrumbs(fn (BreadcrumbListSchema $breadcrumbList, SEOData $SEOData): BreadcrumbListSchema => $breadcrumbList
                 ->prependBreadcrumbs([
                     'Homepage' => 'https://example.com',
                     'Category' => 'https://example.com/test',
@@ -219,7 +219,7 @@ it('can correctly render the JSON-LD Schema markup: FaqPage', function (): void 
         'enableTitleSuffix' => true,
         'url' => 'https://example.com/test/article',
         'schema' => SchemaCollection::make()
-            ->addFaqPage(fn(FaqPageSchema $faqPage, SEOData $SEOData): FaqPageSchema => $faqPage
+            ->addFaqPage(fn (FaqPageSchema $faqPage, SEOData $SEOData): FaqPageSchema => $faqPage
                 ->addQuestion(name: 'Can this package add FaqPage to the schema?', acceptedAnswer: 'Yes!')
                 ->addQuestion(name: 'Does it support multiple questions?', acceptedAnswer: 'Of course.')),
     ];

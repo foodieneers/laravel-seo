@@ -2,8 +2,8 @@
 
 namespace Foodieneers\Laravel\SEO\Support;
 
-use Foodieneers\Laravel\SEO\SchemaCollection;
 use Foodieneers\Laravel\SEO\Schema\CustomSchema;
+use Foodieneers\Laravel\SEO\SchemaCollection;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Support\Collection;
 
@@ -15,7 +15,7 @@ class SchemaTagCollection extends Collection implements Renderable
     {
         $schemas = $SEOData?->schema;
 
-        if (!$schemas instanceof SchemaCollection) {
+        if (! $schemas instanceof SchemaCollection) {
             return null;
         }
 

@@ -41,6 +41,5 @@ final readonly class SEOInputData
         public ?array $prependBreadcrumb = [],
         public ?array $appendBreadcrumb = [],
         public bool $markAsNoindex = false,
-    ) {
-    }
+    ) {}
 }

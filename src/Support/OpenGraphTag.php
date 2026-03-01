@@ -16,7 +16,7 @@ class OpenGraphTag extends Tag
         $this->attributes['property'] = $property;
         $this->attributes['content'] = $content;
 
-        $this->attributesPipeline[] = (fn(Collection $collection) => $collection->mapWithKeys(function (mixed $value, string $key): array {
+        $this->attributesPipeline[] = (fn (Collection $collection) => $collection->mapWithKeys(function (mixed $value, string $key): array {
             if ($key === 'property') {
                 $value = 'og:' . $value;
             }

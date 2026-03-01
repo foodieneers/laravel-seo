@@ -6,7 +6,6 @@ use Rector\Caching\ValueObject\Storage\FileCacheStorage;
 use Rector\Config\RectorConfig;
 use Rector\DeadCode\Rector\ClassMethod\RemoveUnusedPrivateMethodRector;
 use Rector\Php70\Rector\StaticCall\StaticCallOnNonStaticToInstanceCallRector;
-use Rector\Php83\Rector\ClassMethod\AddOverrideAttributeToOverriddenMethodsRector;
 use Rector\Privatization\Rector\ClassMethod\PrivatizeFinalClassMethodRector;
 use Rector\Privatization\Rector\Property\PrivatizeFinalClassPropertyRector;
 use Rector\TypeDeclaration\Rector\ClassMethod\AddVoidReturnTypeWhereNoReturnRector;
@@ -38,20 +37,20 @@ return RectorConfig::configure()
         cacheClass: FileCacheStorage::class,
     )
     ->withPaths([
-        __DIR__.'/src',
-        __DIR__.'/config',
-        __DIR__.'/tests',
+        __DIR__ . '/src',
+        __DIR__ . '/config',
+        __DIR__ . '/tests',
     ])
     ->withSkip([
         StaticCallOnNonStaticToInstanceCallRector::class,
         RemoveUnusedPrivateMethodRector::class,
         PrivatizeFinalClassMethodRector::class,
         PrivatizeFinalClassPropertyRector::class => [
-            __DIR__.'/app/Models/*',
+            __DIR__ . '/app/Models/*',
         ],
         AddVoidReturnTypeWhereNoReturnRector::class => [
-            __DIR__.'/tests',
-            __DIR__.'/app-modules/*/tests',
+            __DIR__ . '/tests',
+            __DIR__ . '/app-modules/*/tests',
         ],
     ])
     ->withPreparedSets(

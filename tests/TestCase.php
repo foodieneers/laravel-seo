@@ -2,9 +2,9 @@
 
 namespace Foodieneers\Laravel\SEO\Tests;
 
-use Illuminate\Support\Facades\Date;
 use Foodieneers\Laravel\SEO\LaravelSEOServiceProvider;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Support\Facades\Date;
 use Illuminate\Support\Facades\Schema;
 use Orchestra\Testbench\TestCase as Orchestra;
 

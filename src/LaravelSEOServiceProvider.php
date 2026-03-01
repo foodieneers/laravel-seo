@@ -16,10 +16,9 @@ class LaravelSEOServiceProvider extends PackageServiceProvider
             ->hasViews('seo');
     }
 
-
     public function bootingPackage(): void
     {
-        Blade::directive('seo', fn ($expression): string => "<?php \$seo = new \Foodieneers\Laravel\SEOInputData($expression); ?>");
+        Blade::directive('seo', fn ($expression): string => "<?php \$seo = new \Foodieneers\Laravel\SEOInputData({$expression}); ?>");
     }
 
     public function packageRegistered(): void

@@ -48,7 +48,7 @@ it('can add multiple authors to Schema Markup: Article', function (): void {
     $articleSchema = new ArticleSchema($this->SEOData, [
         fn (ArticleSchema $article): ArticleSchema => $article
             ->addAuthor('Second author')
-            ->markup(fn(Collection $markup): Collection => $markup->put('alternativeHeadline', 'My alternative headline')),
+            ->markup(fn (Collection $markup): Collection => $markup->put('alternativeHeadline', 'My alternative headline')),
     ]);
 
     expect((string) $articleSchema->render())->toBe(

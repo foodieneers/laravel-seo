@@ -2,10 +2,10 @@
 
 namespace Foodieneers\Laravel\SEO\Schema;
 
-use RalphJSmit\Helpers\Laravel\Pipe\Pipeable;
 use Foodieneers\Laravel\SEO\Support\Tag;
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Support\HtmlString;
+use RalphJSmit\Helpers\Laravel\Pipe\Pipeable;
 
 class CustomSchema extends Tag
 {

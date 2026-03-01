@@ -2,11 +2,11 @@
 
 namespace Foodieneers\Laravel\SEO\Tags;
 
-use Inertia\Middleware;
 use Closure;
 use Foodieneers\Laravel\SEO\Support\SEOData;
 use Foodieneers\Laravel\SEO\Support\Tag;
 use Illuminate\Support\Facades\Route;
+use Inertia\Middleware;
 
 class TitleTag extends Tag
 {

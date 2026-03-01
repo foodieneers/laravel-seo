@@ -1,8 +1,8 @@
 <?php
 
-use Illuminate\Foundation\Application;
 use Foodieneers\Laravel\SEO\Tests\Fixtures\Page;
 use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Str;
 

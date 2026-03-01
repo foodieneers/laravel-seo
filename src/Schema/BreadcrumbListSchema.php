@@ -33,7 +33,7 @@ class BreadcrumbListSchema extends CustomSchemaFluent
             '@context' => 'https://schema.org',
             '@type' => $this->type,
             'itemListElement' => $this->breadcrumbs
-                ->reduce(fn(Collection $carry, string $url, string $pagename): Collection => $carry->push([
+                ->reduce(fn (Collection $carry, string $url, string $pagename): Collection => $carry->push([
                     '@type' => 'ListItem',
                     'position' => $carry->count() + 1,
                     'name' => $pagename,
