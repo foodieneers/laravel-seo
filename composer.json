@@ -22,7 +22,7 @@
         "spatie/laravel-package-tools": "^1.9.2"
     },
     "require-dev": {
-        "foodieneers/laravel-devtools": "*",
+        "foodieneers/laravel-devtools": "^1.0",
         "nesbot/carbon": "^3.0",
         "orchestra/testbench": "^9.16|^10.0",
         "orchestra/testbench-core": "^9.1.4|^10.0"
