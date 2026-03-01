@@ -36,19 +36,10 @@ class SEOData
         public ?string $canonical_url = null,
         public ?string $openGraphTitle = null,
         public ?array $alternates = null,
-        public ?string $currentBreadcrumbName = null,
-        public ?array $prependBreadcrumb = [],
-        public ?array $appendBreadcrumb = [],
-        public ?CarbonInterface $published_at = null,
-        public ?CarbonInterface $updated_at = null,
     ) {
         if ($this->locale === null) {
             $this->locale = app()->getLocale();
         }
-
-        // Backwards compatible aliases for user-facing properties.
-        $this->published_time ??= $this->published_at;
-        $this->modified_time ??= $this->updated_at;
     }
 
     public function imageMeta(): ?ImageMeta

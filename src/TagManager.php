@@ -19,8 +19,7 @@ class TagManager implements Renderable, Stringable
 
     public function __construct()
     {
-        $this->SEOData = $this->fillSEOData();
-        $this->tags = TagCollection::initialize($this->SEOData);
+        $this->tags = new TagCollection;
     }
 
     public function fillSEOData(SEOData|SEOInputData|null $source = null): SEOData
@@ -89,17 +88,43 @@ class TagManager implements Renderable, Stringable
 
     protected function mapInputToSEOData(SEOInputData $source): SEOData
     {
-        $schema = $source->schema;
+        $locale = $source->locale ?? app()->getLocale();
+        $image = $source->image;
+        $schema = null;
+        $currentBreadcrumbName = $source->currentBreadcrumbName;
 
-        if (is_array($schema)) {
-            $schema = SchemaCollection::make($schema);
+        if ($image !== null && filter_var(str_replace(' ', '%20', $image), FILTER_VALIDATE_URL) === false) {
+            $image = url('/images/' . ltrim($image, '/'));
+        }
+
+        if ($source->schema !== []) {
+            $schema = SchemaCollection::initialize();
+
+            foreach ($source->schema as $schemaType) {
+                if (is_string($schemaType) && $schemaType === 'BreadcrumbList') {
+                    $currentBreadcrumbName ??= $this->inferCurrentBreadcrumbName();
+
+                    $schema->addBreadcrumbs(
+                        fn(Schema\BreadcrumbListSchema $breadcrumbList): Schema\BreadcrumbListSchema => $breadcrumbList
+                            ->prependBreadcrumbs($source->prependBreadcrumb ?? [])
+                            ->appendBreadcrumbs(array_merge(
+                                [$currentBreadcrumbName => url()->current()],
+                                $source->appendBreadcrumb ?? [],
+                            ))
+                    );
+
+                    continue;
+                }
+
+                $schema->add($schemaType);
+            }
         }
 
         return new SEOData(
             title: $source->title,
             description: $source->description,
             author: $source->author,
-            image: $source->image,
+            image: $image,
             url: $source->url,
             published_time: $source->published_at,
             modified_time: $source->updated_at,
@@ -111,17 +136,21 @@ class TagManager implements Renderable, Stringable
             type: $source->type,
             site_name: $source->site_name,
             favicon: $source->favicon,
-            locale: $source->locale,
+            locale: $locale,
             robots: $source->markAsNoindex ? 'noindex, nofollow' : $source->robots,
             canonical_url: $source->canonical_url,
             openGraphTitle: $source->openGraphTitle,
             alternates: $source->alternates,
-            currentBreadcrumbName: $source->currentBreadcrumbName,
-            prependBreadcrumb: $source->prependBreadcrumb,
-            appendBreadcrumb: $source->appendBreadcrumb,
-            published_at: $source->published_at,
-            updated_at: $source->updated_at,
         );
+    }
+
+    protected function inferCurrentBreadcrumbName(): string
+    {
+        return Str::of(url()->current())
+            ->afterLast('/')
+            ->replace('-', ' ')
+            ->title()
+            ->toString();
     }
 
     protected function inferTitleFromUrl(): string
@@ -133,6 +162,11 @@ class TagManager implements Renderable, Stringable
 
     public function render(): string
     {
+        if ($this->SEOData === null) {
+            $this->SEOData = $this->fillSEOData();
+            $this->tags = TagCollection::initialize($this->SEOData);
+        }
+
         return $this->tags
             ->pipeThrough(SEOManager::getTagTransformers())
             ->reduce(fn(string $carry, Renderable $item): string => $carry .= Str::of($item->render())->trim() . PHP_EOL, '');
