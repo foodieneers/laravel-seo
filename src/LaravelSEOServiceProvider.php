@@ -2,6 +2,7 @@
 
 namespace Foodieneers\Laravel\SEO;
 
+use Illuminate\Support\Facades\Blade;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
 
@@ -13,6 +14,12 @@ class LaravelSEOServiceProvider extends PackageServiceProvider
             ->name('laravel-seo')
             ->hasConfigFile()
             ->hasViews('seo');
+    }
+
+
+    public function bootingPackage(): void
+    {
+        Blade::directive('seo', fn ($expression): string => "<?php \$seo = new \Foodieneers\Laravel\SEOInputData($expression); ?>");
     }
 
     public function packageRegistered(): void

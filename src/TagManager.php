@@ -6,26 +6,26 @@ use Stringable;
 use const FILTER_VALIDATE_URL;
 
 use Foodieneers\Laravel\SEO\Facades\SEOManager;
+use Foodieneers\Laravel\SEO\Support\SEOInputData;
 use Foodieneers\Laravel\SEO\Support\SEOData;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Support\Str;
 
 class TagManager implements Renderable, Stringable
 {
-    public SEOData $SEOData;
+    public ?SEOData $SEOData = null;
 
     public TagCollection $tags;
 
     public function __construct()
     {
-        $this->tags = TagCollection::initialize(
-            $this->fillSEOData()
-        );
+        $this->SEOData = $this->fillSEOData();
+        $this->tags = TagCollection::initialize($this->SEOData);
     }
 
-    public function fillSEOData(?SEOData $SEOData = null): SEOData
+    public function fillSEOData(SEOData|SEOInputData|null $source = null): SEOData
     {
-        $SEOData ??= new SEOData;
+        $SEOData = $this->resolveSEOData($source);
 
         $defaults = [
             'title' => config('seo.title.infer_title_from_url') ? $this->inferTitleFromUrl() : null,
@@ -66,15 +66,62 @@ class TagManager implements Renderable, Stringable
         );
     }
 
-    public function for(SEOData $source): static
+    public function for(SEOData|SEOInputData $source): static
     {
-        $this->SEOData = $source;
-
-        $this->tags = TagCollection::initialize(
-            $this->fillSEOData($SEOData ?? new SEOData)
-        );
+        $this->SEOData = $this->fillSEOData($source);
+        $this->tags = TagCollection::initialize($this->SEOData);
 
         return $this;
+    }
+
+    protected function resolveSEOData(SEOData|SEOInputData|null $source = null): SEOData
+    {
+        if ($source instanceof SEOData) {
+            return $source;
+        }
+
+        if ($source instanceof SEOInputData) {
+            return $this->mapInputToSEOData($source);
+        }
+
+        return new SEOData;
+    }
+
+    protected function mapInputToSEOData(SEOInputData $source): SEOData
+    {
+        $schema = $source->schema;
+
+        if (is_array($schema)) {
+            $schema = SchemaCollection::make($schema);
+        }
+
+        return new SEOData(
+            title: $source->title,
+            description: $source->description,
+            author: $source->author,
+            image: $source->image,
+            url: $source->url,
+            published_time: $source->published_at,
+            modified_time: $source->updated_at,
+            articleBody: $source->articleBody,
+            section: $source->section,
+            tags: $source->tags,
+            twitter_username: $source->twitter_username,
+            schema: $schema,
+            type: $source->type,
+            site_name: $source->site_name,
+            favicon: $source->favicon,
+            locale: $source->locale,
+            robots: $source->markAsNoindex ? 'noindex, nofollow' : $source->robots,
+            canonical_url: $source->canonical_url,
+            openGraphTitle: $source->openGraphTitle,
+            alternates: $source->alternates,
+            currentBreadcrumbName: $source->currentBreadcrumbName,
+            prependBreadcrumb: $source->prependBreadcrumb,
+            appendBreadcrumb: $source->appendBreadcrumb,
+            published_at: $source->published_at,
+            updated_at: $source->updated_at,
+        );
     }
 
     protected function inferTitleFromUrl(): string

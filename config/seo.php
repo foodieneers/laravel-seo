@@ -1,13 +1,6 @@
 <?php
 
-use Foodieneers\Laravel\SEO\Models\SEO;
-
 return [
-    /**
-     * The SEO model. You can use this setting to override the model used by the package.
-     * Make sure to always extend the old model, so that you'll not lose functionality during upgrades.
-     */
-    'model' => SEO::class,
 
     /**
      * Use this setting to specify the site name that will be used in OpenGraph tags.
@@ -23,7 +16,7 @@ return [
      * to the root domain and not relative to the current URL. The `spatie/laravel-sitemap` package
      * is a great package to generate sitemaps for your application.
      */
-    'sitemap' => null,
+    'sitemap' => '/sitemap.xml',
 
     /**
      * Use this setting to specify whether you want self-referencing `<link rel="canonical" href="$url">` tags to
@@ -59,7 +52,7 @@ return [
      *
      * You can use the following filetypes: ico, png, gif, jpeg, svg.
      */
-    'favicon' => null,
+    'favicon' => '/favicon.ico',
 
     'title' => [
         /**
@@ -69,20 +62,8 @@ return [
          *
          * For example, if you have a page with the url '/foo/about-me', we'll automatically set the title to 'About me' and append the site suffix.
          */
-        'infer_title_from_url' => true,
+        'infer_title_from_url' => false,
 
-        /**
-         * Use this setting to provide a suffix that will be added after the title on each page.
-         * If you don't want a suffix, you should specify an empty string.
-         */
-        'suffix' => '',
-
-        /**
-         * Use this setting to provide a custom title for the homepage. We will not use the suffix on the homepage,
-         * so you'll need to add the suffix manually if you want that. If set to null, we'll determine the title
-         * just like the other pages.
-         */
-        'homepage_title' => null,
     ],
 
     'description' => [
@@ -109,7 +90,7 @@ return [
          * Use this setting to specify a fallback author, which will be used on places where you
          * don't have an author set via an associated ->seo model or via the ->getDynamicSEOData() method.
          */
-        'fallback' => null,
+        'fallback' => 'Marco Azzari',
     ],
 
     'twitter' => [
