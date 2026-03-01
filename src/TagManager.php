@@ -104,22 +104,26 @@ class TagManager implements Renderable, Stringable
             foreach ($source->schema as $schemaType) {
                 if (is_string($schemaType) && $schemaType === 'BreadcrumbList') {
                     $currentBreadcrumbName ??= $this->inferTitleFromUrl();
-                    $list = Schema::breadcrumbList();
+                    $list = [];
+                    $counter = 1;
 
                     foreach ($source->prependBreadcrumb as $name => $url) {
-                        $list->itemListElement(Schema::listItem()
+                        $list[] = Schema::listItem()
+                            ->position($counter++)
                             ->name($name)
-                            ->item($url));
+                            ->item($url);
                     }
-                    $list->itemListElement(Schema::listItem()
-                        ->name($currentBreadcrumbName));
+                    $list[] = Schema::listItem()
+                        ->position($counter++)
+                        ->name($currentBreadcrumbName);
 
                     foreach ($source->appendBreadcrumb as $name => $url) {
-                        $list->itemListElement(Schema::listItem()
+                        $list[] = Schema::listItem()
+                            ->position($counter++)
                             ->name($name)
-                            ->item($url));
+                            ->item($url);
                     }
-                    $schema->add($list->toArray());
+                    $schema->add(Schema::breadcrumbList()->itemListElement($list)->toArray());
 
                     continue;
                 }
