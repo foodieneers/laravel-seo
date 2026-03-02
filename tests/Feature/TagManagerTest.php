@@ -1,60 +1,46 @@
 <?php
 
-use Foodieneers\Laravel\SEO\Facades\SEOManager;
-use Foodieneers\Laravel\SEO\Support\MetaTag;
-use Foodieneers\Laravel\SEO\Support\SEOData;
+use Foodieneers\Laravel\SEO\Support\SEOInputData;
 use Foodieneers\Laravel\SEO\TagManager;
-use Illuminate\Support\Collection;
+it('builds and renders tags from SEOInputData', function (): void {
+    $output = resolve(TagManager::class)
+        ->for(new SEOInputData(
+            title: 'Awesome News - My Project',
+            description: 'Custom description',
+            url: 'https://example.com/news',
+        ))
+        ->render();
 
-use function Pest\Laravel\get;
-
-it('can replace the title if we\'re on the homepage', function (?string $homepageTitleConfig, string $expectedTitle): void {
-    config()->set('seo.title.homepage_title', $homepageTitleConfig);
-    config()->set('seo.title.suffix', '| My Website suffix');
-
-    get(route('seo.test-home'))
-        ->assertSee($expectedTitle);
-})->with([
-    [null, '| My Website suffix'],
-    ['Custom homepage title', 'Custom homepage title'],
-]);
-
-test('can render the SEOData from an object that\'s directly passed in', function (): void {
-    $SEOData = new SEOData(
-        title: 'Awesome News - My Project',
-    );
-
-    $output = resolve(TagManager::class)->for($SEOData)->render();
-
-    expect($output)->toContain('Awesome News - My Project');
+    expect($output)
+        ->toContain('<title>Awesome News - My Project</title>')
+        ->toContain('<meta name="description" content="Custom description">');
 });
 
-it('can pipe the SEOData through the transformer before putting it into the collection', function (): void {
+it('infers title from URL when enabled', function (): void {
     config()->set('seo.title.infer_title_from_url', true);
 
-    get(route('seo.test-plain'))
-        ->assertSee('<title>Test Plain</title>', false);
+    $manager = resolve(TagManager::class)->for(new SEOInputData(
+        url: 'https://example.com/posts/my-first-post',
+    ));
 
-    SEOManager::SEODataTransformer(function (SEOData $SEOData): SEOData {
-        $SEOData->title = 'Transformed Title';
-
-        return $SEOData;
-    });
-
-    SEOManager::SEODataTransformer(function (SEOData $SEOData): SEOData {
-        $SEOData->description = 'Transformed description';
-
-        return $SEOData;
-    });
-
-    get(route('seo.test-plain'))
-        ->assertSee('<title>Transformed Title</title>', false)
-        ->assertSee('Transformed description');
+    expect($manager->SEOData?->title)->toBe('My First Post');
 });
 
-it('can pipe the generated tags through the transformers just before render', function (): void {
-    SEOManager::tagTransformer(fn (Collection $tags): Collection => $tags->push(new MetaTag('test', 'content')));
+it('uses homepage title for root URL when configured', function (): void {
+    config()->set('seo.title.homepage_title', 'Custom homepage title');
 
-    get(route('seo.test-plain'))
-        ->assertSee('<meta name="test" content="content">', false);
+    $manager = resolve(TagManager::class)->for(new SEOInputData(
+        url: url('/'),
+    ));
+
+    expect($manager->SEOData?->title)->toBe('Custom homepage title');
+});
+
+it('marks robots as noindex when requested', function (): void {
+    $manager = resolve(TagManager::class)->for(new SEOInputData(
+        markAsNoindex: true,
+        url: 'https://example.com/private',
+    ));
+
+    expect($manager->SEOData?->robots)->toBe('noindex, nofollow');
 });

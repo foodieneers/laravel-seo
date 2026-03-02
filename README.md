@@ -200,7 +200,7 @@ Now, add the following **Blade-code on every page** where you want your SEO-tags
 {!! seo() !!}
 ```
 
-This will render a **lot of sensible tags by default**, already **greatly improving your SEO**. It will also render things like the `<title>` tag, so you don't have to render that manually. Additionally, it takes care of things automatically adding the `inertia` attribute to your `<title>` tag, allowing it to dynamically update whenever the user navigates to a different route on the frontend.
+This will render a **lot of sensible tags by default**, already **greatly improving your SEO**. It will also render things like the `<title>` tag, so you don't have to render that manually.
 
 To really profit from this package, you can **associate an Eloquent model with a SEO-model**. This will allow you to **dynamically fetch SEO data from your model** and this package will generate as much tags as possible for you, based on that data.
 
@@ -296,10 +296,9 @@ Finally, you should update your Blade file, so that it can receive your model wh
 
 The following order is used when generating the tags (higher overwrites the lower):
 
-1. Any overwrites from the `SEOManager::SEODataTransformer($closure)` (see below)
-2. Data from the `getDynamicSEOData()` method
-3. Data from the associated SEO model (`$post->seo`)
-4. Default data from the `config/seo.php` file
+1. Data from the `getDynamicSEOData()` method
+2. Data from the associated SEO model (`$post->seo`)
+3. Default data from the `config/seo.php` file
 
 ### Passing SEOData directly from the controller
 
@@ -512,41 +511,6 @@ SchemaCollection::initialize()
 
 > [!TIP]
 > After generating the structured data, it is always a good idea to [test your website with Google's rich result validator](https://search.google.com/test/rich-results).
-
-## Advanced usage
-
-Sometimes you may have advanced needs that require you to apply your own logic to the `SEOData` class, just before it is used to generate the tags.
-
-To accomplish this, you can use the `SEODataTransformer()` function on the `SEOManager` facade to register one or multiple closures that will be able to modify the `SEOData` instance at the last moment:
-
-```php
-// In the `boot()` method of a service provider somewhere
-use Foodieneers\Laravel\SEO\Facades\SEOManager;
-
-SEOManager::SEODataTransformer(function (SEOData $SEOData): SEOData {
-    // This will change the title on *EVERY* page. Do any logic you want here, e.g. based on the current request.
-    $SEOData->title = 'Transformed Title';
-
-    return $SEOData;
-});
-```
-
-> Make sure to return the `$SEOData` object in each closure.
-
-### Modifying tags before they are rendered
-
-You can also **register closures that can modify the final collection of generated tags**, right before they are rendered. This is useful if you want to add custom tags to the output or if you want to modify the output of the tags.
-
-```php
-SEOManager::tagTransformer(function (TagCollection $tags): TagCollection {
-    $tags = $tags->reject(fn(Tag $tag) => $tag instanceof OpenGraphTag);
-
-    $tags->push(new MetaTag(name: 'custom-tag', content: 'My custom content'));
-    // Will render: <meta name="custom-tag" content="My custom content">
-
-    return $tags;
-});
-```
 
 ## Roadmap
 

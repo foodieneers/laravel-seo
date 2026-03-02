@@ -2,9 +2,6 @@
 
 namespace Foodieneers\Laravel\SEO;
 
-use Foodieneers\Laravel\SEO\Facades\SEOManager;
-use Foodieneers\Laravel\SEO\Support\SchemaResolver;
-use Foodieneers\Laravel\SEO\Support\SchemaTagCollection;
 use Foodieneers\Laravel\SEO\Support\SEOData;
 use Foodieneers\Laravel\SEO\Support\SEOInputData;
 use Illuminate\Contracts\Support\Renderable;
@@ -19,36 +16,72 @@ class TagManager implements Renderable, Stringable
 
     public TagCollection $tags;
 
-    public array $schemas = [];
-
     public function __construct()
     {
         $this->tags = new TagCollection;
     }
 
-    public function fillSEOData(SEOData | SEOInputData | null $source = null): SEOData
+    public function for(SEOInputData $source): static
     {
-        $SEOData = $this->resolveSEOData($source);
+        $this->SEOData = $this->buildFromInput($source);
+        $this->tags = TagCollection::initialize($this->SEOData);
 
-        $defaults = [
-            'title' => config('seo.title.infer_title_from_url') ? $this->inferTitleFromUrl() : null,
-            'description' => config('seo.description.fallback'),
-            'image' => config('seo.image.fallback'),
-            'site_name' => config('seo.site_name'),
-            'author' => config('seo.author.fallback'),
-            'twitter_username' => Str::of(config('seo.twitter.@username'))->start('@'),
-            'favicon' => config('seo.favicon'),
-        ];
+        return $this;
+    }
 
-        foreach ($defaults as $property => $defaultValue) {
-            if ($SEOData->{$property} === null) {
-                $SEOData->{$property} = $defaultValue;
-            }
+    protected function buildFromInput(SEOInputData $source): SEOData
+    {
+        $url = $source->url ?: url()->current();
+        $title = $source->title;
+
+        if ($title === null && config('seo.title.infer_title_from_url')) {
+            $title = $this->inferTitleFromUrl($url);
+        }
+
+        if ($url === url('/') && ($homepageTitle = config('seo.title.homepage_title'))) {
+            $title = $homepageTitle;
+        }
+
+        $image = $source->image;
+        $favicon = $source->favicon;
+
+        if ($image !== null && filter_var(str_replace(' ', '%20', $image), FILTER_VALIDATE_URL) === false) {
+            $image = secure_url($image);
+        }
+
+        if ($favicon !== null && filter_var(str_replace(' ', '%20', $favicon), FILTER_VALIDATE_URL) === false) {
+            $favicon = secure_url($favicon);
+        }
+
+        $SEOData = new SEOData(
+            title: $title,
+            description: $source->description ?? config('seo.description.fallback'),
+            author: $source->author ?? config('seo.author.fallback'),
+            image: $image,
+            url: $url,
+            published_time: $source->published_at,
+            modified_time: $source->updated_at,
+            articleBody: $source->articleBody,
+            section: $source->section,
+            tags: $source->tags,
+            twitter_username: $source->twitter_username
+                ?? Str::of(config('seo.twitter.@username'))->start('@')->toString(),
+            type: $source->type,
+            site_name: $source->site_name ?? config('seo.site_name'),
+            favicon: $favicon ?? config('seo.favicon'),
+            locale: $source->locale ?? app()->getLocale(),
+            robots: $source->markAsNoindex ? 'noindex, nofollow' : $source->robots,
+            canonical_url: $source->canonical_url,
+            openGraphTitle: $source->openGraphTitle,
+            alternates: $source->alternates,
+        );
+
+        if ($SEOData->image === null) {
+            $SEOData->image = config('seo.image.fallback');
         }
 
         if ($SEOData->image && filter_var(str_replace(' ', '%20', $SEOData->image), FILTER_VALIDATE_URL) === false) {
             $SEOData->imageMeta();
-
             $SEOData->image = secure_url($SEOData->image);
         }
 
@@ -56,75 +89,12 @@ class TagManager implements Renderable, Stringable
             $SEOData->favicon = secure_url($SEOData->favicon);
         }
 
-        if (! $SEOData->url) {
-            $SEOData->url = url()->current();
-        }
-
-        if ($SEOData->url === url('/') && ($homepageTitle = config('seo.title.homepage_title'))) {
-            $SEOData->title = $homepageTitle;
-        }
-
-      return $SEOData;
+        return $SEOData;
     }
 
-    public function for(SEOInputData $source): static
+    protected function inferTitleFromUrl(string $url): string
     {
-        $this->SEOData = $this->fillSEOData($source);
-        $this->schemas = $source->schema;
-        $this->tags = TagCollection::initialize($this->SEOData);
-
-        return $this;
-    }
-
-    protected function resolveSEOData(SEOData | SEOInputData | null $source = null): SEOData
-    {
-        if ($source instanceof SEOData) {
-            return $source;
-        }
-
-        if ($source instanceof SEOInputData) {
-            return $this->mapInputToSEOData($source);
-        }
-
-        return new SEOData;
-    }
-
-    protected function mapInputToSEOData(SEOInputData $source): SEOData
-    {
-        $locale = $source->locale ?? app()->getLocale();
-        $image = $source->image;
-        $schema = SchemaResolver::resolve($source);
-
-        if ($image !== null && filter_var(str_replace(' ', '%20', $image), FILTER_VALIDATE_URL) === false) {
-            $image = url('/images/' . ltrim($image, '/'));
-        }
-
-        return new SEOData(
-            title: $source->title,
-            description: $source->description,
-            author: $source->author,
-            image: $image,
-            url: $source->url,
-            published_time: $source->published_at,
-            modified_time: $source->updated_at,
-            articleBody: $source->articleBody,
-            section: $source->section,
-            tags: $source->tags,
-            twitter_username: $source->twitter_username,
-            type: $source->type,
-            site_name: $source->site_name,
-            favicon: $source->favicon,
-            locale: $locale,
-            robots: $source->markAsNoindex ? 'noindex, nofollow' : $source->robots,
-            canonical_url: $source->canonical_url,
-            openGraphTitle: $source->openGraphTitle,
-            alternates: $source->alternates,
-        );
-    }
-
-    protected function inferTitleFromUrl(): string
-    {
-        return Str::of(url()->current())
+        return Str::of($url)
             ->afterLast('/')
             ->headline();
     }
@@ -132,14 +102,11 @@ class TagManager implements Renderable, Stringable
     public function render(): string
     {
         if (! $this->SEOData instanceof SEOData) {
-            $this->SEOData = $this->fillSEOData();
-            $this->tags = TagCollection::initialize($this->SEOData);
-            $this->tags->add(SchemaCollection::initialize($this->SEOData, $this->schemas));
+            $this->for(new SEOInputData);
         }
 
         return $this->tags
-            ->map(fn (Renderable $tag) => $tag->render())
-            ->implode(PHP_EOL);
+            ->reduce(fn (string $carry, Renderable $item): string => $carry .= Str::of($item->render())->trim() . PHP_EOL, '');
     }
 
     public function __toString(): string
