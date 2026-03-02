@@ -26,13 +26,10 @@ class SEOService implements Stringable
 
     public function render(): string
     {
-        if ($this->data !== null) {
-            $html = resolve(TagManager::class)
+        if ($this->hasData()) {
+            return resolve(TagManager::class)
                 ->for($this->data)
                 ->render();
-            $this->reset();
-
-            return $html;
         }
 
         $title =  config('seo.site_name');

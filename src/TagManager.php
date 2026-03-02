@@ -66,7 +66,7 @@ class TagManager implements Renderable, Stringable
         );
     }
 
-    public function for(SEOData | SEOInputData $source): static
+    public function for(SEOInputData $source): static
     {
         $this->SEOData = $this->fillSEOData($source);
         $this->tags = TagCollection::initialize($this->SEOData);
