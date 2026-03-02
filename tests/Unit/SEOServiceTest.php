@@ -20,7 +20,7 @@ it('renders fallback html when no data is set', function (): void {
         ->toContain('<meta name="robots" content="noindex, nofollow, noarchive">');
 });
 
-it('renders set data and resets state after render', function (): void {
+it('renders set data', function (): void {
     $service = resolve(SEOService::class);
     $service->setData(new SEOInputData(
         title: 'Service Rendered Title',
@@ -30,7 +30,17 @@ it('renders set data and resets state after render', function (): void {
     expect($service->hasData())->toBeTrue();
 
     $output = $service->render();
+    expect($output)
+        ->toContain('Service Rendered Title')
+        ->toContain('Service Description');
+});
 
-    expect($output)->toContain('Service Rendered Title');
-    expect($service->hasData())->toBeFalse();
+it('throws when render is called twice', function (): void {
+    $service = resolve(SEOService::class);
+    $service->setData(new SEOInputData(title: 'First render'));
+
+    $service->render();
+
+    expect(fn () => $service->render())
+        ->toThrow(\LogicException::class, 'SEOService can only be rendered once per request.');
 });
