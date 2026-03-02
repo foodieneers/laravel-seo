@@ -13,8 +13,7 @@ class TagRender implements Renderable, Stringable
         public string $tag,
         public Collection $attributes,
         public null | string | HtmlString $inner = null,
-    ) {
-    }
+    ) {}
 
     public function render(): string
     {

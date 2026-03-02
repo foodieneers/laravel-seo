@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Blade;
+use Illuminate\View\ViewException;
+
 use function Pest\Laravel\artisan;
 
 beforeEach(function (): void {
@@ -26,5 +28,5 @@ it('throws when @seoData is rendered twice', function (): void {
 @seoData
 @seoData
 BLADE))
-        ->toThrow(\Illuminate\View\ViewException::class, 'SEOService can only be rendered once per request.');
+        ->toThrow(ViewException::class, 'SEOService can only be rendered once per request.');
 });

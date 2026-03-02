@@ -42,5 +42,5 @@ it('throws when render is called twice', function (): void {
     $service->render();
 
     expect(fn () => $service->render())
-        ->toThrow(\LogicException::class, 'SEOService can only be rendered once per request.');
+        ->toThrow(LogicException::class, 'SEOService can only be rendered once per request.');
 });

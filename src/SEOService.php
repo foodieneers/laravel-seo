@@ -9,6 +9,7 @@ use Stringable;
 class SEOService implements Stringable
 {
     private ?SEOInputData $data = null;
+
     private bool $hasRendered = false;
 
     public function setData(SEOInputData $data): void
@@ -18,7 +19,7 @@ class SEOService implements Stringable
 
     public function hasData(): bool
     {
-        return $this->data !== null;
+        return $this->data instanceof SEOInputData;
     }
 
     public function reset(): void
@@ -28,9 +29,7 @@ class SEOService implements Stringable
 
     public function render(): string
     {
-        if ($this->hasRendered) {
-            throw new LogicException('SEOService can only be rendered once per request.');
-        }
+        throw_if($this->hasRendered, LogicException::class, 'SEOService can only be rendered once per request.');
 
         $this->hasRendered = true;
 
@@ -44,7 +43,7 @@ class SEOService implements Stringable
             return $rendered;
         }
 
-        $title =  config('seo.site_name');
+        $title = config('seo.site_name');
 
         return sprintf(
             '<title>%s</title><meta name="robots" content="noindex, nofollow, noarchive">',
