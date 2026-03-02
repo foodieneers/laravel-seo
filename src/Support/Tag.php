@@ -3,7 +3,6 @@
 namespace Foodieneers\Laravel\SEO\Support;
 
 use Illuminate\Contracts\Support\Renderable;
-use Illuminate\Contracts\View\View;
 use Illuminate\Support\Collection;
 use Illuminate\Support\HtmlString;
 
@@ -28,13 +27,13 @@ abstract class Tag implements Renderable
 
     public array $attributesPipeline = [];
 
-    public function render(): View
+    public function render(): string
     {
-        return view('seo::tags.tag', [
-            'tag' => $this->tag,
-            'attributes' => $this->collectAttributes(),
-            'inner' => $this->getInner(),
-        ]);
+        return (new TagRender(
+            tag: $this->tag,
+            attributes: $this->collectAttributes(),
+            inner: $this->getInner(),
+        ))->render();
     }
 
     public function collectAttributes(): Collection

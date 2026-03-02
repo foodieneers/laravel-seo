@@ -36,7 +36,6 @@ class TagCollection extends Collection
             OpenGraphTags::initialize($SEOData),
             TwitterCardTags::initialize($SEOData),
             AlternateTags::initialize($SEOData),
-            SchemaTagCollection::initialize($SEOData),
         ])->reject(fn (?Renderable $item): bool => $item === null);
 
         foreach ($tags as $tag) {

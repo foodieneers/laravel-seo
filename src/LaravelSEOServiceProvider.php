@@ -19,8 +19,7 @@ class LaravelSEOServiceProvider extends PackageServiceProvider
     {
         $package
             ->name('laravel-seo')
-            ->hasConfigFile()
-            ->hasViews('seo');
+            ->hasConfigFile();
     }
 
     public function bootingPackage(): void
