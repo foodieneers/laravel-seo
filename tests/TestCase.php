@@ -14,11 +14,6 @@ class TestCase extends Orchestra
     {
         parent::setUp();
 
-        Factory::guessFactoryNamesUsing(
-            fn (string $modelName): string => 'Foodieneers\\Laravel\\SEO\\Database\\Factories\\' . class_basename($modelName) . 'Factory'
-        );
-
-        // Freeze the time across entire testsuite...
         Date::setTestNow(now());
     }
 
@@ -34,8 +29,5 @@ class TestCase extends Orchestra
         config()->set('database.default', 'testing');
 
         Schema::enableForeignKeyConstraints();
-
-        (include __DIR__ . '/../database/migrations/create_seo_table.php.stub')->up();
-        (include __DIR__ . '/../tests/Fixtures/migrations/create_pages_table.php')->up();
     }
 }

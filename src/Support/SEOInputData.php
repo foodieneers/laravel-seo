@@ -13,7 +13,7 @@ use Carbon\CarbonInterface;
 final readonly class SEOInputData
 {
     /**
-     * @param  array<int, array<string, mixed>>  $schema
+     * @param  array<int, string|array<string, mixed>>  $schema
      * @param  null|array<array-key, AlternateTag>  $alternates
      */
     public function __construct(

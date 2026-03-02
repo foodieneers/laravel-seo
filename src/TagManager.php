@@ -5,7 +5,7 @@ namespace Foodieneers\Laravel\SEO;
 use const FILTER_VALIDATE_URL;
 
 use Foodieneers\Laravel\SEO\Facades\SEOManager;
-use Spatie\SchemaOrg\Schema;
+use Foodieneers\Laravel\SEO\Support\SchemaResolver;
 use Foodieneers\Laravel\SEO\Support\SEOData;
 use Foodieneers\Laravel\SEO\Support\SEOInputData;
 use Illuminate\Contracts\Support\Renderable;
@@ -91,45 +91,10 @@ class TagManager implements Renderable, Stringable
     {
         $locale = $source->locale ?? app()->getLocale();
         $image = $source->image;
-        $schema = null;
-        $currentBreadcrumbName = $source->currentBreadcrumbName;
+        $schema = SchemaResolver::resolve($source);
 
         if ($image !== null && filter_var(str_replace(' ', '%20', $image), FILTER_VALIDATE_URL) === false) {
             $image = url('/images/' . ltrim($image, '/'));
-        }
-
-        if ($source->schema !== []) {
-            $schema = SchemaCollection::initialize();
-
-            foreach ($source->schema as $schemaType) {
-                if (is_string($schemaType) && $schemaType === 'BreadcrumbList') {
-                    $currentBreadcrumbName ??= $this->inferTitleFromUrl();
-                    $list = [];
-                    $counter = 1;
-
-                    foreach ($source->breadcrumbs as $name => $url) {
-                        $list[] = Schema::listItem()
-                            ->position($counter++)
-                            ->name($name)
-                            ->item($url);
-                    }
-                    $list[] = Schema::listItem()
-                        ->position($counter++)
-                        ->name($currentBreadcrumbName);
-
-                    foreach ($source->appendBreadcrumb as $name => $url) {
-                        $list[] = Schema::listItem()
-                            ->position($counter++)
-                            ->name($name)
-                            ->item($url);
-                    }
-                    $schema->add(Schema::breadcrumbList()->itemListElement($list)->toArray());
-
-                    continue;
-                }
-
-                $schema->add($schemaType);
-            }
         }
 
         return new SEOData(
