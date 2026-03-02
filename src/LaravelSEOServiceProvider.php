@@ -8,6 +8,13 @@ use Spatie\LaravelPackageTools\PackageServiceProvider;
 
 class LaravelSEOServiceProvider extends PackageServiceProvider
 {
+    public function register(): void
+    {
+        parent::register();
+
+        $this->app->singleton(SEOService::class, fn (): SEOService => new SEOService);
+    }
+
     public function configurePackage(Package $package): void
     {
         $package
@@ -18,7 +25,7 @@ class LaravelSEOServiceProvider extends PackageServiceProvider
 
     public function bootingPackage(): void
     {
-        Blade::directive('seo', fn ($expression): string => "<?php \$seo = new \Foodieneers\Laravel\SEO\Support\SEOInputData({$expression}); ?>");
+        Blade::directive('seo', fn ($expression): string => "<?php app(\Foodieneers\Laravel\SEO\SEOService::class)->setData(new \Foodieneers\Laravel\SEO\Support\SEOInputData({$expression})); ?>");
     }
 
     public function packageRegistered(): void

@@ -1,34 +1,20 @@
 <?php
 
-use Foodieneers\Laravel\SEO\Support\SEOData;
-use Foodieneers\Laravel\SEO\TagManager;
-use Foodieneers\Laravel\SEO\Tests\Fixtures\Page;
+use Foodieneers\Laravel\SEO\SEOService;
+use Foodieneers\Laravel\SEO\Support\SEOInputData;
 
-it('can get the TagManager', function (): void {
-    expect(seo())->toBeInstanceOf(TagManager::class);
+it('can render fallback HTML when no SEOInputData is set', function (): void {
+    expect(seo())
+        ->toContain('<meta name="robots" content="noindex, nofollow, noarchive">');
 });
 
-it('can get the TagManager with and without a model', function (): void {
-    expect(seo())->toBeInstanceOf(TagManager::class);
-
-    $page = Page::create();
-
-    expect(seo())->model->toBeNull();
-    expect(seo()->for($page))->model->toBe($page);
-    expect(seo($page))->model->toBe($page);
-    expect(seo())->model->toBeNull();
-});
-
-it('can get the TagManager with a SEOData data object', function (): void {
-    expect(seo())->toBeInstanceOf(TagManager::class);
-
-    $SEOData = new SEOData(
+it('can render input data from the SEO service', function (): void {
+    app(SEOService::class)->setData(new SEOInputData(
         title: 'Awesome News - My Project',
         description: 'Lorem Ipsum',
-    );
+    ));
 
-    expect(seo())->SEOData->toBeNull();
-    expect(seo()->for($SEOData))->SEOData->toBe($SEOData);
-    expect(seo($SEOData))->SEOData->toBe($SEOData);
-    expect(seo())->SEOData->toBeNull();
+    expect(seo())
+        ->toBeString()
+        ->toContain('Awesome News - My Project');
 });

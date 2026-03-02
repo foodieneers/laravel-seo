@@ -3,6 +3,7 @@
 use Foodieneers\Laravel\SEO\Facades\SEOManager;
 use Foodieneers\Laravel\SEO\Support\MetaTag;
 use Foodieneers\Laravel\SEO\Support\SEOData;
+use Foodieneers\Laravel\SEO\TagManager;
 use Illuminate\Support\Collection;
 
 use function Pest\Laravel\get;
@@ -23,7 +24,7 @@ test('can render the SEOData from an object that\'s directly passed in', functio
         title: 'Awesome News - My Project',
     );
 
-    $output = seo()->for($SEOData)->render();
+    $output = resolve(TagManager::class)->for($SEOData)->render();
 
     expect($output)->toContain('Awesome News - My Project');
 });

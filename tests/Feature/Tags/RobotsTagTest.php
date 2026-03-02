@@ -1,6 +1,7 @@
 <?php
 
 use Foodieneers\Laravel\SEO\Support\SEOData;
+use Foodieneers\Laravel\SEO\TagManager;
 use Foodieneers\Laravel\SEO\Tests\Fixtures\Page;
 
 use function Pest\Laravel\get;
@@ -19,7 +20,7 @@ it('can overwrite the robots tag "default" value with the robots attribute (SEOD
     $SEOData = new SEOData(
         robots: 'noindex,nofollow',
     );
-    $SEODataOutput = (string) seo($SEOData);
+    $SEODataOutput = resolve(TagManager::class)->for($SEOData)->render();
 
     $this->assertStringContainsString('<meta name="robots" content="noindex,nofollow">', $SEODataOutput);
 });
@@ -31,7 +32,7 @@ it('cannot overwrite the robots tag "default" value with the robots attribute if
     $SEOData = new SEOData(
         robots: 'noindex,nofollow',
     );
-    $SEODataOutput = (string) seo($SEOData);
+    $SEODataOutput = resolve(TagManager::class)->for($SEOData)->render();
 
     $this->assertStringContainsString('<meta name="robots" content="max-snippet:-1">', $SEODataOutput);
 });

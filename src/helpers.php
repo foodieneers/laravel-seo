@@ -1,18 +1,10 @@
 <?php
 
-use Foodieneers\Laravel\SEO\Support\SEOData;
-use Foodieneers\Laravel\SEO\Support\SEOInputData;
-use Foodieneers\Laravel\SEO\TagManager;
+use Foodieneers\Laravel\SEO\SEOService;
 
 if (! function_exists('seo')) {
-    function seo(SEOData | SEOInputData | null $source = null): TagManager
+    function seo(): string
     {
-        $tagManager = resolve(TagManager::class);
-
-        if ($source instanceof SEOData || $source instanceof SEOInputData) {
-            $tagManager->for($source);
-        }
-
-        return $tagManager;
+        return resolve(SEOService::class)->render();
     }
 }
