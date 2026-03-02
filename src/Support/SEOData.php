@@ -3,12 +3,9 @@
 namespace Foodieneers\Laravel\SEO\Support;
 
 use Carbon\CarbonInterface;
-use Foodieneers\Laravel\SEO\SchemaCollection;
-use RalphJSmit\Helpers\Laravel\Pipe\Pipeable;
 
 class SEOData
 {
-    use Pipeable;
 
     /**
      * @param  null|array<array-key, AlternateTag>  $alternates
@@ -27,7 +24,6 @@ class SEOData
         public ?string $section = null,
         public ?array $tags = null,
         public ?string $twitter_username = null,
-        public ?SchemaCollection $schema = null,
         public ?string $type = 'website',
         public ?string $site_name = null,
         public ?string $favicon = null,
@@ -49,12 +45,5 @@ class SEOData
         }
 
         return null;
-    }
-
-    public function markAsNoindex(): static
-    {
-        $this->robots = 'noindex, nofollow';
-
-        return $this;
     }
 }

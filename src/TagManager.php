@@ -2,21 +2,24 @@
 
 namespace Foodieneers\Laravel\SEO;
 
-use const FILTER_VALIDATE_URL;
-
 use Foodieneers\Laravel\SEO\Facades\SEOManager;
 use Foodieneers\Laravel\SEO\Support\SchemaResolver;
+use Foodieneers\Laravel\SEO\Support\SchemaTagCollection;
 use Foodieneers\Laravel\SEO\Support\SEOData;
 use Foodieneers\Laravel\SEO\Support\SEOInputData;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Support\Str;
 use Stringable;
 
+use const FILTER_VALIDATE_URL;
+
 class TagManager implements Renderable, Stringable
 {
     public ?SEOData $SEOData = null;
 
     public TagCollection $tags;
+
+    public array $schemas = [];
 
     public function __construct()
     {
@@ -61,14 +64,13 @@ class TagManager implements Renderable, Stringable
             $SEOData->title = $homepageTitle;
         }
 
-        return $SEOData->pipethrough(
-            SEOManager::getSEODataTransformers()
-        );
+      return $SEOData;
     }
 
     public function for(SEOInputData $source): static
     {
         $this->SEOData = $this->fillSEOData($source);
+        $this->schemas = $source->schema;
         $this->tags = TagCollection::initialize($this->SEOData);
 
         return $this;
@@ -109,7 +111,6 @@ class TagManager implements Renderable, Stringable
             section: $source->section,
             tags: $source->tags,
             twitter_username: $source->twitter_username,
-            schema: $schema,
             type: $source->type,
             site_name: $source->site_name,
             favicon: $source->favicon,
@@ -133,11 +134,12 @@ class TagManager implements Renderable, Stringable
         if (! $this->SEOData instanceof SEOData) {
             $this->SEOData = $this->fillSEOData();
             $this->tags = TagCollection::initialize($this->SEOData);
+            $this->tags->add(SchemaCollection::initialize($this->SEOData, $this->schemas));
         }
 
         return $this->tags
-            ->pipeThrough(SEOManager::getTagTransformers())
-            ->reduce(fn (string $carry, Renderable $item): string => $carry .= Str::of($item->render())->trim() . PHP_EOL, '');
+            ->map(fn (Renderable $tag) => $tag->render())
+            ->implode(PHP_EOL);
     }
 
     public function __toString(): string

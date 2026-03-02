@@ -22,11 +22,6 @@ class SEOService implements Stringable
         return $this->data instanceof SEOInputData;
     }
 
-    public function reset(): void
-    {
-        $this->data = null;
-    }
-
     public function render(): string
     {
         throw_if($this->hasRendered, LogicException::class, 'SEOService can only be rendered once per request.');
@@ -37,8 +32,6 @@ class SEOService implements Stringable
             $rendered = resolve(TagManager::class)
                 ->for($this->data)
                 ->render();
-
-            $this->reset();
 
             return $rendered;
         }
