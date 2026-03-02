@@ -6,7 +6,6 @@ use Carbon\CarbonInterface;
 
 class SEOData
 {
-
     /**
      * @param  null|array<array-key, AlternateTag>  $alternates
      */

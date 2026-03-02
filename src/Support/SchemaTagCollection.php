@@ -9,8 +9,5 @@ class SchemaTagCollection extends Collection implements Renderable
 {
     use RenderableCollection;
 
-    public static function initialize(?SEOData $SEOData = null): void
-    {
-      
-    }
+    public static function initialize(?SEOData $SEOData = null): void {}
 }

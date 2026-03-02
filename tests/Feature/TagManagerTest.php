@@ -2,6 +2,7 @@
 
 use Foodieneers\Laravel\SEO\Support\SEOInputData;
 use Foodieneers\Laravel\SEO\TagManager;
+
 it('builds and renders tags from SEOInputData', function (): void {
     $output = resolve(TagManager::class)
         ->for(new SEOInputData(
@@ -38,8 +39,8 @@ it('uses homepage title for root URL when configured', function (): void {
 
 it('marks robots as noindex when requested', function (): void {
     $manager = resolve(TagManager::class)->for(new SEOInputData(
-        markAsNoindex: true,
         url: 'https://example.com/private',
+        markAsNoindex: true,
     ));
 
     expect($manager->SEOData?->robots)->toBe('noindex, nofollow');

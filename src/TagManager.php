@@ -2,13 +2,13 @@
 
 namespace Foodieneers\Laravel\SEO;
 
+use const FILTER_VALIDATE_URL;
+
 use Foodieneers\Laravel\SEO\Support\SEOData;
 use Foodieneers\Laravel\SEO\Support\SEOInputData;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Support\Str;
 use Stringable;
-
-use const FILTER_VALIDATE_URL;
 
 class TagManager implements Renderable, Stringable
 {

@@ -29,11 +29,9 @@ class SEOService implements Stringable
         $this->hasRendered = true;
 
         if ($this->hasData()) {
-            $rendered = resolve(TagManager::class)
+            return resolve(TagManager::class)
                 ->for($this->data)
                 ->render();
-
-            return $rendered;
         }
 
         $title = config('seo.site_name');

@@ -2,7 +2,6 @@
 
 namespace Foodieneers\Laravel\SEO;
 
-use Foodieneers\Laravel\SEO\Support\SchemaTagCollection;
 use Foodieneers\Laravel\SEO\Support\SEOData;
 use Foodieneers\Laravel\SEO\Tags\AlternateTags;
 use Foodieneers\Laravel\SEO\Tags\AuthorTag;

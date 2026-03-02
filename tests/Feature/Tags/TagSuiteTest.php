@@ -90,8 +90,8 @@ it('renders sitemap tag from config', function (): void {
 
 it('renders image and favicon tags and resolves relative paths', function (): void {
     $output = renderSeo(new SEOInputData(
-        url: 'https://example.com/post',
         image: '/images/social.jpg',
+        url: 'https://example.com/post',
         favicon: '/favicon-test.ico',
     ));
 
@@ -124,17 +124,17 @@ it('renders OpenGraph tags including article metadata', function (): void {
 
     $output = OpenGraphTags::initialize(new SEOData(
         title: 'Default title',
-        openGraphTitle: 'OG custom title',
         description: 'OG description',
         image: 'https://cdn.example.com/cover.jpg',
-        imageMeta: $imageMeta,
         url: 'https://example.com/post',
-        site_name: 'Example',
-        type: 'article',
-        section: 'News',
-        tags: ['tag-one', 'tag-two'],
+        imageMeta: $imageMeta,
         published_time: $published,
         modified_time: $modified,
+        section: 'News',
+        tags: ['tag-one', 'tag-two'],
+        type: 'article',
+        site_name: 'Example',
+        openGraphTitle: 'OG custom title',
     ))->render();
 
     expect($output)

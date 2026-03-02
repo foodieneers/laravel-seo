@@ -2,6 +2,4 @@
 
 namespace Foodieneers\Laravel\SEO;
 
-class SEOManager
-{
-}
+class SEOManager {}

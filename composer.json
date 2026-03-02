@@ -39,9 +39,12 @@
     },
     "scripts": {
         "test": "vendor/bin/pest",
-        "lint": "vendor/bin/rector && vendor/bin/pint",
-        "test-coverage": "vendor/bin/pest --coverage",
-        "format": "vendor/bin/pint"
+        "test:types": "vendor/bin/phpstan analyse --memory-limit=4G",
+        "lint": [
+            "vendor/bin/rector",
+            "vendor/bin/pint"
+        ],
+        "test-coverage": "vendor/bin/pest --coverage"
     },
     "config": {
         "sort-packages": true,
