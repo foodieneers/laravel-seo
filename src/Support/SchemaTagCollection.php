@@ -9,7 +9,7 @@ class SchemaTagCollection extends Collection implements Renderable
 {
     public static function initialize(?SEOData $SEOData = null): ?static
     {
-        if ($SEOData === null) {
+        if (! $SEOData instanceof SEOData) {
             return null;
         }
 

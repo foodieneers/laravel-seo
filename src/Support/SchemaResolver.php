@@ -77,6 +77,4 @@ class SchemaResolver
             default => throw new InvalidArgumentException("Unsupported schema type [{$schemaType}]"),
         };
     }
-
- 
 }

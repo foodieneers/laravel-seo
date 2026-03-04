@@ -7,7 +7,6 @@ use Spatie\SchemaOrg\Schema;
 
 class BreadcrumbList
 {
-  
     public static function make(array $breadcrumbs, string $currentBreadcrumbName, array $appendBreadcrumb = []): SchemaBreadcrumbList
     {
         $list = [];
@@ -27,6 +26,7 @@ class BreadcrumbList
                 ->name($name)
                 ->item($url);
         }
+
         return Schema::breadcrumbList()
             ->itemListElement($list);
     }
