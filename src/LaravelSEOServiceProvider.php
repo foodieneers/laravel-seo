@@ -28,8 +28,4 @@ class LaravelSEOServiceProvider extends PackageServiceProvider
         Blade::directive('seoData', fn (): string => "<?php echo app(\Foodieneers\Laravel\SEO\SEOService::class)->render(); ?>");
     }
 
-    public function packageRegistered(): void
-    {
-        $this->app->singleton(SEOManager::class);
-    }
 }
