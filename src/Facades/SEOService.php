@@ -2,11 +2,11 @@
 
 namespace Foodieneers\Laravel\SEO\Facades;
 
-use Foodieneers\Laravel\SEO\Support\SEOInputData;
+use Foodieneers\Laravel\SEO\Support\SEOData;
 use Illuminate\Support\Facades\Facade;
 
 /**
- * @method static void setData(SEOInputData $data)
+ * @method static void setData(SEOData $data)
  * @method static bool hasData()
  * @method static void reset()
  * @method static string render()

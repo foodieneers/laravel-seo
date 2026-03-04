@@ -12,9 +12,9 @@ use Spatie\SchemaOrg\Schema;
 
 class SchemaResolver
 {
-    public function __construct(public array $sourceSchema, public SEOInputData $source) {}
+    public function __construct(public array $sourceSchema, public SEOData $source) {}
 
-    public static function resolve(SEOInputData $source): ?SchemaCollection
+    public static function resolve(SEOData $source): ?SchemaCollection
     {
         if ($source->schema === []) {
             return null;
@@ -71,7 +71,7 @@ class SchemaResolver
         };
     }
 
-    protected function buildBreadcrumbList(SEOInputData $source): BreadcrumbList
+    protected function buildBreadcrumbList(SEOData $source): BreadcrumbList
     {
         $list = [];
         $counter = 1;
@@ -98,7 +98,7 @@ class SchemaResolver
             ->itemListElement($list);
     }
 
-    protected function resolveCurrentBreadcrumbName(SEOInputData $source): string
+    protected function resolveCurrentBreadcrumbName(SEOData $source): string
     {
         return $source->currentBreadcrumbName
             ?? Str::of($source->url ?: url()->current())->afterLast('/')->headline()->toString();

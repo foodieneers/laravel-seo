@@ -8,6 +8,7 @@ class SEOData
 {
     /**
      * @param  null|array<array-key, AlternateTag>  $alternates
+     * @param  array<int, string|array<string, mixed>>  $schema
      */
     public function __construct(
         public ?string $title = null,
@@ -31,6 +32,11 @@ class SEOData
         public ?string $canonical_url = null,
         public ?string $openGraphTitle = null,
         public ?array $alternates = null,
+        public array $schema = [],
+        public ?string $currentBreadcrumbName = null,
+        public ?array $breadcrumbs = [],
+        public ?array $appendBreadcrumb = [],
+        public bool $markAsNoindex = false,
     ) {
         if ($this->locale === null) {
             $this->locale = app()->getLocale();

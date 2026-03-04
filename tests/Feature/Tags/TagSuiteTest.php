@@ -4,14 +4,13 @@ use Carbon\CarbonImmutable;
 use Foodieneers\Laravel\SEO\Support\AlternateTag;
 use Foodieneers\Laravel\SEO\Support\ImageMeta;
 use Foodieneers\Laravel\SEO\Support\SEOData;
-use Foodieneers\Laravel\SEO\Support\SEOInputData;
 use Foodieneers\Laravel\SEO\TagManager;
 use Foodieneers\Laravel\SEO\Tags\OpenGraphTags;
 use Foodieneers\Laravel\SEO\Tags\TwitterCard\Summary;
 use Foodieneers\Laravel\SEO\Tags\TwitterCard\SummaryLargeImage;
 use Foodieneers\Laravel\SEO\Tags\TwitterCardTags;
 
-function renderSeo(SEOInputData $input): string
+function renderSeo(SEOData $input): string
 {
     return resolve(TagManager::class)
         ->for($input)
@@ -19,7 +18,7 @@ function renderSeo(SEOInputData $input): string
 }
 
 it('renders title tag without inertia attribute', function (): void {
-    $output = renderSeo(new SEOInputData(
+    $output = renderSeo(new SEOData(
         title: 'My title',
         url: 'https://example.com/post',
     ));
@@ -30,7 +29,7 @@ it('renders title tag without inertia attribute', function (): void {
 });
 
 it('renders description and author tags', function (): void {
-    $output = renderSeo(new SEOInputData(
+    $output = renderSeo(new SEOData(
         description: 'Page description',
         author: 'Jane Doe',
         url: 'https://example.com/post',
@@ -44,7 +43,7 @@ it('renders description and author tags', function (): void {
 it('renders canonical tag and can be disabled', function (): void {
     config()->set('seo.canonical_link', true);
 
-    $withCanonical = renderSeo(new SEOInputData(
+    $withCanonical = renderSeo(new SEOData(
         url: 'https://example.com/post',
         canonical_url: 'https://example.com/canonical',
     ));
@@ -53,7 +52,7 @@ it('renders canonical tag and can be disabled', function (): void {
 
     config()->set('seo.canonical_link', false);
 
-    $withoutCanonical = renderSeo(new SEOInputData(
+    $withoutCanonical = renderSeo(new SEOData(
         url: 'https://example.com/post',
     ));
 
@@ -64,13 +63,13 @@ it('renders robots tag using default or provided value', function (): void {
     config()->set('seo.robots.default', 'index, follow');
     config()->set('seo.robots.force_default', false);
 
-    $defaultRobots = renderSeo(new SEOInputData(
+    $defaultRobots = renderSeo(new SEOData(
         url: 'https://example.com/post',
     ));
 
     expect($defaultRobots)->toContain('<meta name="robots" content="index, follow">');
 
-    $customRobots = renderSeo(new SEOInputData(
+    $customRobots = renderSeo(new SEOData(
         url: 'https://example.com/post',
         robots: 'noindex, nofollow',
     ));
@@ -81,7 +80,7 @@ it('renders robots tag using default or provided value', function (): void {
 it('renders sitemap tag from config', function (): void {
     config()->set('seo.sitemap', '/sitemap.xml');
 
-    $output = renderSeo(new SEOInputData(
+    $output = renderSeo(new SEOData(
         url: 'https://example.com/post',
     ));
 
@@ -89,7 +88,7 @@ it('renders sitemap tag from config', function (): void {
 });
 
 it('renders image and favicon tags and resolves relative paths', function (): void {
-    $output = renderSeo(new SEOInputData(
+    $output = renderSeo(new SEOData(
         image: '/images/social.jpg',
         url: 'https://example.com/post',
         favicon: '/favicon-test.ico',
@@ -101,7 +100,7 @@ it('renders image and favicon tags and resolves relative paths', function (): vo
 });
 
 it('renders alternate tags when provided', function (): void {
-    $output = renderSeo(new SEOInputData(
+    $output = renderSeo(new SEOData(
         url: 'https://example.com/en/post',
         alternates: [
             new AlternateTag('en', 'https://example.com/en/post'),

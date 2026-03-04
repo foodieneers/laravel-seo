@@ -5,7 +5,6 @@ namespace Foodieneers\Laravel\SEO;
 use const FILTER_VALIDATE_URL;
 
 use Foodieneers\Laravel\SEO\Support\SEOData;
-use Foodieneers\Laravel\SEO\Support\SEOInputData;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Support\Str;
 use Stringable;
@@ -21,18 +20,19 @@ class TagManager implements Renderable, Stringable
         $this->tags = new TagCollection;
     }
 
-    public function for(SEOInputData $source): static
+    public function for(SEOData $source): static
     {
-        $this->SEOData = $this->buildFromInput($source);
+        $this->SEOData = $this->normalize($source);
         $this->tags = TagCollection::initialize($this->SEOData);
 
         return $this;
     }
 
-    protected function buildFromInput(SEOInputData $source): SEOData
+    protected function normalize(SEOData $source): SEOData
     {
         $url = $source->url ?: url()->current();
-        $title = $source->title;
+        $SEOData = clone $source;
+        $title = $SEOData->title;
 
         if ($title === null && config('seo.title.infer_title_from_url')) {
             $title = $this->inferTitleFromUrl($url);
@@ -42,8 +42,8 @@ class TagManager implements Renderable, Stringable
             $title = $homepageTitle;
         }
 
-        $image = $source->image;
-        $favicon = $source->favicon;
+        $image = $SEOData->image;
+        $favicon = $SEOData->favicon;
 
         if ($image !== null && filter_var(str_replace(' ', '%20', $image), FILTER_VALIDATE_URL) === false) {
             $image = secure_url($image);
@@ -53,29 +53,17 @@ class TagManager implements Renderable, Stringable
             $favicon = secure_url($favicon);
         }
 
-        $SEOData = new SEOData(
-            title: $title,
-            description: $source->description ?? config('seo.description.fallback'),
-            author: $source->author ?? config('seo.author.fallback'),
-            image: $image,
-            url: $url,
-            published_time: $source->published_at,
-            modified_time: $source->updated_at,
-            articleBody: $source->articleBody,
-            section: $source->section,
-            tags: $source->tags,
-            twitter_username: $source->twitter_username
-                ?? Str::of(config('seo.twitter.@username'))->start('@')->toString(),
-            type: $source->type,
-            site_name: $source->site_name ?? config('seo.site_name'),
-            favicon: $favicon ?? config('seo.favicon'),
-            locale: $source->locale ?? app()->getLocale(),
-            robots: $source->markAsNoindex ? 'noindex, nofollow' : $source->robots,
-            canonical_url: $source->canonical_url,
-            openGraphTitle: $source->openGraphTitle,
-            alternates: $source->alternates,
-        );
-
+        $SEOData->title = $title;
+        $SEOData->description ??= config('seo.description.fallback');
+        $SEOData->author ??= config('seo.author.fallback');
+        $SEOData->image = $image;
+        $SEOData->url = $url;
+        $SEOData->twitter_username ??= Str::of(config('seo.twitter.@username'))->start('@')->toString();
+        $SEOData->site_name ??= config('seo.site_name');
+        $SEOData->favicon = $favicon ?? config('seo.favicon');
+        $SEOData->locale ??= app()->getLocale();
+        $SEOData->robots = $SEOData->markAsNoindex ? 'noindex, nofollow' : $SEOData->robots;
+        $SEOData->currentBreadcrumbName ??= $this->inferTitleFromUrl($url);
         if ($SEOData->image === null) {
             $SEOData->image = config('seo.image.fallback');
         }
@@ -83,10 +71,6 @@ class TagManager implements Renderable, Stringable
         if ($SEOData->image && filter_var(str_replace(' ', '%20', $SEOData->image), FILTER_VALIDATE_URL) === false) {
             $SEOData->imageMeta();
             $SEOData->image = secure_url($SEOData->image);
-        }
-
-        if ($SEOData->favicon && filter_var(str_replace(' ', '%20', $SEOData->favicon), FILTER_VALIDATE_URL) === false) {
-            $SEOData->favicon = secure_url($SEOData->favicon);
         }
 
         return $SEOData;
@@ -102,7 +86,7 @@ class TagManager implements Renderable, Stringable
     public function render(): string
     {
         if (! $this->SEOData instanceof SEOData) {
-            $this->for(new SEOInputData);
+            $this->for(new SEOData);
         }
 
         return $this->tags

@@ -1,7 +1,7 @@
 <?php
 
 use Foodieneers\Laravel\SEO\SEOService;
-use Foodieneers\Laravel\SEO\Support\SEOInputData;
+use Foodieneers\Laravel\SEO\Support\SEOData;
 
 test('the SEOService singleton works as expected', function (): void {
     $serviceA = resolve(SEOService::class);
@@ -22,7 +22,7 @@ it('renders fallback html when no data is set', function (): void {
 
 it('renders set data', function (): void {
     $service = resolve(SEOService::class);
-    $service->setData(new SEOInputData(
+    $service->setData(new SEOData(
         title: 'Service Rendered Title',
         description: 'Service Description',
     ));
@@ -37,7 +37,7 @@ it('renders set data', function (): void {
 
 it('throws when render is called twice', function (): void {
     $service = resolve(SEOService::class);
-    $service->setData(new SEOInputData(title: 'First render'));
+    $service->setData(new SEOData(title: 'First render'));
 
     $service->render();
 

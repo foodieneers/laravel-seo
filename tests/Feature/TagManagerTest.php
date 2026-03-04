@@ -1,11 +1,11 @@
 <?php
 
-use Foodieneers\Laravel\SEO\Support\SEOInputData;
+use Foodieneers\Laravel\SEO\Support\SEOData;
 use Foodieneers\Laravel\SEO\TagManager;
 
-it('builds and renders tags from SEOInputData', function (): void {
+it('builds and renders tags from SEOData', function (): void {
     $output = resolve(TagManager::class)
-        ->for(new SEOInputData(
+        ->for(new SEOData(
             title: 'Awesome News - My Project',
             description: 'Custom description',
             url: 'https://example.com/news',
@@ -20,7 +20,7 @@ it('builds and renders tags from SEOInputData', function (): void {
 it('infers title from URL when enabled', function (): void {
     config()->set('seo.title.infer_title_from_url', true);
 
-    $manager = resolve(TagManager::class)->for(new SEOInputData(
+    $manager = resolve(TagManager::class)->for(new SEOData(
         url: 'https://example.com/posts/my-first-post',
     ));
 
@@ -30,7 +30,7 @@ it('infers title from URL when enabled', function (): void {
 it('uses homepage title for root URL when configured', function (): void {
     config()->set('seo.title.homepage_title', 'Custom homepage title');
 
-    $manager = resolve(TagManager::class)->for(new SEOInputData(
+    $manager = resolve(TagManager::class)->for(new SEOData(
         url: url('/'),
     ));
 
@@ -38,7 +38,7 @@ it('uses homepage title for root URL when configured', function (): void {
 });
 
 it('marks robots as noindex when requested', function (): void {
-    $manager = resolve(TagManager::class)->for(new SEOInputData(
+    $manager = resolve(TagManager::class)->for(new SEOData(
         url: 'https://example.com/private',
         markAsNoindex: true,
     ));

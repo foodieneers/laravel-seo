@@ -326,37 +326,7 @@ class Homepage extends Controller
 {!! seo($SEOData) !!}
 ```
 
-### Using SEOInputData as a DTO
-
-If you prefer a strict input object for controllers, view models, or actions, you can pass `SEOInputData` to `seo()` as a lightweight immutable DTO.  
-`SEOInputData` is transformed into internal `SEOData` inside the package before tags are generated.
-
-```php
-use Foodieneers\Laravel\SEO\Support\SEOInputData;
-
-$seoInput = new SEOInputData(
-    title: 'Awesome News - My Project',
-    description: 'Lorem Ipsum',
-    image: '/images/cover.jpg',
-    markAsNoindex: false,
-);
-
-return view('homepage', [
-    'seoInput' => $seoInput,
-]);
-```
-
-```blade
-{!! seo($seoInput) !!}
-```
-
-`SEOInputData` is best used for:
-
-1. A user-oriented and stable constructor API.
-2. Write-once data transfer from your app layers to the SEO package.
-3. Keeping transformation/default logic centralized in the package (`TagManager` + `SEOData`).
-
-You can still pass `SEOData` directly when you need full internal control.
+Use `SEOData` directly in your controllers, view models, or actions. The package normalizes and enriches this single object before generating tags.
 
 ## Generating JSON-LD structured data
 

@@ -2,24 +2,24 @@
 
 namespace Foodieneers\Laravel\SEO;
 
-use Foodieneers\Laravel\SEO\Support\SEOInputData;
+use Foodieneers\Laravel\SEO\Support\SEOData;
 use LogicException;
 use Stringable;
 
 class SEOService implements Stringable
 {
-    private ?SEOInputData $data = null;
+    private ?SEOData $data = null;
 
     private bool $hasRendered = false;
 
-    public function setData(SEOInputData $data): void
+    public function setData(SEOData $data): void
     {
         $this->data = $data;
     }
 
     public function hasData(): bool
     {
-        return $this->data instanceof SEOInputData;
+        return $this->data instanceof SEOData;
     }
 
     public function render(): string

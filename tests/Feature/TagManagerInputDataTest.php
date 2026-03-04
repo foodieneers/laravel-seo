@@ -1,9 +1,9 @@
 <?php
 
-use Foodieneers\Laravel\SEO\Support\SEOInputData;
+use Foodieneers\Laravel\SEO\Support\SEOData;
 use Foodieneers\Laravel\SEO\TagManager;
 
-it('builds SEOData from SEOInputData with config defaults and inferred title', function (): void {
+it('normalizes SEOData with config defaults and inferred title', function (): void {
     config()->set('seo.title.infer_title_from_url', true);
     config()->set('seo.description.fallback', 'Fallback description');
     config()->set('seo.author.fallback', 'Fallback author');
@@ -11,7 +11,7 @@ it('builds SEOData from SEOInputData with config defaults and inferred title', f
     config()->set('seo.favicon', '/favicon.ico');
     config()->set('seo.twitter.@username', 'foodieneers');
 
-    $manager = resolve(TagManager::class)->for(new SEOInputData(
+    $manager = resolve(TagManager::class)->for(new SEOData(
         url: 'https://example.com/blog/my-article',
     ));
 
@@ -23,8 +23,8 @@ it('builds SEOData from SEOInputData with config defaults and inferred title', f
         ->and($manager->SEOData?->twitter_username)->toBe('@foodieneers');
 });
 
-it('uses noindex robots when SEOInputData is marked as noindex', function (): void {
-    $manager = resolve(TagManager::class)->for(new SEOInputData(
+it('uses noindex robots when SEOData is marked as noindex', function (): void {
+    $manager = resolve(TagManager::class)->for(new SEOData(
         markAsNoindex: true,
     ));
 
