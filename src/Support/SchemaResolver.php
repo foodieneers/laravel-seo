@@ -3,6 +3,7 @@
 namespace Foodieneers\Laravel\SEO\Support;
 
 use Foodieneers\Laravel\SEO\Schema\BreadcrumbList;
+use Foodieneers\Laravel\SEO\Schema\Person;
 use InvalidArgumentException;
 use Spatie\SchemaOrg\BaseType;
 use Spatie\SchemaOrg\Graph;
