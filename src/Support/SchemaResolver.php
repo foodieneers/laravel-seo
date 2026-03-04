@@ -2,15 +2,14 @@
 
 namespace Foodieneers\Laravel\SEO\Support;
 
+use Foodieneers\Laravel\SEO\Schema\BreadcrumbList;
 use InvalidArgumentException;
 use Spatie\SchemaOrg\BaseType;
-use Spatie\SchemaOrg\BreadcrumbList;
 use Spatie\SchemaOrg\Graph;
-use Spatie\SchemaOrg\Schema;
 
 class SchemaResolver
 {
-    public function __construct(public array $sourceSchema, public SEOData $source) {}
+    public function __construct(public SEOData $source) {}
 
     /**
      * @return list<array<string, mixed>>|null
@@ -21,7 +20,7 @@ class SchemaResolver
             return null;
         }
 
-        return (new self($source->schema, $source))->buildSchema();
+        return (new self($source))->buildSchema();
     }
 
     /**
@@ -32,7 +31,7 @@ class SchemaResolver
         $schemaCollection = [];
         $structuredSchemas = [];
 
-        foreach ($this->sourceSchema as $schemaType) {
+        foreach ($this->source->schema as $schemaType) {
             $resolvedSchema = $this->calculateSchema($schemaType);
 
             if ($resolvedSchema instanceof BaseType) {
@@ -72,36 +71,11 @@ class SchemaResolver
         throw_unless(is_string($schemaType), InvalidArgumentException::class, 'Schema type must be a string or array');
 
         return match ($schemaType) {
-            'BreadcrumbList' => $this->buildBreadcrumbList($this->source),
+            'BreadcrumbList' => BreadcrumbList::make($this->source->breadcrumbs, $this->source->currentBreadcrumbName, $this->source->appendBreadcrumb),
+            'Person' => Person::make($this->source->author),
             default => throw new InvalidArgumentException("Unsupported schema type [{$schemaType}]"),
         };
     }
 
-    protected function buildBreadcrumbList(SEOData $source): BreadcrumbList
-    {
-        $list = [];
-        $counter = 1;
-
-        foreach ($source->breadcrumbs ?? [] as $name => $url) {
-            $list[] = Schema::listItem()
-                ->position($counter++)
-                ->name($name)
-                ->item($url);
-        }
-
-        $list[] = Schema::listItem()
-            ->position($counter++)
-            ->name($this->source->currentBreadcrumbName);
-
-        foreach ($source->appendBreadcrumb ?? [] as $name => $url) {
-            $list[] = Schema::listItem()
-                ->position($counter++)
-                ->name($name)
-                ->item($url);
-        }
-
-        return Schema::breadcrumbList()
-            ->itemListElement($list);
-    }
-
+ 
 }

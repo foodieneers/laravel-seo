@@ -25,5 +25,5 @@ it('renders BreadcrumbList schema', function (): void {
     ));
 
     expect($output)
-        ->toContain('schema.org');
+        ->toContain('<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"/"},{"@type":"ListItem","position":2,"name":"Category","item":"/category"},{"@type":"ListItem","position":3,"name":"Product"}]}</script>');
 });
