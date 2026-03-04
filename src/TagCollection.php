@@ -2,6 +2,7 @@
 
 namespace Foodieneers\Laravel\SEO;
 
+use Foodieneers\Laravel\SEO\Support\SchemaTagCollection;
 use Foodieneers\Laravel\SEO\Support\SEOData;
 use Foodieneers\Laravel\SEO\Tags\AlternateTags;
 use Foodieneers\Laravel\SEO\Tags\AuthorTag;
@@ -35,6 +36,7 @@ class TagCollection extends Collection
             OpenGraphTags::initialize($SEOData),
             TwitterCardTags::initialize($SEOData),
             AlternateTags::initialize($SEOData),
+            SchemaTagCollection::initialize($SEOData),
         ])->reject(fn (?Renderable $item): bool => $item === null);
 
         foreach ($tags as $tag) {

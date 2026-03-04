@@ -32,38 +32,24 @@ class TagManager implements Renderable, Stringable
     {
         $url = $source->url ?: url()->current();
         $SEOData = clone $source;
-        $title = $SEOData->title;
 
+        $title = $SEOData->title;
         if ($title === null && config('seo.title.infer_title_from_url')) {
             $title = $this->inferTitleFromUrl($url);
         }
-
-        if ($url === url('/') && ($homepageTitle = config('seo.title.homepage_title'))) {
-            $title = $homepageTitle;
-        }
-
-        $image = $SEOData->image;
-        $favicon = $SEOData->favicon;
-
-        if ($image !== null && filter_var(str_replace(' ', '%20', $image), FILTER_VALIDATE_URL) === false) {
-            $image = secure_url($image);
-        }
-
-        if ($favicon !== null && filter_var(str_replace(' ', '%20', $favicon), FILTER_VALIDATE_URL) === false) {
-            $favicon = secure_url($favicon);
-        }
-
         $SEOData->title = $title;
+
         $SEOData->description ??= config('seo.description.fallback');
         $SEOData->author ??= config('seo.author.fallback');
-        $SEOData->image = $image;
+
         $SEOData->url = $url;
         $SEOData->twitter_username ??= Str::of(config('seo.twitter.@username'))->start('@')->toString();
         $SEOData->site_name ??= config('seo.site_name');
-        $SEOData->favicon = $favicon ?? config('seo.favicon');
+        $SEOData->favicon ??= config('seo.favicon');
         $SEOData->locale ??= app()->getLocale();
         $SEOData->robots = $SEOData->markAsNoindex ? 'noindex, nofollow' : $SEOData->robots;
         $SEOData->currentBreadcrumbName ??= $this->inferTitleFromUrl($url);
+
         if ($SEOData->image === null) {
             $SEOData->image = config('seo.image.fallback');
         }
@@ -71,6 +57,10 @@ class TagManager implements Renderable, Stringable
         if ($SEOData->image && filter_var(str_replace(' ', '%20', $SEOData->image), FILTER_VALIDATE_URL) === false) {
             $SEOData->imageMeta();
             $SEOData->image = secure_url($SEOData->image);
+        }
+
+        if ($SEOData->favicon !== null && filter_var(str_replace(' ', '%20', $SEOData->favicon), FILTER_VALIDATE_URL) === false) {
+            $SEOData->favicon = secure_url($SEOData->favicon);
         }
 
         return $SEOData;

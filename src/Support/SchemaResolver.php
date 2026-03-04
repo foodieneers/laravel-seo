@@ -2,8 +2,6 @@
 
 namespace Foodieneers\Laravel\SEO\Support;
 
-use Foodieneers\Laravel\SEO\SchemaCollection;
-use Illuminate\Support\Str;
 use InvalidArgumentException;
 use Spatie\SchemaOrg\BaseType;
 use Spatie\SchemaOrg\BreadcrumbList;
@@ -14,7 +12,10 @@ class SchemaResolver
 {
     public function __construct(public array $sourceSchema, public SEOData $source) {}
 
-    public static function resolve(SEOData $source): ?SchemaCollection
+    /**
+     * @return list<array<string, mixed>>|null
+     */
+    public static function resolve(SEOData $source): ?array
     {
         if ($source->schema === []) {
             return null;
@@ -23,9 +24,12 @@ class SchemaResolver
         return (new self($source->schema, $source))->buildSchema();
     }
 
-    protected function buildSchema(): SchemaCollection
+    /**
+     * @return list<array<string, mixed>>
+     */
+    protected function buildSchema(): array
     {
-        $schemaCollection = SchemaCollection::initialize();
+        $schemaCollection = [];
         $structuredSchemas = [];
 
         foreach ($this->sourceSchema as $schemaType) {
@@ -34,12 +38,14 @@ class SchemaResolver
             if ($resolvedSchema instanceof BaseType) {
                 $structuredSchemas[] = $resolvedSchema;
             } else {
-                $schemaCollection->add($resolvedSchema);
+                $schemaCollection[] = $resolvedSchema;
             }
         }
 
         if (count($structuredSchemas) === 1) {
-            return $schemaCollection->add($structuredSchemas[0]->toArray());
+            $schemaCollection[] = $structuredSchemas[0]->toArray();
+
+            return $schemaCollection;
         }
 
         if (count($structuredSchemas) > 1) {
@@ -48,7 +54,7 @@ class SchemaResolver
                 $graph->add($item);
             }
 
-            return $schemaCollection->add($graph->toArray());
+            $schemaCollection[] = $graph->toArray();
         }
 
         return $schemaCollection;
@@ -85,7 +91,7 @@ class SchemaResolver
 
         $list[] = Schema::listItem()
             ->position($counter++)
-            ->name($this->resolveCurrentBreadcrumbName($source));
+            ->name($this->source->currentBreadcrumbName);
 
         foreach ($source->appendBreadcrumb ?? [] as $name => $url) {
             $list[] = Schema::listItem()
@@ -98,9 +104,4 @@ class SchemaResolver
             ->itemListElement($list);
     }
 
-    protected function resolveCurrentBreadcrumbName(SEOData $source): string
-    {
-        return $source->currentBreadcrumbName
-            ?? Str::of($source->url ?: url()->current())->afterLast('/')->headline()->toString();
-    }
 }

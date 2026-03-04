@@ -7,7 +7,30 @@ use Illuminate\Support\Collection;
 
 class SchemaTagCollection extends Collection implements Renderable
 {
-    use RenderableCollection;
+    public static function initialize(?SEOData $SEOData = null): ?static
+    {
+        if ($SEOData === null) {
+            return null;
+        }
 
-    public static function initialize(?SEOData $SEOData = null): void {}
+        $schemas = SchemaResolver::resolve($SEOData);
+
+        if ($schemas === null || $schemas === []) {
+            return null;
+        }
+
+        return new static($schemas);
+    }
+
+    public function render(): string
+    {
+        return $this
+            ->map(function (array $schema): string {
+                $json = json_encode($schema, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE | JSON_THROW_ON_ERROR);
+                $json = str_replace('</script', '<\/script', $json);
+
+                return sprintf('<script type="application/ld+json">%s</script>', $json);
+            })
+            ->implode(PHP_EOL);
+    }
 }

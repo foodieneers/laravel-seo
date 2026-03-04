@@ -27,16 +27,6 @@ it('infers title from URL when enabled', function (): void {
     expect($manager->SEOData?->title)->toBe('My First Post');
 });
 
-it('uses homepage title for root URL when configured', function (): void {
-    config()->set('seo.title.homepage_title', 'Custom homepage title');
-
-    $manager = resolve(TagManager::class)->for(new SEOData(
-        url: url('/'),
-    ));
-
-    expect($manager->SEOData?->title)->toBe('Custom homepage title');
-});
-
 it('marks robots as noindex when requested', function (): void {
     $manager = resolve(TagManager::class)->for(new SEOData(
         url: 'https://example.com/private',

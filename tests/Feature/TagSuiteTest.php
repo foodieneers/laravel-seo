@@ -4,18 +4,10 @@ use Carbon\CarbonImmutable;
 use Foodieneers\Laravel\SEO\Support\AlternateTag;
 use Foodieneers\Laravel\SEO\Support\ImageMeta;
 use Foodieneers\Laravel\SEO\Support\SEOData;
-use Foodieneers\Laravel\SEO\TagManager;
 use Foodieneers\Laravel\SEO\Tags\OpenGraphTags;
 use Foodieneers\Laravel\SEO\Tags\TwitterCard\Summary;
 use Foodieneers\Laravel\SEO\Tags\TwitterCard\SummaryLargeImage;
 use Foodieneers\Laravel\SEO\Tags\TwitterCardTags;
-
-function renderSeo(SEOData $input): string
-{
-    return resolve(TagManager::class)
-        ->for($input)
-        ->render();
-}
 
 it('renders title tag without inertia attribute', function (): void {
     $output = renderSeo(new SEOData(
