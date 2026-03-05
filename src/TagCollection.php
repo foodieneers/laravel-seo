@@ -18,6 +18,7 @@ use Foodieneers\Laravel\SEO\Tags\TwitterCardTags;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Support\Collection;
 
+/** @phpstan-consistent-constructor */
 class TagCollection extends Collection
 {
     public static function initialize(?SEOData $SEOData = null): static

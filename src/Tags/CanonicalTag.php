@@ -8,6 +8,7 @@ use Foodieneers\Laravel\SEO\Support\SEOData;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Support\Collection;
 
+/** @phpstan-consistent-constructor */
 class CanonicalTag extends Collection implements Renderable
 {
     use RenderableCollection;

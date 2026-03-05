@@ -7,6 +7,7 @@ use Foodieneers\Laravel\SEO\Support\SEOData;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Support\Collection;
 
+/** @phpstan-consistent-constructor */
 class AlternateTags extends Collection implements Renderable
 {
     use RenderableCollection;

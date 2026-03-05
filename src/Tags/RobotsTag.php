@@ -8,6 +8,7 @@ use Foodieneers\Laravel\SEO\Support\SEOData;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Support\Collection;
 
+/** @phpstan-consistent-constructor */
 class RobotsTag extends Collection implements Renderable
 {
     use RenderableCollection;
@@ -19,7 +20,7 @@ class RobotsTag extends Collection implements Renderable
         $robotsContent = config('seo.robots.default');
 
         if (! config('seo.robots.force_default')) {
-            $robotsContent = $SEOData?->robots ?? $robotsContent;
+            $robotsContent = $SEOData->robots ?? $robotsContent;
         }
 
         $collection->push(new MetaTag('robots', $robotsContent));

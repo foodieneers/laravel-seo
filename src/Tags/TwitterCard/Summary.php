@@ -10,6 +10,7 @@ use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Support\Collection;
 use Illuminate\Support\HtmlString;
 
+/** @phpstan-consistent-constructor */
 class Summary extends Collection implements Renderable
 {
     use RenderableCollection;
@@ -42,9 +43,8 @@ class Summary extends Collection implements Renderable
             $collection->push(new TwitterCardTag('image', new HtmlString($SEOData->image)));
 
             if ($SEOData->imageMeta instanceof ImageMeta) {
-                $collection
-                    ->when($SEOData->imageMeta?->width, fn (self $collection): self => $collection->push(new TwitterCardTag('image:width', $SEOData->imageMeta->width)))
-                    ->when($SEOData->imageMeta?->height, fn (self $collection): self => $collection->push(new TwitterCardTag('image:height', $SEOData->imageMeta->height)));
+                $collection->push(new TwitterCardTag('image:width', (string) $SEOData->imageMeta->width));
+                $collection->push(new TwitterCardTag('image:height', (string) $SEOData->imageMeta->height));
             }
         }
 

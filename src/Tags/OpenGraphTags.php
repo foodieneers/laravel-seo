@@ -11,6 +11,7 @@ use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Support\Collection;
 use Illuminate\Support\HtmlString;
 
+/** @phpstan-consistent-constructor */
 class OpenGraphTags extends Collection implements Renderable
 {
     use RenderableCollection;
@@ -37,9 +38,13 @@ class OpenGraphTags extends Collection implements Renderable
             $collection->push(new OpenGraphTag('image', new HtmlString($SEOData->image)));
 
             if ($SEOData->imageMeta instanceof ImageMeta) {
-                $collection
-                    ->when($SEOData->imageMeta->width, fn (self $collection): self => $collection->push(new OpenGraphTag('image:width', $SEOData->imageMeta->width)))
-                    ->when($SEOData->imageMeta->height, fn (self $collection): self => $collection->push(new OpenGraphTag('image:height', $SEOData->imageMeta->height)));
+                if ($SEOData->imageMeta->width !== null) {
+                    $collection->push(new OpenGraphTag('image:width', (string) $SEOData->imageMeta->width));
+                }
+
+                if ($SEOData->imageMeta->height !== null) {
+                    $collection->push(new OpenGraphTag('image:height', (string) $SEOData->imageMeta->height));
+                }
             }
         }
 

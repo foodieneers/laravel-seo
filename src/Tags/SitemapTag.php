@@ -8,6 +8,7 @@ use Foodieneers\Laravel\SEO\Support\SitemapTag as SitemapTagSupport;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Support\Collection;
 
+/** @phpstan-consistent-constructor */
 class SitemapTag extends Collection implements Renderable
 {
     use RenderableCollection;

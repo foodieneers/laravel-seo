@@ -6,6 +6,7 @@ use Foodieneers\Laravel\SEO\Support\LinkTag;
 use Foodieneers\Laravel\SEO\Support\SEOData;
 use Illuminate\Support\Collection;
 
+/** @phpstan-consistent-constructor */
 class FaviconTag extends LinkTag
 {
     public static function initialize(?SEOData $SEOData): ?static

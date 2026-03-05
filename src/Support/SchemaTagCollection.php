@@ -5,6 +5,7 @@ namespace Foodieneers\Laravel\SEO\Support;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Support\Collection;
 
+/** @phpstan-consistent-constructor */
 class SchemaTagCollection extends Collection implements Renderable
 {
     public static function initialize(?SEOData $SEOData = null): ?static

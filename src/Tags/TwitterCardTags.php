@@ -10,6 +10,7 @@ use Foodieneers\Laravel\SEO\Tags\TwitterCard\SummaryLargeImage;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Support\Collection;
 
+/** @phpstan-consistent-constructor */
 class TwitterCardTags extends Collection implements Renderable
 {
     use RenderableCollection;

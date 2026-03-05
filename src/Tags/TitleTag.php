@@ -5,6 +5,7 @@ namespace Foodieneers\Laravel\SEO\Tags;
 use Foodieneers\Laravel\SEO\Support\SEOData;
 use Foodieneers\Laravel\SEO\Support\Tag;
 
+/** @phpstan-consistent-constructor */
 class TitleTag extends Tag
 {
     public string $tag = 'title';
