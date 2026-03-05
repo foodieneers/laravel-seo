@@ -4,6 +4,7 @@ namespace Foodieneers\Laravel\SEO\Support;
 
 use Foodieneers\Laravel\SEO\Schema\BreadcrumbList;
 use Foodieneers\Laravel\SEO\Schema\Person;
+use Foodieneers\Laravel\SEO\Schema\Website;
 use InvalidArgumentException;
 use Spatie\SchemaOrg\BaseType;
 use Spatie\SchemaOrg\Graph;
@@ -74,6 +75,7 @@ class SchemaResolver
         return match ($schemaType) {
             'BreadcrumbList' => BreadcrumbList::make($this->source->breadcrumbs, $this->source->currentBreadcrumbName, $this->source->appendBreadcrumb),
             'Person' => Person::make($this->source->author),
+            'Website' => Website::make($this->source->url, $this->source->site_name, $this->source->author),
             default => throw new InvalidArgumentException("Unsupported schema type [{$schemaType}]"),
         };
     }

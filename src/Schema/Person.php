@@ -15,13 +15,23 @@ class Person
                 ->name($author)
                 ->id('https://www.marcoazzari.com/#person')
                 ->url('https://www.marcoazzari.com')
-                ->jobTitle('Founder')
-                ->description('Founder of Food Explorers and Culinary Expert')
+                ->jobTitle('Founder & Gastronomy Expert')
+                ->description('Founder of Food Explorers, Explorers Universe')
                 ->worksFor(Schema::organization()
-                    ->name('Food Explorers')
-                    ->url('https://www.foodexplorers.ch')
-                    ->logo('https://www.foodexplorers.ch/logo.png')
+                    ->name('Explorers Universe')
+                    ->url('https://www.explorersuniverse.com')
+                    ->logo('https://www.foodexplorers.com/logo.webp')
                 )
+                ->brand([
+                    Schema::brand()
+                        ->name('Food Explorers')
+                        ->url('https://www.foodexplorers.ch')
+                        ->logo('https://www.foodexplorers.ch/logo.webp'),
+                    Schema::brand()
+                        ->name('Analytical Drinker')
+                        ->url('https://www.analyticaldrinker.com')
+                        ->logo('https://www.analyticaldrinker.com/logo.webp'),
+                ])
                 ->sameAs([
                     'https://www.linkedin.com/in/marcoazzari/',
                     'https://www.x.com/marcoazzari',
@@ -31,13 +41,23 @@ class Person
                 ])
                 ->knowsAbout([
                     'Gastronomy',
-                    'Culinary',
-                    'Italian Food',
+                    'Culinary Arts',
+                    'Italian Cuisine',
                     'Pizza',
-                    'Wine & Spirits',
+                    'Wine & Spirits Tasting',
                     'Zurich Food Scene',
                     'Milano Food Scene',
                 ]);
+        }
+        throw new Exception("Author [{$author}] not found");
+    }
+
+    public static function getAuthor(string $author): SchemaPerson
+    {
+        if ($author === 'Marco Azzari') {
+            return Schema::person()
+                ->name('Marco Azzari')
+                ->id('https://www.marcoazzari.com/#person');
         }
         throw new Exception("Author [{$author}] not found");
     }
