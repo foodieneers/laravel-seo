@@ -8,6 +8,7 @@ use Illuminate\Support\HtmlString;
 
 abstract class Tag implements Renderable
 {
+    /** @var list<string> */
     const ATTRIBUTES_ORDER = ['rel', 'hreflang', 'title', 'name', 'href', 'property', 'description', 'content'];
 
     /**
@@ -40,12 +41,12 @@ abstract class Tag implements Renderable
     {
         return collect($this->attributes)
             ->map(fn (string | bool | HtmlString $attribute): string | bool | HtmlString => is_string($attribute) ? trim($attribute) : $attribute)
-            ->sortKeysUsing(function ($a, $b) {
+            ->sortKeysUsing(function (string|int $a, string|int $b): int {
                 $indexA = array_search($a, static::ATTRIBUTES_ORDER);
                 $indexB = array_search($b, static::ATTRIBUTES_ORDER);
 
                 return match (true) {
-                    $indexB === $indexA => 0, // keep the order defined in $attributes if neither $a or $b are in ATTRIBUTES_ORDER
+                    $indexB === $indexA => 0,
                     $indexA === false => 1,
                     $indexB === false => -1,
                     default => $indexA - $indexB

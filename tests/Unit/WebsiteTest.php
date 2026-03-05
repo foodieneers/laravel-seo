@@ -32,7 +32,7 @@ it('builds Website schema payload with author', function (): void {
         'name' => 'Example',
         'author' => [
             '@type' => 'Person',
-            'id' => 'https://www.marcoazzari.com/#person',
+            '@id' => 'https://www.marcoazzari.com/#person',
             'name' => 'Marco Azzari',
         ],
     ]);

@@ -13,7 +13,7 @@ class Person
         if ($author === 'Marco Azzari') {
             return Schema::person()
                 ->name($author)
-                ->id('https://www.marcoazzari.com/#person')
+                ->identifier('https://www.marcoazzari.com/#person')
                 ->url('https://www.marcoazzari.com')
                 ->jobTitle('Founder & Gastronomy Expert')
                 ->description('Founder of Food Explorers, Explorers Universe')
@@ -57,7 +57,7 @@ class Person
         if ($author === 'Marco Azzari') {
             return Schema::person()
                 ->name('Marco Azzari')
-                ->id('https://www.marcoazzari.com/#person');
+                ->identifier('https://www.marcoazzari.com/#person');
         }
         throw new Exception("Author [{$author}] not found");
     }

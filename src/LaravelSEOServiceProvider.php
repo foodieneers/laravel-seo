@@ -24,7 +24,7 @@ class LaravelSEOServiceProvider extends PackageServiceProvider
 
     public function bootingPackage(): void
     {
-        Blade::directive('seo', fn ($expression): string => "<?php app(\Foodieneers\Laravel\SEO\SEOService::class)->setData(new \Foodieneers\Laravel\SEO\Support\SEOData({$expression})); ?>");
+        Blade::directive('seo', fn (?string $expression): string => "<?php app(\Foodieneers\Laravel\SEO\SEOService::class)->setData(new \Foodieneers\Laravel\SEO\Support\SEOData({$expression})); ?>");
         Blade::directive('seoData', fn (): string => "<?php echo app(\Foodieneers\Laravel\SEO\SEOService::class)->render(); ?>");
     }
 }

@@ -23,13 +23,13 @@ it('builds BreadcrumbList schema items in order', function (): void {
                     '@type' => 'ListItem',
                     'position' => 1,
                     'name' => 'Home',
-                    'item' => url('/'),
+                    'item' => ['@type' => 'Thing', '@id' => url('/')],
                 ],
                 [
                     '@type' => 'ListItem',
                     'position' => 2,
                     'name' => 'Category',
-                    'item' => url('/category'),
+                    'item' => ['@type' => 'Thing', '@id' => url('/category')],
                 ],
                 [
                     '@type' => 'ListItem',
@@ -40,7 +40,7 @@ it('builds BreadcrumbList schema items in order', function (): void {
                     '@type' => 'ListItem',
                     'position' => 4,
                     'name' => 'Offer',
-                    'item' => 'https://example.com/offer',
+                    'item' => ['@type' => 'Thing', '@id' => 'https://example.com/offer'],
                 ],
             ],
         ]);

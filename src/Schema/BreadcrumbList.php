@@ -7,6 +7,10 @@ use Spatie\SchemaOrg\Schema;
 
 class BreadcrumbList
 {
+    /**
+     * @param  array<string, string>  $breadcrumbs
+     * @param  array<string, string>  $appendBreadcrumb
+     */
     public static function make(array $breadcrumbs, string $currentBreadcrumbName, array $appendBreadcrumb = []): SchemaBreadcrumbList
     {
         $list = [];
@@ -15,16 +19,16 @@ class BreadcrumbList
             $list[] = Schema::listItem()
                 ->position($counter++)
                 ->name($name)
-                ->item(url($url));
+                ->item(Schema::thing()->identifier(url($url)));
         }
         $list[] = Schema::listItem()
             ->position($counter++)
             ->name($currentBreadcrumbName);
-        foreach ($appendBreadcrumb ?? [] as $name => $url) {
+        foreach ($appendBreadcrumb as $name => $url) {
             $list[] = Schema::listItem()
                 ->position($counter++)
                 ->name($name)
-                ->item($url);
+                ->item(Schema::thing()->identifier(url($url)));
         }
 
         return Schema::breadcrumbList()
