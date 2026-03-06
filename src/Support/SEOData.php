@@ -36,6 +36,7 @@ class SEOData
         public ?string $currentBreadcrumbName = null,
         public ?array $breadcrumbs = [],
         public ?array $appendBreadcrumb = [],
+        public ?string $area = null,
         public bool $markAsNoindex = false,
     ) {
         if ($this->locale === null) {
@@ -50,5 +51,10 @@ class SEOData
         }
 
         return null;
+    }
+
+    public function hasOrganization(): bool
+    {
+        return count($this->schema) > 0 && array_key_exists('Organization', $this->schema);
     }
 }

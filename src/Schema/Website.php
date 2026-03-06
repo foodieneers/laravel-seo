@@ -7,7 +7,7 @@ use Spatie\SchemaOrg\WebSite as SchemaWebSite;
 
 class Website
 {
-    public static function make(string $url, string $name, ?string $author = null): SchemaWebSite
+    public static function make(string $url, string $name, ?string $author = null, bool $hasPublisher = false): SchemaWebSite
     {
         $schema = Schema::website()
             ->identifier($url . '/#website')
@@ -16,6 +16,10 @@ class Website
 
         if ($author !== null) {
             $schema->author(Person::getAuthor($author));
+        }
+
+        if ($hasPublisher) {
+            $schema->publisher(Schema::organization()->identifier(url('/#organization')));
         }
 
         return $schema;
