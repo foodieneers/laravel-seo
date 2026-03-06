@@ -41,7 +41,7 @@ abstract class Tag implements Renderable
     {
         return collect($this->attributes)
             ->map(fn (string | bool | HtmlString $attribute): string | bool | HtmlString => is_string($attribute) ? trim($attribute) : $attribute)
-            ->sortKeysUsing(function (string|int $a, string|int $b): int {
+            ->sortKeysUsing(function (string | int $a, string | int $b): int {
                 $indexA = array_search($a, static::$attributesOrder);
                 $indexB = array_search($b, static::$attributesOrder);
 
