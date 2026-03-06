@@ -30,7 +30,7 @@ class TagManager implements Renderable, Stringable
 
     protected function normalize(SEOData $source): SEOData
     {
-        $url = $source->url ?: url()->current();
+        $url = $source->url ?: request()->path();
         $SEOData = clone $source;
 
         $title = $SEOData->title;
@@ -42,7 +42,7 @@ class TagManager implements Renderable, Stringable
         $SEOData->description ??= config('seo.description.fallback');
         $SEOData->author ??= config('seo.author.fallback');
 
-        $SEOData->url = $url;
+        $SEOData->url = url($url);
         $SEOData->twitter_username ??= Str::of(config('seo.twitter.@username'))->start('@')->toString();
         $SEOData->site_name ??= config('seo.site_name');
         $SEOData->favicon ??= config('seo.favicon');
@@ -69,8 +69,9 @@ class TagManager implements Renderable, Stringable
     protected function inferTitleFromUrl(string $url): string
     {
         return Str::of($url)
-            ->afterLast('/')
-            ->headline() ?? 'Home';
+        ->afterLast('/')
+        ->headline()
+        ->whenEmpty(fn ($str) => 'Home');
     }
 
     public function render(): string
