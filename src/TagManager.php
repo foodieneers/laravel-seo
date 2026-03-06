@@ -70,7 +70,7 @@ class TagManager implements Renderable, Stringable
     {
         return Str::of($url)
             ->afterLast('/')
-            ->headline();
+            ->headline() ?? 'Home';
     }
 
     public function render(): string
