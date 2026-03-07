@@ -69,9 +69,9 @@ class TagManager implements Renderable, Stringable
     protected function inferTitleFromUrl(string $url): string
     {
         return Str::of($url)
-        ->afterLast('/')
-        ->headline()
-        ->whenEmpty(fn ($str) => 'Home');
+            ->afterLast('/')
+            ->headline()
+            ->whenEmpty(fn ($str): string => 'Home');
     }
 
     public function render(): string

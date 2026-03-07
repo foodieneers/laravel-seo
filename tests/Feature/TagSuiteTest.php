@@ -119,8 +119,8 @@ it('renders OpenGraph tags including article metadata', function (): void {
         image: 'https://cdn.example.com/cover.jpg',
         url: 'https://example.com/post',
         imageMeta: $imageMeta,
-        published_time: $published,
-        modified_time: $modified,
+        published_at: $published,
+        modified_at: $modified,
         section: 'News',
         tags: ['tag-one', 'tag-two'],
         type: 'article',
@@ -137,8 +137,8 @@ it('renders OpenGraph tags including article metadata', function (): void {
         ->toContain('<meta property="og:url" content="https://example.com/post">')
         ->toContain('<meta property="og:site_name" content="Example">')
         ->toContain('<meta property="og:type" content="article">')
-        ->toContain('<meta property="article:published_time" content="' . $published->toIso8601String() . '">')
-        ->toContain('<meta property="article:modified_time" content="' . $modified->toIso8601String() . '">')
+        ->toContain('<meta property="article:published_at" content="' . $published->toIso8601String() . '">')
+        ->toContain('<meta property="article:modified_at" content="' . $modified->toIso8601String() . '">')
         ->toContain('<meta property="article:section" content="News">')
         ->toContain('<meta property="article:tag" content="tag-one">')
         ->toContain('<meta property="article:tag" content="tag-two">');

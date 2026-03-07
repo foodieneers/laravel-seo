@@ -21,6 +21,6 @@ it('orders tag attributes', function (): void {
         'rel' => 'rel',
     ];
 
-    expect((string) $tag->render())
+    expect($tag->render())
         ->toBe('<link rel="rel" hreflang="hreflang" title="title" name="name" href="href" property="property" description="description" content="content" foo="foo" bar="bar">');
 });

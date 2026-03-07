@@ -2,6 +2,7 @@
 
 namespace Foodieneers\Laravel\SEO\Support;
 
+use Foodieneers\Laravel\SEO\Schema\BlogPost;
 use Foodieneers\Laravel\SEO\Schema\BreadcrumbList;
 use Foodieneers\Laravel\SEO\Schema\Organization;
 use Foodieneers\Laravel\SEO\Schema\Person;
@@ -78,6 +79,7 @@ class SchemaResolver
             'Person' => Person::make($this->source->author),
             'Website' => Website::make($this->source->url, $this->source->site_name, $this->source->author, $this->source->hasOrganization()),
             'Organization' => Organization::make($this->source->url, $this->source->site_name, $this->source->author, $this->source->area),
+            'BlogPost' => BlogPost::make($this->source->url, $this->source->title, $this->source->image, $this->source->description, $this->source->published_at, $this->source->modified_at, $this->source->author, $this->source->hasOrganization()),
             default => throw new InvalidArgumentException("Unsupported schema type [{$schemaType}]"),
         };
     }

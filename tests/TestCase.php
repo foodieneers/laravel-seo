@@ -16,7 +16,7 @@ class TestCase extends Orchestra
         Date::setTestNow(now());
     }
 
-    protected function getPackageProviders($app)
+    protected function getPackageProviders($app): array
     {
         return [
             LaravelSEOServiceProvider::class,
