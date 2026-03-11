@@ -8,13 +8,13 @@ use Spatie\SchemaOrg\Schema;
 
 class Organization
 {
-    public static function make(string $url, string $name, ?string $author = null, ?string $area = null): SchemaOrganization
+    public static function make(string $url, string $name, ?string $author = null, ?string $area = null, ?string $logo = null): SchemaOrganization
     {
         $organization = Schema::organization()
             ->identifier($url . '/#organization')
             ->url($url)
             ->name($name)
-            ->logo(url('/logo.webp'))
+            ->logo($logo)
             ->founder(Person::getAuthor($author));
 
         if ($area !== null) {

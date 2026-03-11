@@ -15,6 +15,7 @@ class SEOData
         public ?string $description = null,
         public ?string $author = null,
         public ?string $image = null,
+        public ?string $logo = null,
         public ?string $url = null,
         public bool $enableTitleSuffix = true,
         public ?ImageMeta $imageMeta = null,

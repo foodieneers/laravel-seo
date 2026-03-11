@@ -38,7 +38,7 @@ class TagCollection extends Collection
             TwitterCardTags::initialize($SEOData),
             AlternateTags::initialize($SEOData),
             SchemaTagCollection::initialize($SEOData),
-        ])->reject(fn (?Renderable $item): bool => ! $item instanceof Renderable);
+        ])->filter(fn (?Renderable $item): bool => $item instanceof Renderable);
 
         foreach ($tags as $tag) {
             $collection->push($tag);

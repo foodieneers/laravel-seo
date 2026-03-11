@@ -54,6 +54,10 @@ class TagManager implements Renderable, Stringable
             $SEOData->image = config('seo.image.fallback');
         }
 
+        if ($SEOData->logo === null) {
+            $SEOData->logo = config('seo.logo');
+        }
+
         if ($SEOData->image && filter_var(str_replace(' ', '%20', $SEOData->image), FILTER_VALIDATE_URL) === false) {
             $SEOData->imageMeta();
             $SEOData->image = secure_url($SEOData->image);

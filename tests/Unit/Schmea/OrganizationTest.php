@@ -7,6 +7,7 @@ it('builds Organization schema payload without area served', function (): void {
         url: 'https://example.com',
         name: 'Example Org',
         author: 'Marco Azzari',
+        logo: url('/images/logo.webp'),
     )->toArray();
 
     expect($schema)->toMatchArray([
@@ -15,7 +16,7 @@ it('builds Organization schema payload without area served', function (): void {
         '@id' => 'https://example.com/#organization',
         'url' => 'https://example.com',
         'name' => 'Example Org',
-        'logo' => 'http://localhost/logo.webp',
+        'logo' => 'http://localhost/images/logo.webp',
         'founder' => [
             '@type' => 'Person',
             '@id' => 'https://www.marcoazzari.com/#person',

@@ -18,6 +18,8 @@ return [
      */
     'sitemap' => '/sitemap.xml',
 
+    'logo' => 'images/logo.webp',
+
     /**
      * Use this setting to specify whether you want self-referencing `<link rel="canonical" href="$url">` tags to
      * be added to the head of every page. There has been some debate whether this a good practice, but experts

@@ -1,12 +1,12 @@
 <?php
 
-use Foodieneers\Laravel\SEO\Schema\BlogPost;
+use Foodieneers\Laravel\SEO\Schema\BlogPosting;
 use Illuminate\Support\Facades\Date;
 
 it('builds BlogPost schema payload without optional fields', function (): void {
     $publishedAt = Date::parse('2026-03-01T10:00:00+00:00');
 
-    $schema = BlogPost::make(
+    $schema = BlogPosting::make(
         url: 'https://example.com/posts/hello-world',
         headline: 'Hello World',
         description: 'This is a hello world post.',
@@ -28,7 +28,7 @@ it('builds BlogPost schema payload with modified date, author and publisher', fu
     $publishedAt = Date::parse('2026-03-01T10:00:00+00:00');
     $modifiedAt = Date::parse('2026-03-03T12:30:00+00:00');
 
-    $schema = BlogPost::make(
+    $schema = BlogPosting::make(
         url: 'https://example.com/posts/hello-world',
         headline: 'Hello World',
         description: 'This is a hello world post.',

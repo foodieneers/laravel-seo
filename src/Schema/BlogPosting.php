@@ -6,7 +6,7 @@ use Carbon\CarbonInterface;
 use Spatie\SchemaOrg\BlogPosting as SchemaBlogPost;
 use Spatie\SchemaOrg\Schema;
 
-class BlogPost
+class BlogPosting
 {
     public static function make(string $url, string $headline, ?string $image = null, string $description = '', ?CarbonInterface $datePublished = null, ?CarbonInterface $dateModified = null, ?string $author = null, bool $hasPublisher = false): SchemaBlogPost
     {
