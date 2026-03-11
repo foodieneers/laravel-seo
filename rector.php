@@ -45,12 +45,9 @@ return RectorConfig::configure()
         StaticCallOnNonStaticToInstanceCallRector::class,
         RemoveUnusedPrivateMethodRector::class,
         PrivatizeFinalClassMethodRector::class,
-        PrivatizeFinalClassPropertyRector::class => [
-            __DIR__ . '/app/Models/*',
-        ],
+        PrivatizeFinalClassPropertyRector::class,
         AddVoidReturnTypeWhereNoReturnRector::class => [
             __DIR__ . '/tests',
-            __DIR__ . '/app-modules/*/tests',
         ],
     ])
     ->withPreparedSets(
