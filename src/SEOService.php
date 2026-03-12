@@ -8,6 +8,7 @@ use Stringable;
 class SEOService implements Stringable
 {
     private ?SEOData $data = null;
+
     public function setData(SEOData $data): void
     {
         $this->data = $data;

@@ -1,7 +1,6 @@
 <?php
 
 use Illuminate\Support\Facades\Blade;
-use Illuminate\View\ViewException;
 
 use function Pest\Laravel\artisan;
 
