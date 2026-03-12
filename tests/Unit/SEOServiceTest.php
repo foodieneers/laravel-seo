@@ -34,13 +34,3 @@ it('renders set data', function (): void {
         ->toContain('Service Rendered Title')
         ->toContain('Service Description');
 });
-
-it('throws when render is called twice', function (): void {
-    $service = resolve(SEOService::class);
-    $service->setData(new SEOData(title: 'First render'));
-
-    $service->render();
-
-    expect(fn () => $service->render())
-        ->toThrow(LogicException::class, 'SEOService can only be rendered once per request.');
-});

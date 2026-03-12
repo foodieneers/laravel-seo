@@ -3,15 +3,11 @@
 namespace Foodieneers\Laravel\SEO;
 
 use Foodieneers\Laravel\SEO\Support\SEOData;
-use LogicException;
 use Stringable;
 
 class SEOService implements Stringable
 {
     private ?SEOData $data = null;
-
-    private bool $hasRendered = false;
-
     public function setData(SEOData $data): void
     {
         $this->data = $data;
@@ -24,10 +20,6 @@ class SEOService implements Stringable
 
     public function render(): string
     {
-        throw_if($this->hasRendered, LogicException::class, 'SEOService can only be rendered once per request.');
-
-        $this->hasRendered = true;
-
         if ($this->hasData()) {
             return resolve(TagManager::class)
                 ->for($this->data)

@@ -21,12 +21,3 @@ BLADE);
         ->toContain('Directive Title')
         ->toContain('Directive Description');
 });
-
-it('throws when @seoData is rendered twice', function (): void {
-    expect(fn () => Blade::render(<<<'BLADE'
-@seo(title: 'Directive Title')
-@seoData
-@seoData
-BLADE))
-        ->toThrow(ViewException::class, 'SEOService can only be rendered once per request.');
-});
