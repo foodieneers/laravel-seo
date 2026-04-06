@@ -2,7 +2,9 @@
 
 use Foodieneers\Laravel\SEO\Schema\Organization;
 
-it('builds Organization schema payload without area served', function (): void {
+it('builds Organization schema with default area served when no explicit area', function (): void {
+    config()->set('seo.country');
+
     $schema = Organization::make(
         url: 'https://example.com',
         name: 'Example Org',
@@ -22,10 +24,16 @@ it('builds Organization schema payload without area served', function (): void {
             '@id' => 'https://www.marcoazzari.com/#person',
             'name' => 'Marco Azzari',
         ],
+        'areaServed' => [
+            '@type' => 'Place',
+            'name' => 'World',
+        ],
     ]);
 });
 
-it('builds Organization schema payload with area served', function (): void {
+it('builds Organization schema payload with explicit city area', function (): void {
+    config()->set('seo.country');
+
     $schema = Organization::make(
         url: 'https://example.com',
         name: 'Example Org',

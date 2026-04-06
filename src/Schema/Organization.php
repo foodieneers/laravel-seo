@@ -19,6 +19,11 @@ class Organization
 
         if ($area !== null) {
             $organization->areaServed(self::getArea($area));
+        } elseif (config('seo.country') !== null) {
+            $fullName = self::getFullName(config('seo.country'));
+            $organization->areaServed(Schema::country()->name($fullName));
+        } else {
+            $organization->areaServed(Schema::place()->name('World'));
         }
 
         return $organization;
@@ -27,5 +32,22 @@ class Organization
     public static function getArea(string $area): City
     {
         return Schema::city()->name($area);
+    }
+
+    public static function getFullName(string $country): string
+    {
+        return match ($country) {
+            'ch' => 'Switzerland',
+            'it' => 'Italy',
+            'us' => 'United States',
+            'de' => 'Germany',
+            'fr' => 'France',
+            'es' => 'Spain',
+            'at' => 'Austria',
+            'uk' => 'United Kingdom',
+            'ca' => 'Canada',
+            'pt' => 'Portugal',
+            default => $country,
+        };
     }
 }
