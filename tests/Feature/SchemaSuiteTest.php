@@ -1,6 +1,7 @@
 <?php
 
 use Foodieneers\Laravel\SEO\Support\SEOData;
+use Spatie\SchemaOrg\Schema;
 
 it('renders nothing if no schema is provided', function (): void {
     $output = renderSeo(new SEOData);
@@ -37,4 +38,31 @@ it('renders Website schema', function (): void {
 
     expect($output)
         ->toContain('{"@context":"https://schema.org","@type":"WebSite","url":"https://example.com","name":"Example Site","author":{"@type":"Person","name":"Marco Azzari","@id":"https://www.marcoazzari.com/#person"},"@id":"https://example.com/#website"}</script>');
+});
+
+it('renders Spatie rawSchemas without precompiled schema keys', function (): void {
+    $product = Schema::product()->name('Custom Product');
+
+    $output = renderSeo(new SEOData(rawSchemas: [$product]));
+
+    expect($output)
+        ->toContain('<script type="application/ld+json">')
+        ->toContain('"@type":"Product"')
+        ->toContain('"name":"Custom Product"');
+});
+
+it('merges rawSchemas with named schema types into one graph when multiple BaseTypes are present', function (): void {
+    $product = Schema::product()->name('Addon');
+
+    $output = renderSeo(new SEOData(
+        url: 'https://example.com',
+        site_name: 'Example Site',
+        schema: ['Organization'],
+        rawSchemas: [$product],
+    ));
+
+    expect($output)
+        ->toContain('"@graph"')
+        ->toContain('"@type":"Organization"')
+        ->toContain('"@type":"Product"');
 });

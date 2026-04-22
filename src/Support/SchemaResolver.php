@@ -20,7 +20,7 @@ class SchemaResolver
      */
     public static function resolve(SEOData $source): ?array
     {
-        if ($source->schema === []) {
+        if ($source->schema === [] && $source->rawSchemas === []) {
             return null;
         }
 
@@ -45,6 +45,8 @@ class SchemaResolver
             }
         }
 
+        [$schemaCollection, $structuredSchemas] = $this->appendRawSchemas($schemaCollection, $structuredSchemas);
+
         if (count($structuredSchemas) === 1) {
             $schemaCollection[] = $structuredSchemas[0]->toArray();
 
@@ -61,6 +63,28 @@ class SchemaResolver
         }
 
         return $schemaCollection;
+    }
+
+    /**
+     * @param  list<array<string, mixed>>  $schemaCollection
+     * @param  list<BaseType>  $structuredSchemas
+     * @return array{0: list<array<string, mixed>>, 1: list<BaseType>}
+     */
+    protected function appendRawSchemas(array $schemaCollection, array $structuredSchemas): array
+    {
+        foreach ($this->source->rawSchemas as $raw) {
+            if ($raw instanceof Graph) {
+                /** @var array<string, mixed> $graphPayload */
+                $graphPayload = $raw->toArray();
+                $schemaCollection[] = $graphPayload;
+
+                continue;
+            }
+
+            $structuredSchemas[] = $raw;
+        }
+
+        return [$schemaCollection, $structuredSchemas];
     }
 
     /**

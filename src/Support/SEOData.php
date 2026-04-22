@@ -3,12 +3,15 @@
 namespace Foodieneers\Laravel\SEO\Support;
 
 use Carbon\CarbonInterface;
+use Spatie\SchemaOrg\BaseType;
+use Spatie\SchemaOrg\Graph;
 
 class SEOData
 {
     /**
      * @param  null|array<array-key, AlternateTag>  $alternates
      * @param  array<int, string|array<string, mixed>>  $schema
+     * @param  list<BaseType|Graph>  $rawSchemas
      */
     public function __construct(
         public ?string $title = null,
@@ -34,6 +37,7 @@ class SEOData
         public ?string $openGraphTitle = null,
         public ?array $alternates = null,
         public array $schema = [],
+        public array $rawSchemas = [],
         public ?string $currentBreadcrumbName = null,
         public ?array $breadcrumbs = [],
         public ?array $appendBreadcrumb = [],
