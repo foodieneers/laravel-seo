@@ -23,7 +23,9 @@ class BreadcrumbList
         }
         $list[] = Schema::listItem()
             ->position($counter++)
-            ->name($currentBreadcrumbName);
+            ->name($currentBreadcrumbName)
+            ->item(Schema::thing()->identifier(url()->current()));
+       
         foreach ($appendBreadcrumb as $name => $url) {
             $list[] = Schema::listItem()
                 ->position($counter++)
