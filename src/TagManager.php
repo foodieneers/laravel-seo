@@ -72,10 +72,15 @@ class TagManager implements Renderable, Stringable
 
     protected function inferTitleFromUrl(string $url): string
     {
-        return Str::of($url)
-            ->afterLast('/')
+        $langCodes = ['en', 'fr', 'de', 'it', 'es'];
+        $lastSegment = Str::of($url)->afterLast('/');
+        if (in_array($lastSegment->toString(), $langCodes, true)) {
+            return 'Home';
+        }
+        return $lastSegment
             ->headline()
             ->whenEmpty(fn ($str): string => 'Home');
+       
     }
 
     public function render(): string
