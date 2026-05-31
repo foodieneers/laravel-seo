@@ -48,7 +48,6 @@ class TagManager implements Renderable, Stringable
         $SEOData->favicon ??= config('seo.favicon');
         $SEOData->locale ??= app()->getLocale();
         $SEOData->robots = $SEOData->markAsNoindex ? 'noindex, nofollow' : $SEOData->robots;
-        $SEOData->currentBreadcrumbName ??= $this->inferTitleFromUrl($url);
 
         if ($SEOData->image === null) {
             $SEOData->image = config('seo.image.fallback');
@@ -77,10 +76,10 @@ class TagManager implements Renderable, Stringable
         if (in_array($lastSegment->toString(), $langCodes, true)) {
             return 'Home';
         }
+
         return $lastSegment
             ->headline()
-            ->whenEmpty(fn ($str): string => 'Home');
-       
+            ->whenEmpty(fn (Stringable $str): string => 'Home');
     }
 
     public function render(): string

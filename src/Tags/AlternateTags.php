@@ -2,6 +2,7 @@
 
 namespace Foodieneers\Laravel\SEO\Tags;
 
+use Foodieneers\Laravel\SEO\Support\AlternateTag;
 use Foodieneers\Laravel\SEO\Support\RenderableCollection;
 use Foodieneers\Laravel\SEO\Support\SEOData;
 use Illuminate\Contracts\Support\Renderable;
@@ -14,10 +15,15 @@ class AlternateTags extends Collection implements Renderable
 
     public static function initialize(SEOData $SEOData): ?static
     {
-        if (! $SEOData->alternates) {
+        if ($SEOData->lang === []) {
             return null;
         }
 
-        return new static($SEOData->alternates);
+        $alternates = collect($SEOData->lang)
+            ->map(fn (string $href, string $hreflang): AlternateTag => new AlternateTag($hreflang, $href))
+            ->values()
+            ->all();
+
+        return new static($alternates);
     }
 }

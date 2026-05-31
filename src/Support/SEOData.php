@@ -3,15 +3,15 @@
 namespace Foodieneers\Laravel\SEO\Support;
 
 use Carbon\CarbonInterface;
+use InvalidArgumentException;
 use Spatie\SchemaOrg\BaseType;
 use Spatie\SchemaOrg\Graph;
 
 class SEOData
 {
     /**
-     * @param  null|array<array-key, AlternateTag>  $alternates
-     * @param  array<int, string|array<string, mixed>>  $schema
-     * @param  list<BaseType|Graph>  $rawSchemas
+     * @param  array<string, string>  $lang
+     * @param  list<BaseType|Graph>  $schema
      */
     public function __construct(
         public ?string $title = null,
@@ -35,17 +35,24 @@ class SEOData
         public ?string $robots = null,
         public ?string $canonical_url = null,
         public ?string $openGraphTitle = null,
-        public ?array $alternates = null,
+        public array $lang = [],
         public array $schema = [],
-        public array $rawSchemas = [],
-        public ?string $currentBreadcrumbName = null,
-        public ?array $breadcrumbs = [],
-        public ?array $appendBreadcrumb = [],
-        public ?string $area = null,
         public bool $markAsNoindex = false,
     ) {
         if ($this->locale === null) {
             $this->locale = app()->getLocale();
+        }
+
+        $this->assertValidSchema($this->schema);
+    }
+
+    /**
+     * @param  array<int, mixed>  $schema
+     */
+    protected function assertValidSchema(array $schema): void
+    {
+        foreach ($schema as $item) {
+            throw_if(! $item instanceof BaseType && ! $item instanceof Graph, InvalidArgumentException::class, 'Schema must be a BaseType or Graph.');
         }
     }
 
@@ -56,10 +63,5 @@ class SEOData
         }
 
         return null;
-    }
-
-    public function hasOrganization(): bool
-    {
-        return count($this->schema) > 0 && array_key_exists('Organization', $this->schema);
     }
 }

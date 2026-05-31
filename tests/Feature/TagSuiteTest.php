@@ -1,7 +1,6 @@
 <?php
 
 use Carbon\CarbonImmutable;
-use Foodieneers\Laravel\SEO\Support\AlternateTag;
 use Foodieneers\Laravel\SEO\Support\ImageMeta;
 use Foodieneers\Laravel\SEO\Support\SEOData;
 use Foodieneers\Laravel\SEO\Tags\OpenGraphTags;
@@ -91,18 +90,42 @@ it('renders image and favicon tags and resolves relative paths', function (): vo
         ->toContain('<link href="' . secure_url('/favicon-test.ico') . '" rel="shortcut icon">');
 });
 
-it('renders alternate tags when provided', function (): void {
+it('renders no alternate tags when lang is empty', function (): void {
     $output = renderSeo(new SEOData(
         url: 'https://example.com/en/post',
-        alternates: [
-            new AlternateTag('en', 'https://example.com/en/post'),
-            new AlternateTag('fr', 'https://example.com/fr/post'),
+    ));
+
+    expect($output)->not->toContain('hreflang=');
+});
+
+it('renders alternate tags from lang map', function (): void {
+    $output = renderSeo(new SEOData(
+        url: 'https://example.com/en/post',
+        lang: [
+            'en' => 'https://example.com/en/post',
+            'fr' => 'https://example.com/fr/post',
         ],
     ));
 
     expect($output)
         ->toContain('<link rel="alternate" hreflang="en" href="https://example.com/en/post">')
         ->toContain('<link rel="alternate" hreflang="fr" href="https://example.com/fr/post">');
+});
+
+it('renders alternate tags with regional hreflang codes', function (): void {
+    $output = renderSeo(new SEOData(
+        url: 'https://example.com/en-ch/post',
+        lang: [
+            'en-CH' => 'https://example.com/en-ch/post',
+            'de-CH' => 'https://example.com/de-ch/post',
+            'x-default' => 'https://example.com/post',
+        ],
+    ));
+
+    expect($output)
+        ->toContain('<link rel="alternate" hreflang="en-CH" href="https://example.com/en-ch/post">')
+        ->toContain('<link rel="alternate" hreflang="de-CH" href="https://example.com/de-ch/post">')
+        ->toContain('<link rel="alternate" hreflang="x-default" href="https://example.com/post">');
 });
 
 it('renders OpenGraph tags including article metadata', function (): void {
